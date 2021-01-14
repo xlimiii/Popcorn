@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:id="@+id/menu_mainMenu"
+    android:icon="@drawable/ic_baseline_home_24"
+    android:title="Home"
+/>
+    <item
+        android:id="@+id/menu_movies"
+        android:icon="@drawable/ic_baseline_movie_24"
+        android:title="Movies"
+        />
+    <item
+        android:id="@+id/menu_actors"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Actors"
+        />
+    <item
+        android:id="@+id/menu_directors"
+        android:icon="@drawable/ic_baseline_videocam_24"
+        android:title="Directors"
+        />
+    <item
+        android:id="@+id/menu_favourites"
+        android:icon="@drawable/ic_baseline_favorite_24"
+        android:title="Fav"
+        />
+
+</menu>
