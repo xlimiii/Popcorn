@@ -1,6 +1,6 @@
-package com.example.popcorn.Model
+package com.example.popcorn.model
 
-data class Production_companies (
+data class ProductionCompanies (
     val id : Int,
     val logo_path : String,
     val name : String,

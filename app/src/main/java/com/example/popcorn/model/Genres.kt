@@ -1,4 +1,4 @@
-package com.example.popcorn.Model
+package com.example.popcorn.model
 
 data class Genres (
     val id : Int,
