@@ -1,5 +1,6 @@
-package com.example.popcorn.model
+package com.example.popcorn.model.api
 
+import com.example.popcorn.model.Movie
 import retrofit2.Call
 
 class ApiRepository(private val apiRequest : ApiRequest) {

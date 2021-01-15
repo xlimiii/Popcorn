@@ -7,17 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.popcorn.R
-import com.example.popcorn.viewmodel.ApiViewModel
+import com.example.popcorn.viewmodel.MovieViewModel
 
 class HomeFragment : Fragment() {
-    private lateinit var apiVM: ApiViewModel
+    private lateinit var movieVM: MovieViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        apiVM = ViewModelProvider(requireActivity()).get(ApiViewModel::class.java)
-        apiVM.setCurrentMovieID(550)
-        apiVM.setCurrentMovie()
-        apiVM.currentMovie.observe(viewLifecycleOwner, {
-            println(apiVM.currentMovie.value.toString())
+        movieVM = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
+        movieVM.setCurrentMovieID(550)
+        movieVM.setCurrentMovie()
+        movieVM.currentMovie.observe(viewLifecycleOwner, {
+            println(movieVM.currentMovie.value.toString())
         })
 
         return inflater.inflate(R.layout.fragment_home, container, false)

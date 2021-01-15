@@ -1,5 +1,6 @@
-package com.example.popcorn.model
+package com.example.popcorn.model.api
 
+import com.example.popcorn.model.Movie
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -8,7 +9,7 @@ import retrofit2.http.Path
 
 interface ApiRequest {
 
-    @GET("3/movie/{movieID}?api_key=055b1da364a8c6b64b59a86724d0ae7c&language=en-US") //550
+    @GET("3/movie/{movieID}?api_key=055b1da364a8c6b64b59a86724d0ae7c&language=en-US")
     fun getMovieDetails(@Path("movieID") movieID : Int): Call<Movie>
 
     companion object {

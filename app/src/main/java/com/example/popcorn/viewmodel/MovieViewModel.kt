@@ -4,14 +4,14 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.popcorn.model.ApiRepository
-import com.example.popcorn.model.ApiRequest
+import com.example.popcorn.model.api.ApiRepository
+import com.example.popcorn.model.api.ApiRequest
 import com.example.popcorn.model.Movie
 import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 
-class ApiViewModel(application: Application) : AndroidViewModel(application) {
-    private val apiRepository : ApiRepository = ApiRepository(ApiRequest.getAPI())
+class MovieViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository : ApiRepository = ApiRepository(ApiRequest.getAPI())
 
     var currentMovieID : Int? = null
     fun setCurrentMovieID(id : Int) { currentMovieID = id; }
@@ -20,7 +20,7 @@ class ApiViewModel(application: Application) : AndroidViewModel(application) {
     fun setCurrentMovie()
     {
         viewModelScope.launch {
-            val response = apiRepository.getMovieDetails(currentMovieID!!).awaitResponse()
+            val response = repository.getMovieDetails(currentMovieID!!).awaitResponse()
             if (response.isSuccessful)
             {
                 val data = response.body()!!
