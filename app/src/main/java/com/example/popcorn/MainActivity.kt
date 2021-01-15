@@ -4,8 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
+import com.example.popcorn.Model.ApiRequest
 import com.google.android.material.bottomnavigation.BottomNavigationView
-
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.awaitResponse
+import retrofit2.converter.gson.GsonConverterFactory
+const val   BASE_URL="https://api.themoviedb.org"
 class MainActivity : AppCompatActivity() {
 
     private val homeFragment= HomeFragment()
@@ -18,6 +25,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         replaceFragment(homeFragment)
+        getMovieInfo()
+
 
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigation.setOnNavigationItemSelectedListener {
@@ -38,6 +47,27 @@ class MainActivity : AppCompatActivity() {
             transaction.replace(R.id.fragment_container, fragment)
             transaction.commit()
         }
+    }
+
+    private fun getMovieInfo(){
+
+        val api= Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiRequest::class.java)
+        
+        GlobalScope.launch(Dispatchers.IO) {
+            val response=api.getMovieDetails().awaitResponse()
+
+            if(response.isSuccessful)
+            {
+                val data=response.body()!!
+                Log.d("rr", "${data?.original_title?: "brak nazwy miasta"}")
+            }
+
+        }
+
     }
 
 }
