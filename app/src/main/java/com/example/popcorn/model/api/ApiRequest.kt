@@ -1,20 +1,63 @@
 package com.example.popcorn.model.api
 
-import com.example.popcorn.model.Movie
+import com.example.popcorn.model.*
+import com.example.popcorn.model.responses.*
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiRequest {
 
-    @GET("3/movie/{movieID}?api_key=055b1da364a8c6b64b59a86724d0ae7c&language=en-US")
-    fun getMovieDetails(@Path("movieID") movieID : Int): Call<Movie>
+    //                                  MOVIES SECTION
+    @GET("3/search/movie?api_key=$apiKey")
+    fun searchForMovies(@Query("query") someText : String) : Call<MovieListResponse>
 
+    @GET("3/movie/popular?api_key=$apiKey")
+    fun getPopularMovies() : Call<MovieListResponse>
+
+    @GET("3/movie/{movieID}?api_key=$apiKey")
+    fun getMovieDetails(@Path("movieID") movieID : Int) : Call<Movie>
+
+    @GET("3/movie/{movieID}/credits?api_key=$apiKey")
+    fun getPeopleFromThisMovie(@Path("movieID") movieID : Int) : Call<PeopleFromMovieListResponse>
+
+    @GET("3/genre/movie/list?api_key=$apiKey")
+    fun getAllGenres() : Call<GenreListResponse>
+
+
+
+    //                                  PEOPLE SECTION
+    @GET("3/search/person?api_key=$apiKey")
+    fun searchForPeople(@Query("query") someText : String) : Call<PersonListResponse>
+
+    @GET("3/person/popular?api_key=$apiKey")
+    fun getPopularPeople() : Call<PersonListResponse>
+
+    @GET("3/person/{personID}?api_key=$apiKey")
+    fun getPersonDetails(@Path("personID") personID : Int) : Call<Person>
+
+    @GET("3/person/{personID}/movie_credits?api_key=$apiKey")
+    fun getMoviesFromThisPerson(@Path("personID") personID : Int) : Call<MoviesFromPersonListResponse>
+
+
+
+    //                                  COMPANIES SECTION
+    @GET("3/search/company?api_key=$apiKey")
+    fun searchForCompanies(@Query("query") someText : String) : Call<CompanyListResponse>
+
+    @GET("3/company/{companyID}?api_key=$apiKey")
+    fun getCompanyDetails(@Path("companyID") companyID : Int) : Call<ProductionCompany>
+
+
+
+    //                  INSTANCE WHICH PROVIDES COMMUNICATION WITH API
     companion object {
-        private var INSTANCE : ApiRequest? = null
+        private const val apiKey: String = "055b1da364a8c6b64b59a86724d0ae7c"
         private const val WEBSITE = "https://api.themoviedb.org/"
+        private var INSTANCE : ApiRequest? = null
 
         fun getAPI() : ApiRequest {
             val tempInstance = INSTANCE
@@ -23,10 +66,8 @@ interface ApiRequest {
             else
             {
                 val comm = Retrofit.Builder()
-                    .baseUrl(WEBSITE)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-                    .create(ApiRequest::class.java)
+                    .baseUrl(WEBSITE).addConverterFactory(GsonConverterFactory.create())
+                    .build().create(ApiRequest::class.java)
                 INSTANCE = comm
                 return comm
             }

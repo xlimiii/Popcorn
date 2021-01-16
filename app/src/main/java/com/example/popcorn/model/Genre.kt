@@ -1,6 +1,6 @@
 package com.example.popcorn.model
 
-data class Genres (
+data class Genre (
     val id : Int,
     val name : String
 )
