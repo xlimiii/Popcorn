@@ -1,3 +1,20 @@
 package com.example.popcorn.model
 
-data class Person (val something : String)
+data class Person (
+    val adult : Boolean,
+    val gender : Int,
+    val id : Int,
+    val known_for : List<Movie>,
+    val known_for_department : String,
+    val name : String,
+    val original_name : String,
+    val popularity : Double,
+    val profile_path : String,
+    //Cast & Crew
+    val cast_id : Int,
+    val character : String,
+    val credit_id : String,
+    val order : Int,
+    val department : String,
+    val job : String
+    )

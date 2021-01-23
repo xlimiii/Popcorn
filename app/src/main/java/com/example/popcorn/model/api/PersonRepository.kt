@@ -1,8 +1,6 @@
 package com.example.popcorn.model.api
 
-import com.example.popcorn.model.Movie
 import com.example.popcorn.model.Person
-import com.example.popcorn.model.ProductionCompany
 import com.example.popcorn.model.responses.MoviesFromPersonListResponse
 import com.example.popcorn.model.responses.PersonListResponse
 import retrofit2.Call

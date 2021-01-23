@@ -6,9 +6,11 @@ data class Movie (
         val belongs_to_collection : String,
         val budget : Int,
         val genres : List<Genre>,
+        val genre_ids : List<Int>,
         val homepage : String,
         val id : Int,
         val imdb_id : String,
+        val media_type : String,
         val original_language : String,
         val original_title : String,
         val overview : String,
@@ -25,5 +27,11 @@ data class Movie (
         val title : String,
         val video : Boolean,
         val vote_average : Double,
-        val vote_count : Int
+        val vote_count : Int,
+//Crew and Cast
+        val credit_id : String,
+        val department : String,
+        val job : String,
+        val character : String,
+        val order : Int
 )
