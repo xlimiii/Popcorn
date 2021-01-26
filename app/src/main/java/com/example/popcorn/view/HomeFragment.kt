@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.example.popcorn.R
 import com.example.popcorn.viewmodel.CompanyViewModel
 import com.example.popcorn.viewmodel.MovieViewModel

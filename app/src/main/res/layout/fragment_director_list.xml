@@ -6,15 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".view.DirectorListFragment">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/linearLayoutdirector"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="FRAGMENT DIRECTOR"
-        android:textAlignment="center"
-        android:textSize="30sp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewdirector"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewdirector"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutdirector" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

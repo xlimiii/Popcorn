@@ -3,27 +3,27 @@
 <item
     android:id="@+id/menu_mainMenu"
     android:icon="@drawable/ic_baseline_home_24"
-    android:title="Home"
+    android:title="@string/home"
 />
     <item
         android:id="@+id/menu_movies"
         android:icon="@drawable/ic_baseline_movie_24"
-        android:title="Movies"
+        android:title="@string/movies"
         />
     <item
         android:id="@+id/menu_actors"
         android:icon="@drawable/ic_baseline_person_24"
-        android:title="Actors"
+        android:title="@string/actors"
         />
     <item
         android:id="@+id/menu_directors"
         android:icon="@drawable/ic_baseline_videocam_24"
-        android:title="Directors"
+        android:title="@string/directors"
         />
     <item
         android:id="@+id/menu_favourites"
         android:icon="@drawable/ic_baseline_favorite_24"
-        android:title="Fav"
+        android:title="@string/favourite"
         />
 
 </menu>
