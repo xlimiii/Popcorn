@@ -47,9 +47,9 @@ class HomeFragment : Fragment() {
         //personVM.peopleWithMatchingName.observe(viewLifecycleOwner, {
         //    println("'Gal' people: " + personVM.peopleWithMatchingName.value.toString()) })
 
-        //personVM.setPopularPeople()
-        //personVM.popularPeople.observe(viewLifecycleOwner, {
-        //    println("Popular people: " + personVM.popularPeople.value.toString()) })
+        personVM.setPopularPeople()
+        personVM.popularPeople.observe(viewLifecycleOwner, {
+            println("Popular people: " + personVM.popularPeople.value.toString()) })
 
         //personVM.setCurrentPerson(50)
         //personVM.currentPerson.observe(viewLifecycleOwner, {
