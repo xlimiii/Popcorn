@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MovieDetailsFragment">
+    tools:context=".view.ActorDetailsFragment">
 
     <ImageView
-        android:id="@+id/iv_movieDetailsPoster"
+        android:id="@+id/iv_actorDetailsPoster"
         android:layout_width="80dp"
         android:layout_height="120dp"
         android:layout_marginTop="80dp"
@@ -20,13 +20,13 @@
         app:srcCompat="@drawable/ic_baseline_person_24" />
 
     <TextView
-        android:id="@+id/tv_movieDetailsTitle"
+        android:id="@+id/tv_actorDetailsName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:text="TEST - WIDOK SZCZEGOLOWY FILMU"
+        android:text="TEST - WIDOK SZCZEGOLOWY AKTORA"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iv_movieDetailsPoster"
+        app:layout_constraintStart_toEndOf="@+id/iv_actorDetailsPoster"
         app:layout_constraintTop_toTopOf="parent" />
 
 

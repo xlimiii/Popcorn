@@ -28,7 +28,7 @@ class MovieListFragment : Fragment() {
 
         viewModel= ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
 
-        movieListAdapter= MovieListAdapter(viewModel.popularMovies)
+        movieListAdapter= MovieListAdapter(viewModel.popularMovies, viewModel)
 
         viewModel.popularMovies.observe(viewLifecycleOwner, Observer { t ->
             movieListAdapter.notifyDataSetChanged()

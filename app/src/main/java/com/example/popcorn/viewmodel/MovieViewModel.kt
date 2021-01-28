@@ -1,5 +1,6 @@
 package com.example.popcorn.viewmodel
 
+import android.annotation.SuppressLint
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -9,11 +10,27 @@ import com.example.popcorn.model.api.MovieRepository
 import com.example.popcorn.model.api.ApiRequest
 import com.example.popcorn.model.Movie
 import com.example.popcorn.model.Person
+import com.example.popcorn.model.db.Favourite
+import com.example.popcorn.model.db.FavouriteRepository
+import com.example.popcorn.model.db.PopcornDatabase
 import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MovieViewModel(application: Application) : AndroidViewModel(application) {
     private val repository : MovieRepository = MovieRepository(ApiRequest.getAPI())
+    private val favRepository : FavouriteRepository = FavouriteRepository(PopcornDatabase.getDatabase(application).favouriteDao())
+
+
+    @SuppressLint("SimpleDateFormat")
+    fun addFavourite(movieID : Int)
+    {
+        viewModelScope.launch { favRepository.add(
+            Favourite(id = 0, movieID = movieID,
+                date = SimpleDateFormat("dd-MM-yyyy").format(Date()))
+        )}
+    }
 
     //                                      MOVIE SEARCH
     var moviesWithMatchingTitle = MutableLiveData<List<Movie>>()

@@ -38,10 +38,19 @@
         android:id="@+id/actorListFragment"
         android:name="com.example.popcorn.view.ActorListFragment"
         android:label="fragment_actor_list"
-        tools:layout="@layout/fragment_actor_list" />
+        tools:layout="@layout/fragment_actor_list" >
+        <action
+            android:id="@+id/action_actorListFragment_to_actorDetailsFragment"
+            app:destination="@id/actorDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
         android:name="com.example.popcorn.view.MovieDetailsFragment"
         android:label="fragment_movie_details"
         tools:layout="@layout/fragment_movie_details" />
+    <fragment
+        android:id="@+id/actorDetailsFragment"
+        android:name="com.example.popcorn.view.ActorDetailsFragment"
+        android:label="fragment_actor_details"
+        tools:layout="@layout/fragment_actor_details" />
 </navigation>
