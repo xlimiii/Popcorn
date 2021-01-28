@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 <item
-    android:id="@+id/menu_mainMenu"
+    android:id="@+id/homeFragment"
     android:icon="@drawable/ic_baseline_home_24"
     android:title="@string/home"
+    app:showAsAction="always"
 />
     <item
-        android:id="@+id/menu_movies"
+        android:id="@+id/movieListFragment"
         android:icon="@drawable/ic_baseline_movie_24"
         android:title="@string/movies"
+        app:showAsAction="always"
         />
     <item
-        android:id="@+id/menu_actors"
+        android:id="@+id/actorListFragment"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="@string/actors"
+        app:showAsAction="always"
         />
     <item
-        android:id="@+id/menu_directors"
+        android:id="@+id/directorListFragment"
         android:icon="@drawable/ic_baseline_videocam_24"
         android:title="@string/directors"
+        app:showAsAction="always"
         />
     <item
-        android:id="@+id/menu_favourites"
+        android:id="@+id/favouriteListFragment"
         android:icon="@drawable/ic_baseline_favorite_24"
         android:title="@string/favourite"
+        app:showAsAction="always"
         />
 
 </menu>
