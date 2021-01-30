@@ -13,16 +13,18 @@ import com.example.popcorn.viewmodel.MovieViewModel
 import com.example.popcorn.viewmodel.PersonViewModel
 
 class HomeFragment : Fragment() {
-    private lateinit var movieVM : MovieViewModel
-    private lateinit var personVM : PersonViewModel
-    private lateinit var companyVM : CompanyViewModel
+    //private lateinit var movieVM : MovieViewModel
+    //private lateinit var personVM : PersonViewModel
+    //private lateinit var companyVM : CompanyViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        /*
+
         movieVM = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
         personVM = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
         companyVM = ViewModelProvider(requireActivity()).get(CompanyViewModel::class.java)
 
-        //                             EXAMPLES OF USAGE:
         movieVM.setMoviesWithMatchingTitle("Avengers")
         movieVM.moviesWithMatchingTitle.observe(viewLifecycleOwner, {
             println("Avenger movies: " + movieVM.moviesWithMatchingTitle.value.toString()) })
@@ -35,25 +37,25 @@ class HomeFragment : Fragment() {
         movieVM.currentMovie.observe(viewLifecycleOwner, {
             println("Movie number 550: " + movieVM.currentMovie.value.toString()) })
 
-        //movieVM.setPeopleConnectedWithCurrentMovie(550)
-        //movieVM.peopleConnectedWithCurrentMovie.observe(viewLifecycleOwner, {
-        //    println("People connected with movie number 550: " + movieVM.peopleConnectedWithCurrentMovie.value.toString()) })
+        movieVM.setPeopleConnectedWithCurrentMovie(550)
+        movieVM.peopleConnectedWithCurrentMovie.observe(viewLifecycleOwner, {
+            println("People connected with movie number 550: " + movieVM.peopleConnectedWithCurrentMovie.value.toString()) })
 
         movieVM.setGenres()
         movieVM.genres.observe(viewLifecycleOwner, {
             println("Genres: " + movieVM.genres.value.toString()) })
 
-        //personVM.setPeopleWithMatchingName("Gal")
-        //personVM.peopleWithMatchingName.observe(viewLifecycleOwner, {
-        //    println("'Gal' people: " + personVM.peopleWithMatchingName.value.toString()) })
+        personVM.setPeopleWithMatchingName("Gal")
+        personVM.peopleWithMatchingName.observe(viewLifecycleOwner, {
+            println("'Gal' people: " + personVM.peopleWithMatchingName.value.toString()) })
 
         personVM.setPopularPeople()
         personVM.popularPeople.observe(viewLifecycleOwner, {
             println("Popular people: " + personVM.popularPeople.value.toString()) })
 
-        //personVM.setCurrentPerson(50)
-        //personVM.currentPerson.observe(viewLifecycleOwner, {
-        //    println("Person number 50: " + personVM.currentPerson.value.toString()) })
+        personVM.setCurrentPerson(50)
+        personVM.currentPerson.observe(viewLifecycleOwner, {
+            println("Person number 50: " + personVM.currentPerson.value.toString()) })
 
         personVM.setMoviesConnectedWithCurrentPerson(50)
         personVM.moviesConnectedWithCurrentPerson.observe(viewLifecycleOwner, {
@@ -66,6 +68,8 @@ class HomeFragment : Fragment() {
         companyVM.setCurrentCompany(3)
         companyVM.currentCompany.observe(viewLifecycleOwner, {
             println("Company number 3: " + companyVM.currentCompany.value.toString()) })
+
+         */
 
         return inflater.inflate(R.layout.fragment_home, container, false)
     }

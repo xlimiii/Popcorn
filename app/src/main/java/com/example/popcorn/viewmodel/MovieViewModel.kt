@@ -3,6 +3,7 @@ package com.example.popcorn.viewmodel
 import android.annotation.SuppressLint
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.popcorn.model.Genre
@@ -13,7 +14,9 @@ import com.example.popcorn.model.Person
 import com.example.popcorn.model.db.Favourite
 import com.example.popcorn.model.db.FavouriteRepository
 import com.example.popcorn.model.db.PopcornDatabase
+import com.example.popcorn.model.responses.MovieListResponse
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import retrofit2.awaitResponse
 import java.text.SimpleDateFormat
 import java.util.*
@@ -37,7 +40,11 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
     fun setMoviesWithMatchingTitle(givenText : String)
     {
         viewModelScope.launch {
-            val response = repository.searchForMovies(givenText).awaitResponse()
+            // if there is no input, list of popular movies should be displayed
+            val response =
+                    if (givenText != "") { repository.searchForMovies(givenText).awaitResponse() }
+                    else { repository.getPopularMovies().awaitResponse() }
+
             if (response.isSuccessful)
             {
                 val data = response.body()!!
