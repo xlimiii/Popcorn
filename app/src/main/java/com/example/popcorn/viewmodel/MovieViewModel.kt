@@ -23,17 +23,6 @@ import java.util.*
 
 class MovieViewModel(application: Application) : AndroidViewModel(application) {
     private val repository : MovieRepository = MovieRepository(ApiRequest.getAPI())
-    private val favRepository : FavouriteRepository = FavouriteRepository(PopcornDatabase.getDatabase(application).favouriteDao())
-
-
-    @SuppressLint("SimpleDateFormat")
-    fun addFavourite(movieID : Int)
-    {
-        viewModelScope.launch { favRepository.add(
-            Favourite(id = 0, movieID = movieID,
-                date = SimpleDateFormat("dd-MM-yyyy").format(Date()))
-        )}
-    }
 
     //                                      MOVIE SEARCH
     var moviesWithMatchingTitle = MutableLiveData<List<Movie>>()

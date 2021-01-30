@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.popcorn.R
 import com.example.popcorn.model.Movie
+import com.example.popcorn.viewmodel.FavouriteViewModel
 import com.example.popcorn.viewmodel.MovieViewModel
 import com.example.popcorn.viewmodel.adapters.MovieListAdapter
 import kotlinx.android.synthetic.main.fragment_movie_list.*
@@ -21,13 +22,15 @@ class MovieListFragment : Fragment() {
     private lateinit var myLayoutManager : LinearLayoutManager
     private lateinit var recyclerView : RecyclerView
     private lateinit var movieVM : MovieViewModel
+    private lateinit var favVM : FavouriteViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,  savedInstanceState: Bundle?): View? {
         myLayoutManager = LinearLayoutManager(context)
         movieVM = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
+        favVM = ViewModelProvider(requireActivity()).get(FavouriteViewModel::class.java)
 
         movieVM.setMoviesWithMatchingTitle("")
-        movieListAdapter = MovieListAdapter(movieVM.moviesWithMatchingTitle, movieVM)
+        movieListAdapter = MovieListAdapter(movieVM.moviesWithMatchingTitle, movieVM, favVM)
         movieVM.moviesWithMatchingTitle.observe(viewLifecycleOwner, { movieListAdapter.notifyDataSetChanged() })
 
         return inflater.inflate(R.layout.fragment_movie_list, container, false)

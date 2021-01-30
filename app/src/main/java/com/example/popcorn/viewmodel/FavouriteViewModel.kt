@@ -5,6 +5,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.popcorn.model.Movie
 import com.example.popcorn.model.db.Favourite
 import com.example.popcorn.model.db.FavouriteRepository
 import com.example.popcorn.model.db.PopcornDatabase
@@ -18,11 +19,12 @@ class FavouriteViewModel(application: Application) : AndroidViewModel(applicatio
     val favourites : LiveData<List<Favourite>> = repository.readAll
 
     @SuppressLint("SimpleDateFormat")
-    fun addFavourite(movieID : Int)
+    fun addFavourite(movie : Movie)
     {
         viewModelScope.launch { repository.add(
-            Favourite(id = 0, movieID = movieID,
-                date = SimpleDateFormat("dd-MM-yyyy").format(Date()))
+            Favourite(id = 0, movieID = movie.id, title = movie.title,
+                    poster_path = movie.poster_path, release_date = movie.release_date,
+                    date = SimpleDateFormat("dd-MM-yyyy").format(Date()))
         )}
     }
 

@@ -3,33 +3,40 @@ package com.example.popcorn.viewmodel.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.popcorn.R
-import com.example.popcorn.model.Person
 import com.example.popcorn.model.db.Favourite
 import com.example.popcorn.viewmodel.FavouriteViewModel
 
-class FavouriteListAdapter(val favourites: LiveData<List<Favourite>>, val favVM: FavouriteViewModel) : RecyclerView.Adapter<FavouriteListAdapter.MovieHolder>() {
+class FavouriteListAdapter(private val favouriteMovies: LiveData<List<Favourite>>, private val favVM: FavouriteViewModel) : RecyclerView.Adapter<FavouriteListAdapter.MovieHolder>() {
     inner class MovieHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouriteListAdapter.MovieHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.fav_temp_row, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_row, parent, false)
         return MovieHolder(view)
     }
 
     override fun onBindViewHolder(holder: FavouriteListAdapter.MovieHolder, position: Int) {
-        val idFavMovie = holder.itemView.findViewById<TextView>(R.id.tv_idFavMovie)
+        val name = holder.itemView.findViewById<TextView>(R.id.tv_movieTitle)
+        name.text = favouriteMovies.value?.get(position)?.title.toString()
 
-            idFavMovie.text = favourites.value?.get(position)?.movieID.toString()
+        val poster = holder.itemView.findViewById<ImageView>(R.id.iv_moviePoster)
+        val url = "https://image.tmdb.org/t/p/w185${favouriteMovies.value?.get(position)?.poster_path}"
+        Glide.with(holder.itemView).load(url).centerCrop().into(poster)
+
+        val movieRowBackground = holder.itemView.findViewById<ConstraintLayout>(R.id.movieRowBackground)
+        movieRowBackground.setOnClickListener { view->view.findNavController().navigate(R.id.action_favouriteListFragment_to_movieDetailsFragment) }
+
+        val delFromFav = holder.itemView.findViewById<ImageButton>(R.id.btn_addMovieToFav)
+        delFromFav.setOnClickListener{ favouriteMovies.value?.get(position)?.let { item -> favVM.deleteFavorite(item.movieID) } }
     }
 
-    override fun getItemCount(): Int {
-        return favourites.value?.size?:0
-    }
+    override fun getItemCount() : Int = favouriteMovies.value?.size ?: 0
 }
