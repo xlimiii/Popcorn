@@ -6,11 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".view.MovieDetailsFragment">
 
+    <TextView
+        android:id="@+id/tv_movieDescriptionH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Movie Description"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_movieDetailsPoster" />
+
     <ImageView
         android:id="@+id/iv_movieDetailsPoster"
-        android:layout_width="80dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="80dp"
+        android:layout_width="120dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="24dp"
         android:paddingLeft="5dp"
         android:paddingTop="2dp"
         android:paddingRight="5dp"
@@ -23,11 +34,77 @@
         android:id="@+id/tv_movieDetailsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="TEST - WIDOK SZCZEGOLOWY FILMU"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:text="TYTUŁ"
+        android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/iv_movieDetailsPoster"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="rok"
+        app:layout_constraintStart_toEndOf="@+id/iv_movieDetailsPoster"
+        app:layout_constraintTop_toBottomOf="@+id/tv_movieDetailsTitle" />
+
+    <TextView
+        android:id="@+id/tv_movieDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="24dp"
+        android:text="opis"
+        android:textAlignment="gravity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_movieDescriptionH" />
+
+    <TextView
+        android:id="@+id/tv_actorsInMovie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/actors"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_movieDescription" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_actorsInMovie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_actorsInMovie" />
+
+    <TextView
+        android:id="@+id/tv_genresForMovie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Gatunki"
+        app:layout_constraintStart_toEndOf="@+id/iv_movieDetailsPoster"
+        app:layout_constraintTop_toBottomOf="@+id/tv_year" />
+
+    <TextView
+        android:id="@+id/tv_oryginalLang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="orig language"
+        app:layout_constraintStart_toEndOf="@+id/iv_movieDetailsPoster"
+        app:layout_constraintTop_toBottomOf="@+id/tv_genresForMovie" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

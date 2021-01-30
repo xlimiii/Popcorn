@@ -34,7 +34,8 @@ class MovieListAdapter(private val movies : LiveData<List<Movie>>, private val m
         Glide.with(holder.itemView).load(url).centerCrop().into(poster)
 
         val movieRowBackground = holder.itemView.findViewById<ConstraintLayout>(R.id.movieRowBackground)
-        movieRowBackground.setOnClickListener { view->view.findNavController().navigate(R.id.action_movieListFragment_to_movieDetailsFragment) }
+        movieRowBackground.setOnClickListener {  movies.value?.let { it1 -> movieVM.setCurrentMovie(it1.get(position).id) }
+            movieRowBackground.findNavController().navigate(R.id.action_movieListFragment_to_movieDetailsFragment) }
 
         val addToFav = holder.itemView.findViewById<ImageButton>(R.id.btn_addMovieToFav)
         addToFav.setOnClickListener{ movies.value?.get(position)?.let { item -> favVM.addFavourite(item) } }
