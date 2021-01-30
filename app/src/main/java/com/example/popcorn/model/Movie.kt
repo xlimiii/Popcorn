@@ -4,7 +4,7 @@ package com.example.popcorn.model
 data class Movie (
         val adult : Boolean,
         val backdrop_path : String,
-        val belongs_to_collection : String,
+        val belongs_to_collection : BelongsToCollection,
         val budget : Int,
         val genres : List<Genre>,
         val genre_ids : List<Int>,
