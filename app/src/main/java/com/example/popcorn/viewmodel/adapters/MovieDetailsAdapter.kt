@@ -1,5 +1,6 @@
 package com.example.popcorn.viewmodel.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,7 @@ class MovieDetailsAdapter(var actorsInMovies: LiveData<List<Person>>) : Recycler
     inner class MovieHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieDetailsAdapter.MovieHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.person_row, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.person_tile, parent, false)
         return MovieHolder(view)
     }
 
@@ -34,9 +35,10 @@ class MovieDetailsAdapter(var actorsInMovies: LiveData<List<Person>>) : Recycler
             .centerCrop()
             .into(avatar)
         name.text = actorsInMovies.value?.get(position)?.name.toString()
+        Log.wtf("tag",actorsInMovies.value?.get(2)?.name)
     }
 
     override fun getItemCount(): Int {
-        return 1
+        return actorsInMovies.value?.size?:0
     }
 }

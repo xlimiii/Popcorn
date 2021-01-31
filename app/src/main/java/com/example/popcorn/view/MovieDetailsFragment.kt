@@ -1,5 +1,6 @@
 package com.example.popcorn.view
 
+import android.graphics.text.LineBreaker.JUSTIFICATION_MODE_INTER_WORD
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -27,16 +28,33 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        myLayoutManager = LinearLayoutManager(context)
+        myLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         movieViewModel = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
         movieViewModel.currentMovie.value?.id?.let {
             movieViewModel.setPeopleConnectedWithCurrentMovie(
                 it
             )
         }
-        movieDetailsAdapter= MovieDetailsAdapter(movieViewModel.peopleConnectedWithCurrentMovie)
-        movieViewModel.peopleConnectedWithCurrentMovie!!.observe(viewLifecycleOwner, {movieDetailsAdapter.notifyDataSetChanged()})
         val view =  inflater.inflate(R.layout.fragment_movie_details, container, false)
+        view.tv_movieDescription.setJustificationMode((JUSTIFICATION_MODE_INTER_WORD))
+        movieDetailsAdapter= MovieDetailsAdapter(movieViewModel.peopleConnectedWithCurrentMovie)
+        movieViewModel.currentMovie.observe(viewLifecycleOwner, {it ->
+            view.tv_movieDetailsTitle.text = it.title
+            view.tv_movieDescription.text = it.overview
+            view.tv_year.text = it.release_date
+            var genresText: String = " "
+            it.genres?.forEach { x -> genresText+= x.name+" "}
+            view.tv_genresForMovie.text = genresText
+            view.tv_oryginalLang.text = "Original language: " + it.original_language
+            val url = "https://image.tmdb.org/t/p/w185${it.poster_path}"
+            Glide.with(view.iv_movieDetailsPoster)
+                .load(url)
+                .centerCrop()
+                .into(view.iv_movieDetailsPoster)
+            movieViewModel.setPeopleConnectedWithCurrentMovie(it.id)
+        })
+        movieViewModel.peopleConnectedWithCurrentMovie!!.observe(viewLifecycleOwner, {movieDetailsAdapter.notifyDataSetChanged()})
+
 
         return view
     }
@@ -46,19 +64,10 @@ class MovieDetailsFragment : Fragment() {
             this.layoutManager = myLayoutManager
             this.adapter = movieDetailsAdapter
         }
-        view.tv_movieDetailsTitle.text = movieViewModel.currentMovie.value?.title
-        view.tv_year.text = movieViewModel.currentMovie.value?.release_date
-        view.tv_movieDescription.text = movieViewModel.currentMovie.value?.overview
-        var genresText: String = " "
-        movieViewModel.currentMovie.value?.genres?.forEach { x -> genresText+= x.name+" "}
-        view.tv_genresForMovie.text = genresText
-        view.tv_oryginalLang.text = "Original language: " + movieViewModel.currentMovie.value?.original_language
 
-        val url = "https://image.tmdb.org/t/p/w185${movieViewModel.currentMovie.value?.poster_path}"
-        Glide.with(view.iv_movieDetailsPoster)
-            .load(url)
-            .centerCrop()
-            .into(view.iv_movieDetailsPoster)
+
+
+
 
     }
     companion object { fun newInstance() = MovieDetailsFragment() }

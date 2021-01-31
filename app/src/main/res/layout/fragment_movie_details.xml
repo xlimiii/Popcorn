@@ -55,9 +55,11 @@
         android:id="@+id/tv_movieDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:text="opis"
         android:textAlignment="gravity"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,16 +98,21 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_genresForMovie" />
 
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:fillViewport="false"
+        android:measureAllChildren="false"
+        android:nestedScrollingEnabled="false"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_actorsInMovie">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_actorsInMovie"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
     </ScrollView>
 
 
