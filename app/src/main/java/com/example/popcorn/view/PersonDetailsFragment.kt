@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.popcorn.R
+import com.example.popcorn.viewmodel.MovieViewModel
 import com.example.popcorn.viewmodel.PersonViewModel
 import com.example.popcorn.viewmodel.adapters.PersonDetailsAdapter
 import kotlinx.android.synthetic.main.fragment_details.*
@@ -18,6 +19,8 @@ import kotlinx.android.synthetic.main.fragment_details.view.*
 
 class PersonDetailsFragment : Fragment() {
     private lateinit var personViewModel: PersonViewModel
+    private lateinit var movieViewModel: MovieViewModel
+
     private lateinit var personDetailsAdapter: PersonDetailsAdapter
     private lateinit var myLayoutManager : LinearLayoutManager
     private lateinit var recyclerView : RecyclerView
@@ -26,6 +29,7 @@ class PersonDetailsFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         myLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         personViewModel = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
+        movieViewModel = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
         personViewModel.currentPerson.value?.id?.let {
             personViewModel.setMoviesConnectedWithCurrentPerson(
                 it
@@ -36,7 +40,7 @@ class PersonDetailsFragment : Fragment() {
         view.tv_header1.text = "Biography"
         view.tv_header2.text = "Movies"
 
-        personDetailsAdapter= PersonDetailsAdapter(personViewModel.moviesConnectedWithCurrentPerson)
+        personDetailsAdapter= PersonDetailsAdapter(personViewModel.moviesConnectedWithCurrentPerson, movieViewModel)
         personViewModel.currentPerson.observe(viewLifecycleOwner, { it ->
             view.tv_movieDetailsTitle.text = it.name
             view.tv_movieDescription.text = it.biography

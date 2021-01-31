@@ -50,10 +50,18 @@
         android:id="@+id/movieDetailsFragment"
         android:name="com.example.popcorn.view.MovieDetailsFragment"
         android:label="fragment_movie_details"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details" >
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_actorDetailsFragment"
+            app:destination="@id/actorDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/actorDetailsFragment"
         android:name="com.example.popcorn.view.PersonDetailsFragment"
         android:label="fragment_actor_details"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details" >
+        <action
+            android:id="@+id/action_actorDetailsFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
 </navigation>

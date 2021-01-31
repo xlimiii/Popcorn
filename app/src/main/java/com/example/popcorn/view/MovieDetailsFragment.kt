@@ -13,12 +13,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.popcorn.R
 import com.example.popcorn.viewmodel.MovieViewModel
+import com.example.popcorn.viewmodel.PersonViewModel
 import com.example.popcorn.viewmodel.adapters.MovieDetailsAdapter
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.fragment_details.view.*
 
 class MovieDetailsFragment : Fragment() {
     private lateinit var movieViewModel: MovieViewModel
+    private lateinit var personViewModel: PersonViewModel
     private lateinit var movieDetailsAdapter: MovieDetailsAdapter
     private lateinit var myLayoutManager : LinearLayoutManager
     private lateinit var recyclerView : RecyclerView
@@ -27,6 +29,8 @@ class MovieDetailsFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         myLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         movieViewModel = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
+        personViewModel = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
+
         movieViewModel.currentMovie.value?.id?.let {
             movieViewModel.setPeopleConnectedWithCurrentMovie(
                 it
@@ -36,7 +40,7 @@ class MovieDetailsFragment : Fragment() {
         view.tv_movieDescription.setJustificationMode((LineBreaker.JUSTIFICATION_MODE_INTER_WORD))
         view.tv_header1.text = "Description"
         view.tv_header2.text = "Cast"
-        movieDetailsAdapter= MovieDetailsAdapter(movieViewModel.peopleConnectedWithCurrentMovie)
+        movieDetailsAdapter= MovieDetailsAdapter(movieViewModel.peopleConnectedWithCurrentMovie, personViewModel)
         movieViewModel.currentMovie.observe(viewLifecycleOwner, {it ->
             view.tv_movieDetailsTitle.text = it.title
             view.tv_movieDescription.text = it.overview
