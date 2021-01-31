@@ -22,10 +22,25 @@ interface ApiRequest {
     fun getMovieDetails(@Path("movieID") movieID : Int) : Call<Movie>
 
     @GET("3/movie/{movieID}/credits?api_key=$apiKey")
-    fun getPeopleFromThisMovie(@Path("movieID") movieID : Int) : Call<PeopleFromMovieListResponse>
+    fun getPeopleFromThisMovie(@Path("movieID") movieID : Int) : Call<PeopleFromMovieOrTVShowListResponse>
 
     @GET("3/genre/movie/list?api_key=$apiKey")
     fun getAllGenres() : Call<GenreListResponse>
+
+
+
+    //                                 TV SHOWS SECTION
+    @GET("3/search/tv?api_key=$apiKey")
+    fun searchForTVShows(@Query("query") someText : String) : Call<TVShowListResponse>
+
+    @GET("3/tv/popular?api_key=$apiKey")
+    fun getPopularTVShows() : Call<TVShowListResponse>
+
+    @GET("3/tv/{tvShowID}?api_key=$apiKey")
+    fun getTVShowDetails(@Path("tvShowID") tvShowID : Int) : Call<TVShow>
+
+    @GET("3/tv/{tvShowID}/credits?api_key=$apiKey")
+    fun getPeopleFromThisTVShow(@Path("tvShowID") tvShowID : Int) : Call<PeopleFromMovieOrTVShowListResponse>
 
 
 

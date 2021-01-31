@@ -1,9 +1,7 @@
 package com.example.popcorn.viewmodel
 
-import android.annotation.SuppressLint
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.popcorn.model.Genre
@@ -11,15 +9,8 @@ import com.example.popcorn.model.api.MovieRepository
 import com.example.popcorn.model.api.ApiRequest
 import com.example.popcorn.model.Movie
 import com.example.popcorn.model.Person
-import com.example.popcorn.model.db.Favourite
-import com.example.popcorn.model.db.FavouriteRepository
-import com.example.popcorn.model.db.PopcornDatabase
-import com.example.popcorn.model.responses.MovieListResponse
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import retrofit2.awaitResponse
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MovieViewModel(application: Application) : AndroidViewModel(application) {
     private val repository : MovieRepository = MovieRepository(ApiRequest.getAPI())
@@ -71,7 +62,8 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     //                            PEOPLE CONNECTED WITH THIS MOVIE
-    var peopleConnectedWithCurrentMovie = MutableLiveData<List<Person>>()
+    var currentMovieCast = MutableLiveData<List<Person>>()
+    var currentMovieCrew = MutableLiveData<List<Person>>()
     fun setPeopleConnectedWithCurrentMovie(currentMovieID : Int)
     {
         viewModelScope.launch {
@@ -79,7 +71,8 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
             if (response.isSuccessful)
             {
                 val data = response.body()!!
-                peopleConnectedWithCurrentMovie.value = data.cast
+                currentMovieCast.value = data.cast
+                currentMovieCrew.value = data.crew
             }
         }
     }

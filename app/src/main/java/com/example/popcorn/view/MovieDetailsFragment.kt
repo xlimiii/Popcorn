@@ -1,7 +1,6 @@
 package com.example.popcorn.view
 
 import android.graphics.text.LineBreaker
-import android.graphics.text.LineBreaker.JUSTIFICATION_MODE_INTER_WORD
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -40,7 +39,7 @@ class MovieDetailsFragment : Fragment() {
         view.tv_movieDescription.setJustificationMode((LineBreaker.JUSTIFICATION_MODE_INTER_WORD))
         view.tv_header1.text = "Description"
         view.tv_header2.text = "Cast"
-        movieDetailsAdapter= MovieDetailsAdapter(movieViewModel.peopleConnectedWithCurrentMovie, personViewModel)
+        movieDetailsAdapter= MovieDetailsAdapter(movieViewModel.currentMovieCast, personViewModel)
         movieViewModel.currentMovie.observe(viewLifecycleOwner, {it ->
             view.tv_movieDetailsTitle.text = it.title
             view.tv_movieDescription.text = it.overview
@@ -59,7 +58,7 @@ class MovieDetailsFragment : Fragment() {
                 .into(view.iv_movieDetailsPoster)
             movieViewModel.setPeopleConnectedWithCurrentMovie(it.id)
         })
-        movieViewModel.peopleConnectedWithCurrentMovie!!.observe(viewLifecycleOwner, {movieDetailsAdapter.notifyDataSetChanged()})
+        movieViewModel.currentMovieCast!!.observe(viewLifecycleOwner, {movieDetailsAdapter.notifyDataSetChanged()})
 
 
         return view
