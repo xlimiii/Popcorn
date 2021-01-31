@@ -33,10 +33,10 @@
             app:destination="@id/movieDetailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/directorListFragment"
-        android:name="com.example.popcorn.view.DirectorListFragment"
-        android:label="fragment_director_list"
-        tools:layout="@layout/fragment_director_list" />
+        android:id="@+id/tvShowListFragment"
+        android:name="com.example.popcorn.view.TvShowListFragment"
+        android:label="fragment_tv_show_list"
+        tools:layout="@layout/fragment_tv_show_list" />
     <fragment
         android:id="@+id/actorListFragment"
         android:name="com.example.popcorn.view.ActorListFragment"

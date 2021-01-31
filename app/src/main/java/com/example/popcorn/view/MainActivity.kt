@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
     private val homeFragment = HomeFragment.newInstance()
     private val movieListFragment = MovieListFragment.newInstance()
     private val actorListFragment = ActorListFragment.newInstance()
-    private val directorListFragment = DirectorListFragment.newInstance()
+    private val directorListFragment = TvShowListFragment.newInstance()
     private val favouriteListFragment = FavouriteListFragment.newInstance()
     private lateinit var bottomNavigationView: BottomNavigationView
 

@@ -20,9 +20,9 @@
         app:showAsAction="always"
         />
     <item
-        android:id="@+id/directorListFragment"
-        android:icon="@drawable/ic_baseline_videocam_24"
-        android:title="@string/directors"
+        android:id="@+id/tvShowListFragment"
+        android:icon="@drawable/ic_baseline_tv_shows"
+        android:title="Tv Shows"
         app:showAsAction="always"
         />
     <item
