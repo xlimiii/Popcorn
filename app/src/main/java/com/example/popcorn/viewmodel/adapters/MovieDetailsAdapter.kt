@@ -20,7 +20,7 @@ class MovieDetailsAdapter(var actorsInMovies: LiveData<List<Person>>) : Recycler
     inner class MovieHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieDetailsAdapter.MovieHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.person_tile, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.tile, parent, false)
         return MovieHolder(view)
     }
 
@@ -28,6 +28,7 @@ class MovieDetailsAdapter(var actorsInMovies: LiveData<List<Person>>) : Recycler
 
         val name = holder.itemView.findViewById<TextView>(R.id.tv_personName)
         val avatar = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
+        val character = holder.itemView.findViewById<TextView>(R.id.tv_characterName)
         val actorRowBackground = holder.itemView.findViewById<LinearLayout>(R.id.actorRowBackground)
         val url = "https://image.tmdb.org/t/p/w185${actorsInMovies.value?.get(position)?.profile_path}"
         Glide.with(holder.itemView)
@@ -35,7 +36,7 @@ class MovieDetailsAdapter(var actorsInMovies: LiveData<List<Person>>) : Recycler
             .centerCrop()
             .into(avatar)
         name.text = actorsInMovies.value?.get(position)?.name.toString()
-        Log.wtf("tag",actorsInMovies.value?.get(2)?.name)
+        character.text = actorsInMovies.value?.get(position)?.character
     }
 
     override fun getItemCount(): Int {

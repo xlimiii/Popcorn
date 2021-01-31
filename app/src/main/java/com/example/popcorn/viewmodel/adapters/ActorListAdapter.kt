@@ -12,9 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.popcorn.R
 import com.example.popcorn.model.Person
+import com.example.popcorn.viewmodel.MovieViewModel
 import com.example.popcorn.viewmodel.PersonViewModel
 
-class ActorListAdapter(val actors: LiveData<List<Person>>) : RecyclerView.Adapter<ActorListAdapter.ActorHolder>() {
+class ActorListAdapter(val actors: LiveData<List<Person>>, private val personVM : PersonViewModel) : RecyclerView.Adapter<ActorListAdapter.ActorHolder>() {
     inner class ActorHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorListAdapter.ActorHolder {
@@ -32,9 +33,8 @@ class ActorListAdapter(val actors: LiveData<List<Person>>) : RecyclerView.Adapte
             .centerCrop()
             .into(avatar)
         name.text = actors.value?.get(position)?.name.toString()
-        actorRowBackground.setOnClickListener {
-                view->view.findNavController().navigate(R.id.action_actorListFragment_to_actorDetailsFragment)
-        }
+        actorRowBackground.setOnClickListener {  actors.value?.let { it1 -> personVM.setCurrentPerson(it1.get(position).id) }
+            actorRowBackground.findNavController().navigate(R.id.action_actorListFragment_to_actorDetailsFragment) }
     }
 
     override fun getItemCount(): Int {

@@ -5,34 +5,37 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import android.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.popcorn.R
+import com.example.popcorn.viewmodel.FavouriteViewModel
+import com.example.popcorn.viewmodel.MovieViewModel
 import com.example.popcorn.viewmodel.PersonViewModel
 import com.example.popcorn.viewmodel.adapters.ActorListAdapter
+import com.example.popcorn.viewmodel.adapters.MovieListAdapter
 import kotlinx.android.synthetic.main.fragment_actor_list.*
+import kotlinx.android.synthetic.main.fragment_movie_list.*
 
 class ActorListFragment : Fragment() {
-    private lateinit var actorListAdapter: ActorListAdapter
-    private lateinit var myLayoutManager: LinearLayoutManager
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var viewModel: PersonViewModel
+    private lateinit var personListAdapter : ActorListAdapter
+    private lateinit var myLayoutManager : LinearLayoutManager
+    private lateinit var recyclerView : RecyclerView
+    private lateinit var personVM : PersonViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        myLayoutManager= LinearLayoutManager(context)
+        myLayoutManager = LinearLayoutManager(context)
+        personVM = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
 
-        viewModel= ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
 
-        actorListAdapter= ActorListAdapter(viewModel.popularPeople)
+        personVM.setPeopleWithMatchingName("")
+        personListAdapter = ActorListAdapter(personVM.peopleWithMatchingName, personVM)
+        personVM.peopleWithMatchingName.observe(viewLifecycleOwner, { personListAdapter.notifyDataSetChanged() })
 
-        viewModel.popularPeople.observe(viewLifecycleOwner, Observer { t ->
-            actorListAdapter.notifyDataSetChanged()
-        })
         return inflater.inflate(R.layout.fragment_actor_list, container, false)
     }
 
@@ -40,8 +43,12 @@ class ActorListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerView=rv_actorList.apply {
             this.layoutManager=myLayoutManager
-            this.adapter=actorListAdapter
+            this.adapter=personListAdapter
         }
+        sv_actorList.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(givenText : String) : Boolean { personVM.setPeopleWithMatchingName(givenText); return false }
+            override fun onQueryTextSubmit(query: String): Boolean { return false }
+        })
     }
 
     companion object { fun newInstance() = ActorListFragment() }
