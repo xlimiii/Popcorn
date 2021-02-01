@@ -6,5 +6,6 @@ data class GeneralObject (
         val poster_path : String,
         val title : String,
         val name : String,
-        val profile_path : String
+        val profile_path : String,
+        val character : String
         )
