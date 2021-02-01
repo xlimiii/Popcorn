@@ -1,4 +1,4 @@
-package com.example.popcorn.view
+package com.example.popcorn.view.general
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,13 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.popcorn.R
 import com.example.popcorn.viewmodel.*
-import com.example.popcorn.viewmodel.adapters.ActorListAdapter
-import com.example.popcorn.viewmodel.adapters.MovieListAdapter
-import com.example.popcorn.viewmodel.adapters.MultiListAdapter
+import com.example.popcorn.viewmodel.adapters.general.ActorListAdapter
+import com.example.popcorn.viewmodel.adapters.general.MovieListAdapter
+import com.example.popcorn.viewmodel.adapters.general.MultiListAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_movie_list.*
-import kotlinx.android.synthetic.main.fragment_movie_list.rv_movieList
-import kotlinx.android.synthetic.main.fragment_movie_list.sv_movieList
 
 class HomeFragment : Fragment() {
     private lateinit var multiListAdapter : MultiListAdapter

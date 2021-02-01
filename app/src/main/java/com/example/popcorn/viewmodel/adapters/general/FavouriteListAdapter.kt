@@ -1,4 +1,4 @@
-package com.example.popcorn.viewmodel.adapters
+package com.example.popcorn.viewmodel.adapters.general
 
 import android.view.LayoutInflater
 import android.view.View
@@ -18,12 +18,12 @@ import com.example.popcorn.viewmodel.FavouriteViewModel
 class FavouriteListAdapter(private val favouriteMovies: LiveData<List<Favourite>>, private val favVM: FavouriteViewModel) : RecyclerView.Adapter<FavouriteListAdapter.MovieHolder>() {
     inner class MovieHolder(view: View): RecyclerView.ViewHolder(view)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouriteListAdapter.MovieHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_row, parent, false)
         return MovieHolder(view)
     }
 
-    override fun onBindViewHolder(holder: FavouriteListAdapter.MovieHolder, position: Int) {
+    override fun onBindViewHolder(holder: MovieHolder, position: Int) {
         val name = holder.itemView.findViewById<TextView>(R.id.tv_movieTitle)
         name.text = favouriteMovies.value?.get(position)?.title.toString()
 
@@ -35,7 +35,7 @@ class FavouriteListAdapter(private val favouriteMovies: LiveData<List<Favourite>
         movieRowBackground.setOnClickListener { view->view.findNavController().navigate(R.id.action_favouriteListFragment_to_movieDetailsFragment) }
 
         val delFromFav = holder.itemView.findViewById<ImageButton>(R.id.btn_addMovieToFav)
-        delFromFav.setOnClickListener{ favouriteMovies.value?.get(position)?.let { item -> favVM.deleteFavorite(item.movieID) } }
+        delFromFav.setOnClickListener{ favouriteMovies.value?.get(position)?.let { item -> favVM.deleteFavorite(item.id) } }
     }
 
     override fun getItemCount() : Int = favouriteMovies.value?.size ?: 0

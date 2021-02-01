@@ -1,4 +1,4 @@
-package com.example.popcorn.viewmodel.adapters
+package com.example.popcorn.viewmodel.adapters.general
 
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +21,7 @@ import com.example.popcorn.viewmodel.FavouriteViewModel
 class MovieListAdapter(private val movies : LiveData<List<Movie>>, private val movieVM : MovieViewModel, private val favVM : FavouriteViewModel, private val fromCalled: Int) : RecyclerView.Adapter<MovieListAdapter.MovieHolder>() {
     inner class MovieHolder(view: View): RecyclerView.ViewHolder(view)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListAdapter.MovieHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieHolder {
         val view: View = if(fromCalled == 0) {
             LayoutInflater.from(parent.context).inflate(R.layout.movie_row, parent, false)
         }
@@ -31,7 +31,7 @@ class MovieListAdapter(private val movies : LiveData<List<Movie>>, private val m
         return MovieHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MovieListAdapter.MovieHolder, position: Int) {
+    override fun onBindViewHolder(holder: MovieHolder, position: Int) {
         if(fromCalled == 0){
         val name = holder.itemView.findViewById<TextView>(R.id.tv_movieTitle)
         name.text = movies.value?.get(position)?.title.toString()

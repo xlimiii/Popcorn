@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.popcorn.model.GeneralObject
-import com.example.popcorn.model.Movie
 import com.example.popcorn.model.Person
 import com.example.popcorn.model.api.ApiRequest
 import com.example.popcorn.model.api.PersonRepository
@@ -15,11 +14,13 @@ import retrofit2.awaitResponse
 class PersonViewModel(application: Application) : AndroidViewModel(application) {
     private val repository : PersonRepository = PersonRepository(ApiRequest.getAPI())
 
-    //                                      PERSON SEARCH
+    //                             PERSON SEARCH AND POPULAR PEOPLE
     var peopleWithMatchingName = MutableLiveData<List<Person>>()
     fun setPeopleWithMatchingName(givenText : String)
     {
         viewModelScope.launch {
+            // if there is no input, list changes into list of popular people;
+            // otherwise this is list of people with matching names
             val response =
                     if (givenText != "") { repository.searchForPeople(givenText).awaitResponse() }
                     else { repository.getPopularPeople().awaitResponse() }
@@ -28,20 +29,6 @@ class PersonViewModel(application: Application) : AndroidViewModel(application) 
             {
                 val data = response.body()!!
                 peopleWithMatchingName.value = data.results
-            }
-        }
-    }
-
-    //                                     POPULAR PEOPLE
-    var popularPeople = MutableLiveData<List<Person>>()
-    fun setPopularPeople()
-    {
-        viewModelScope.launch {
-            val response = repository.getPopularPeople().awaitResponse()
-            if (response.isSuccessful)
-            {
-                val data = response.body()!!
-                popularPeople.value = data.results
             }
         }
     }
@@ -60,31 +47,18 @@ class PersonViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    //                            MOVIES CONNECTED WITH THIS PERSON
-    var moviesConnectedWithCurrentPerson = MutableLiveData<List<Movie>>()
-    fun setMoviesConnectedWithCurrentPerson(currentPersonID : Int)
-    {
-        viewModelScope.launch {
-            val response = repository.getMoviesFromThisPerson(currentPersonID).awaitResponse()
-            if (response.isSuccessful)
-            {
-                val data = response.body()!!
-                moviesConnectedWithCurrentPerson.value = data.cast
-            }
-        }
-    }
-
-
     //                         MOVIES AND TV SHOWS CONNECTED WITH THIS PERSON
-    var moviesAndTVShowsConnectedWithCurrentPerson = MutableLiveData<List<GeneralObject>>()
-    fun setMoviesAndTVShowsConnectedWithCurrentPerson(currentPersonID : Int)
+    var currentPersonInCastCollection = MutableLiveData<List<GeneralObject>>()
+    var currentPersonInCrewCollection = MutableLiveData<List<GeneralObject>>()
+    fun setCurrentPersonCollection(currentPersonID : Int)
     {
         viewModelScope.launch {
             val response = repository.getMoviesAndTVShowsFromThisPerson(currentPersonID).awaitResponse()
             if (response.isSuccessful)
             {
                 val data = response.body()!!
-                moviesAndTVShowsConnectedWithCurrentPerson.value = data.cast
+                currentPersonInCastCollection.value = data.cast
+                currentPersonInCrewCollection.value = data.crew
             }
         }
     }

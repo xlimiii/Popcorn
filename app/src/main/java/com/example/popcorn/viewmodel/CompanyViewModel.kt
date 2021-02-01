@@ -14,20 +14,6 @@ import retrofit2.awaitResponse
 class CompanyViewModel(application: Application) : AndroidViewModel(application) {
     private val repository : CompanyRepository = CompanyRepository(ApiRequest.getAPI())
 
-    //                                      COMPANY SEARCH
-    var companiesWithMatchingName = MutableLiveData<List<ProductionCompany>>()
-    fun setCompaniesWithMatchingName(givenText : String)
-    {
-        viewModelScope.launch {
-            val response = repository.searchForCompanies(givenText).awaitResponse()
-            if (response.isSuccessful)
-            {
-                val data = response.body()!!
-                companiesWithMatchingName.value = data.results
-            }
-        }
-    }
-
     //                                      COMPANY DETAILS
     var currentCompany = MutableLiveData<ProductionCompany>()
     fun setCurrentCompany(currentCompanyID : Int)

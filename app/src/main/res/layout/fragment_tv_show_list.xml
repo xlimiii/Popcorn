@@ -4,16 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.TvShowListFragment">
+    tools:context=".view.general.TvShowListFragment">
 
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <SearchView
+        android:id="@+id/sv_tvShowList"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TVSHOWS"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.112" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_tvShowList"
+        android:layout_width="409dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/sv_tvShowList" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

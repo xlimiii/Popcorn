@@ -1,4 +1,4 @@
-package com.example.popcorn.viewmodel.adapters
+package com.example.popcorn.viewmodel.adapters.general
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.popcorn.R
 import com.example.popcorn.model.Person
-import com.example.popcorn.viewmodel.MovieViewModel
 import com.example.popcorn.viewmodel.PersonViewModel
 
 class ActorListAdapter(val actors: LiveData<List<Person>>, private val personVM : PersonViewModel,private val fromCalled: Int) : RecyclerView.Adapter<ActorListAdapter.ActorHolder>() {
     inner class ActorHolder(view: View): RecyclerView.ViewHolder(view)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorListAdapter.ActorHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorHolder {
         val view: View = if(fromCalled == 0) {
             LayoutInflater.from(parent.context).inflate(R.layout.person_row, parent, false)
         }
@@ -28,7 +27,7 @@ class ActorListAdapter(val actors: LiveData<List<Person>>, private val personVM 
         return ActorHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ActorListAdapter.ActorHolder, position: Int) {
+    override fun onBindViewHolder(holder: ActorHolder, position: Int) {
         if(fromCalled == 0){
         val name = holder.itemView.findViewById<TextView>(R.id.tv_personName)
         val avatar = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)

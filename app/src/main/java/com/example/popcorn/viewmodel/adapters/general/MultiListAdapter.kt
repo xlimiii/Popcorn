@@ -1,4 +1,4 @@
-package com.example.popcorn.viewmodel.adapters
+package com.example.popcorn.viewmodel.adapters.general
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,25 +7,21 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.LiveData
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.popcorn.R
 import com.example.popcorn.model.GeneralObject
-import com.example.popcorn.model.Person
 import com.example.popcorn.viewmodel.MultiViewModel
-import com.example.popcorn.viewmodel.PersonViewModel
-import java.util.*
 
 class MultiListAdapter(val objects: LiveData<List<GeneralObject>>, private val multiVM : MultiViewModel) : RecyclerView.Adapter<MultiListAdapter.ObjectHolder>() {
     inner class ObjectHolder(view: View): RecyclerView.ViewHolder(view)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MultiListAdapter.ObjectHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ObjectHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.person_row, parent, false)
         return ObjectHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MultiListAdapter.ObjectHolder, position: Int) {
+    override fun onBindViewHolder(holder: ObjectHolder, position: Int) {
         val name = holder.itemView.findViewById<TextView>(R.id.tv_personName)
         val avatar = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
         val objectRowBackground = holder.itemView.findViewById<LinearLayout>(R.id.actorRowBackground)

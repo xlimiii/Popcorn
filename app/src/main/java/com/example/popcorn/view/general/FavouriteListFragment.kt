@@ -1,4 +1,4 @@
-package com.example.popcorn.view
+package com.example.popcorn.view.general
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,20 +10,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.popcorn.R
 import com.example.popcorn.viewmodel.FavouriteViewModel
-import com.example.popcorn.viewmodel.adapters.FavouriteListAdapter
+import com.example.popcorn.viewmodel.adapters.general.FavouriteListAdapter
 import kotlinx.android.synthetic.main.fragment_favourite_list.*
 
 class FavouriteListFragment : Fragment() {
-    private lateinit var favListAdapter: FavouriteListAdapter
-    private lateinit var myLayoutManager: LinearLayoutManager
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var favVM: FavouriteViewModel
+    private lateinit var favListAdapter : FavouriteListAdapter
+    private lateinit var myLayoutManager : LinearLayoutManager
+    private lateinit var recyclerView : RecyclerView
+    private lateinit var favVM : FavouriteViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        myLayoutManager= LinearLayoutManager(context)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View? {
+        myLayoutManager = LinearLayoutManager(context)
         favVM = ViewModelProvider(requireActivity()).get(FavouriteViewModel::class.java)
 
-        favListAdapter= FavouriteListAdapter(favVM.favourites, favVM)
+        favListAdapter = FavouriteListAdapter(favVM.favourites, favVM)
         favVM.favourites.observe(viewLifecycleOwner, { favListAdapter.notifyDataSetChanged() })
 
         return inflater.inflate(R.layout.fragment_favourite_list, container, false)

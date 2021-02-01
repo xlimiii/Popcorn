@@ -14,12 +14,13 @@ import retrofit2.awaitResponse
 class TVShowViewModel(application: Application) : AndroidViewModel(application) {
     private val repository : TVShowRepository = TVShowRepository(ApiRequest.getAPI())
 
-    //                                     TV SHOW SEARCH
+    //                                TV SHOW SEARCH AND POPULAR TV SHOWS
     var TVShowsWithMatchingTitle = MutableLiveData<List<TVShow>>()
     fun setTVShowsWithMatchingTitle(givenText : String)
     {
         viewModelScope.launch {
-            // if there is no input, list of popular tv shows should be displayed
+            // if there is no input, list changes into list of popular TV shows;
+            // otherwise this is list of TV shows with matching names
             val response =
                     if (givenText != "") { repository.searchForTVShows(givenText).awaitResponse() }
                     else { repository.getPopularTVShows().awaitResponse() }
@@ -28,20 +29,6 @@ class TVShowViewModel(application: Application) : AndroidViewModel(application) 
             {
                 val data = response.body()!!
                 TVShowsWithMatchingTitle.value = data.results
-            }
-        }
-    }
-
-    //                                     POPULAR TV SHOWS
-    var popularTVShows = MutableLiveData<List<TVShow>>()
-    fun setPopularTVShows()
-    {
-        viewModelScope.launch {
-            val response = repository.getPopularTVShows().awaitResponse()
-            if (response.isSuccessful)
-            {
-                val data = response.body()!!
-                popularTVShows.value = data.results
             }
         }
     }

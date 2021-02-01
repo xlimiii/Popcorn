@@ -15,12 +15,13 @@ import retrofit2.awaitResponse
 class MovieViewModel(application: Application) : AndroidViewModel(application) {
     private val repository : MovieRepository = MovieRepository(ApiRequest.getAPI())
 
-    //                                      MOVIE SEARCH
+    //                           MOVIE SEARCH AND POPULAR MOVIES
     var moviesWithMatchingTitle = MutableLiveData<List<Movie>>()
     fun setMoviesWithMatchingTitle(givenText : String)
     {
         viewModelScope.launch {
-            // if there is no input, list of popular movies should be displayed
+            // if there is no input, list changes into list of popular movies;
+            // otherwise this is list of movies with matching names
             val response =
                     if (givenText != "") { repository.searchForMovies(givenText).awaitResponse() }
                     else { repository.getPopularMovies().awaitResponse() }
@@ -29,20 +30,6 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
             {
                 val data = response.body()!!
                 moviesWithMatchingTitle.value = data.results
-            }
-        }
-    }
-
-    //                                     POPULAR MOVIES
-    var popularMovies = MutableLiveData<List<Movie>>()
-    fun setPopularMovies()
-    {
-        viewModelScope.launch {
-            val response = repository.getPopularMovies().awaitResponse()
-            if (response.isSuccessful)
-            {
-                val data = response.body()!!
-                popularMovies.value = data.results
             }
         }
     }

@@ -8,6 +8,7 @@ data class TVShow(
     val last_air_date: String,
     val genres : List<Genre>,
     val genre_ids : List<Int>,
+    val id : Int,
     val last_episode_aired: Episode,
     val name: String,
     val networks : List<Network>,

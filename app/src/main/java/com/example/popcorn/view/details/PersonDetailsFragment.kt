@@ -1,11 +1,14 @@
-package com.example.popcorn.view
+package com.example.popcorn.view.details
 
+import android.annotation.SuppressLint
 import android.graphics.text.LineBreaker
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,54 +16,44 @@ import com.bumptech.glide.Glide
 import com.example.popcorn.R
 import com.example.popcorn.viewmodel.MovieViewModel
 import com.example.popcorn.viewmodel.PersonViewModel
-import com.example.popcorn.viewmodel.adapters.PersonDetailsAdapter
+import com.example.popcorn.viewmodel.adapters.details.PersonDetailsAdapter
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.fragment_details.view.*
 
 class PersonDetailsFragment : Fragment() {
     private lateinit var personViewModel: PersonViewModel
     private lateinit var movieViewModel: MovieViewModel
-
     private lateinit var personDetailsAdapter: PersonDetailsAdapter
     private lateinit var myLayoutManager : LinearLayoutManager
     private lateinit var recyclerView : RecyclerView
 
+    @SuppressLint("SetTextI18n")
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         myLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         personViewModel = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
         movieViewModel = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
-        personViewModel.currentPerson.value?.id?.let {
-            personViewModel.setMoviesConnectedWithCurrentPerson(
-                it
-            )
-        }
+        personViewModel.currentPerson.value?.id?.let { personViewModel.setCurrentPersonCollection(it) }
         val view =  inflater.inflate(R.layout.fragment_details, container, false)
-        view.tv_movieDescription.setJustificationMode((LineBreaker.JUSTIFICATION_MODE_INTER_WORD))
+        view.tv_movieDescription.justificationMode = (LineBreaker.JUSTIFICATION_MODE_INTER_WORD)
         view.tv_header1.text = "Biography"
         view.tv_header2.text = "Movies"
 
-        personDetailsAdapter= PersonDetailsAdapter(personViewModel.moviesAndTVShowsConnectedWithCurrentPerson, movieViewModel)
-        personViewModel.currentPerson.observe(viewLifecycleOwner, { it ->
+        personDetailsAdapter= PersonDetailsAdapter(personViewModel.currentPersonInCastCollection, movieViewModel)
+        personViewModel.currentPerson.observe(viewLifecycleOwner, {
             view.tv_movieDetailsTitle.text = it.name
             view.tv_movieDescription.text = it.biography
             view.tv_year.text = it.birthday
-            if(it.deathday !=null) {
-                view.tv_year2.text = it.deathday
-            }
-            view.tv_genresForMovie.setText( "Known for: " +it.known_for_department)
-            if(it.place_of_birth !=null)
-                view.tv_oryginalLang.setText( "Place of Birth: " +it.place_of_birth)
+            view.tv_year2.text = it.deathday
+            view.tv_genresForMovie.text = "Known for: " + it.known_for_department
+            view.tv_oryginalLang.text = "Place of Birth: " + it.place_of_birth
             val url = "https://image.tmdb.org/t/p/w185${it.profile_path}"
-            Glide.with(view.iv_movieDetailsPoster)
-                .load(url)
-                .centerCrop()
-                .into(view.iv_movieDetailsPoster)
-            personViewModel.setMoviesAndTVShowsConnectedWithCurrentPerson(it.id)
+            Glide.with(view.iv_movieDetailsPoster).load(url).centerCrop().into(view.iv_movieDetailsPoster)
+            personViewModel.setCurrentPersonCollection(it.id)
         })
-        personViewModel.moviesAndTVShowsConnectedWithCurrentPerson.observe(viewLifecycleOwner, { personDetailsAdapter.notifyDataSetChanged() })
 
-
+        personViewModel.currentPersonInCastCollection.observe(viewLifecycleOwner, { personDetailsAdapter.notifyDataSetChanged() })
         return view
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,11 +62,7 @@ class PersonDetailsFragment : Fragment() {
             this.layoutManager = myLayoutManager
             this.adapter = personDetailsAdapter
         }
-
-
-
-
-
     }
+
     companion object { fun newInstance() = MovieDetailsFragment() }
 }

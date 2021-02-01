@@ -1,4 +1,4 @@
-package com.example.popcorn.view
+package com.example.popcorn.view.general
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,15 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.popcorn.R
-import com.example.popcorn.model.Movie
 import com.example.popcorn.viewmodel.FavouriteViewModel
 import com.example.popcorn.viewmodel.MovieViewModel
-import com.example.popcorn.viewmodel.adapters.MovieListAdapter
+import com.example.popcorn.viewmodel.adapters.general.MovieListAdapter
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 
 class MovieListFragment : Fragment() {
