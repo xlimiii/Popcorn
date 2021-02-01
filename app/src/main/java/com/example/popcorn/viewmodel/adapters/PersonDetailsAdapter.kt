@@ -11,10 +11,10 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.popcorn.R
-import com.example.popcorn.model.Movie
+import com.example.popcorn.model.GeneralObject
 import com.example.popcorn.viewmodel.MovieViewModel
 
-class PersonDetailsAdapter(var moviesInPerson: LiveData<List<Movie>>, val movieVM: MovieViewModel) : RecyclerView.Adapter<PersonDetailsAdapter.PersonHolder>() {
+class PersonDetailsAdapter(var moviesInPerson: LiveData<List<GeneralObject>>, val movieVM: MovieViewModel) : RecyclerView.Adapter<PersonDetailsAdapter.PersonHolder>() {
     inner class PersonHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonDetailsAdapter.PersonHolder {
@@ -34,7 +34,11 @@ class PersonDetailsAdapter(var moviesInPerson: LiveData<List<Movie>>, val movieV
             .load(url)
             .centerCrop()
             .into(poster)
-        name.text = moviesInPerson.value?.get(position)?.title.toString()
+
+        name.text =
+                if (moviesInPerson.value?.get(position)?.media_type == "movie") moviesInPerson.value?.get(position)?.title.toString()
+                else moviesInPerson.value?.get(position)?.name.toString()
+
         character.text = moviesInPerson.value?.get(position)?.character
         movieRowBackground.setOnClickListener {  moviesInPerson.value?.let { it1 -> movieVM.setCurrentMovie(it1.get(position).id) }
             movieRowBackground.findNavController().navigate(R.id.action_actorDetailsFragment_to_movieDetailsFragment) }

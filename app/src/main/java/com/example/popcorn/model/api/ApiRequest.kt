@@ -68,6 +68,15 @@ interface ApiRequest {
 
 
 
+    //                                  GENERAL SECTION
+    @GET("3/search/multi?api_key=$apiKey")
+    fun searchMulti(@Query("query") someText : String) : Call<GeneralObjectListResponse>
+
+    @GET("3/person/{personID}/combined_credits?api_key=$apiKey")
+    fun getMoviesAndTVShowsFromThisPerson(@Path("personID") personID : Int) : Call<MoviesAndTVShowsFromPersonListResponse>
+
+
+
     //                  INSTANCE WHICH PROVIDES COMMUNICATION WITH API
     companion object {
         private const val apiKey: String = "055b1da364a8c6b64b59a86724d0ae7c"

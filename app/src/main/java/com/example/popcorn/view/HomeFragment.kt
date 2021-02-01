@@ -5,73 +5,49 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.popcorn.R
-import com.example.popcorn.viewmodel.CompanyViewModel
-import com.example.popcorn.viewmodel.MovieViewModel
-import com.example.popcorn.viewmodel.PersonViewModel
+import com.example.popcorn.viewmodel.*
+import com.example.popcorn.viewmodel.adapters.ActorListAdapter
+import com.example.popcorn.viewmodel.adapters.MovieListAdapter
+import com.example.popcorn.viewmodel.adapters.MultiListAdapter
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_movie_list.*
+import kotlinx.android.synthetic.main.fragment_movie_list.rv_movieList
+import kotlinx.android.synthetic.main.fragment_movie_list.sv_movieList
 
 class HomeFragment : Fragment() {
-    //private lateinit var movieVM : MovieViewModel
-    //private lateinit var personVM : PersonViewModel
-    //private lateinit var companyVM : CompanyViewModel
+    private lateinit var multiListAdapter : MultiListAdapter
+    private lateinit var myLayoutManager : LinearLayoutManager
+    private lateinit var recyclerView : RecyclerView
+    private lateinit var multiVM : MultiViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        myLayoutManager = LinearLayoutManager(context)
+        multiVM = ViewModelProvider(requireActivity()).get(MultiViewModel::class.java)
 
-        /*
+        multiVM.setObjectsWithMatchingName("")
+        multiListAdapter = MultiListAdapter(multiVM.objectsWithMatchingName, multiVM)
+        multiVM.objectsWithMatchingName.observe(viewLifecycleOwner, { multiListAdapter.notifyDataSetChanged() })
 
-        movieVM = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
-        personVM = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
-        companyVM = ViewModelProvider(requireActivity()).get(CompanyViewModel::class.java)
-
-        movieVM.setMoviesWithMatchingTitle("Avengers")
-        movieVM.moviesWithMatchingTitle.observe(viewLifecycleOwner, {
-            println("Avenger movies: " + movieVM.moviesWithMatchingTitle.value.toString()) })
-
-        movieVM.setPopularMovies()
-        movieVM.popularMovies.observe(viewLifecycleOwner, {
-            println("Popular movies: " + movieVM.popularMovies.value.toString()) })
-
-        movieVM.setCurrentMovie(550)
-        movieVM.currentMovie.observe(viewLifecycleOwner, {
-            println("Movie number 550: " + movieVM.currentMovie.value.toString()) })
-
-        movieVM.setPeopleConnectedWithCurrentMovie(550)
-        movieVM.peopleConnectedWithCurrentMovie.observe(viewLifecycleOwner, {
-            println("People connected with movie number 550: " + movieVM.peopleConnectedWithCurrentMovie.value.toString()) })
-
-        movieVM.setGenres()
-        movieVM.genres.observe(viewLifecycleOwner, {
-            println("Genres: " + movieVM.genres.value.toString()) })
-
-        personVM.setPeopleWithMatchingName("Gal")
-        personVM.peopleWithMatchingName.observe(viewLifecycleOwner, {
-            println("'Gal' people: " + personVM.peopleWithMatchingName.value.toString()) })
-
-        personVM.setPopularPeople()
-        personVM.popularPeople.observe(viewLifecycleOwner, {
-            println("Popular people: " + personVM.popularPeople.value.toString()) })
-
-        personVM.setCurrentPerson(50)
-        personVM.currentPerson.observe(viewLifecycleOwner, {
-            println("Person number 50: " + personVM.currentPerson.value.toString()) })
-
-        personVM.setMoviesConnectedWithCurrentPerson(50)
-        personVM.moviesConnectedWithCurrentPerson.observe(viewLifecycleOwner, {
-            println("Movies connected with person number 50: " + personVM.moviesConnectedWithCurrentPerson.value.toString()) })
-
-        companyVM.setCompaniesWithMatchingName("Disney")
-        companyVM.companiesWithMatchingName.observe(viewLifecycleOwner, {
-            println("Disney companies: " + companyVM.companiesWithMatchingName.value.toString()) })
-
-        companyVM.setCurrentCompany(3)
-        companyVM.currentCompany.observe(viewLifecycleOwner, {
-            println("Company number 3: " + companyVM.currentCompany.value.toString()) })
-
-         */
 
         return inflater.inflate(R.layout.fragment_home, container, false)
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        recyclerView = rv_multiList.apply {
+            this.layoutManager = myLayoutManager
+            this.adapter = multiListAdapter
+        }
+
+        sv_multiList.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(givenText : String) : Boolean { multiVM.setObjectsWithMatchingName(givenText); return false }
+            override fun onQueryTextSubmit(query: String): Boolean { return false }
+        })
     }
 
     companion object { fun newInstance() = HomeFragment() }

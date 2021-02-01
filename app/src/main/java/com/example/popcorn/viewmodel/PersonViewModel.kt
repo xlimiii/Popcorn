@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.popcorn.model.GeneralObject
 import com.example.popcorn.model.Movie
 import com.example.popcorn.model.Person
 import com.example.popcorn.model.api.ApiRequest
@@ -66,6 +67,21 @@ class PersonViewModel(application: Application) : AndroidViewModel(application) 
             {
                 val data = response.body()!!
                 moviesConnectedWithCurrentPerson.value = data.cast
+            }
+        }
+    }
+
+
+    //                         MOVIES AND TV SHOWS CONNECTED WITH THIS PERSON
+    var moviesAndTVShowsConnectedWithCurrentPerson = MutableLiveData<List<GeneralObject>>()
+    fun setMoviesAndTVShowsConnectedWithCurrentPerson(currentPersonID : Int)
+    {
+        viewModelScope.launch {
+            val response = repository.getMoviesAndTVShowsFromThisPerson(currentPersonID).awaitResponse()
+            if (response.isSuccessful)
+            {
+                val data = response.body()!!
+                moviesAndTVShowsConnectedWithCurrentPerson.value = data.cast
             }
         }
     }

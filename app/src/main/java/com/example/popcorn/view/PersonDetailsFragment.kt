@@ -40,7 +40,7 @@ class PersonDetailsFragment : Fragment() {
         view.tv_header1.text = "Biography"
         view.tv_header2.text = "Movies"
 
-        personDetailsAdapter= PersonDetailsAdapter(personViewModel.moviesConnectedWithCurrentPerson, movieViewModel)
+        personDetailsAdapter= PersonDetailsAdapter(personViewModel.moviesAndTVShowsConnectedWithCurrentPerson, movieViewModel)
         personViewModel.currentPerson.observe(viewLifecycleOwner, { it ->
             view.tv_movieDetailsTitle.text = it.name
             view.tv_movieDescription.text = it.biography
@@ -56,9 +56,9 @@ class PersonDetailsFragment : Fragment() {
                 .load(url)
                 .centerCrop()
                 .into(view.iv_movieDetailsPoster)
-            personViewModel.setMoviesConnectedWithCurrentPerson(it.id)
+            personViewModel.setMoviesAndTVShowsConnectedWithCurrentPerson(it.id)
         })
-        personViewModel.moviesConnectedWithCurrentPerson!!.observe(viewLifecycleOwner, {personDetailsAdapter.notifyDataSetChanged()})
+        personViewModel.moviesAndTVShowsConnectedWithCurrentPerson.observe(viewLifecycleOwner, { personDetailsAdapter.notifyDataSetChanged() })
 
 
         return view
