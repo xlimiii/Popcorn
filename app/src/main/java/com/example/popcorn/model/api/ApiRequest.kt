@@ -60,18 +60,12 @@ interface ApiRequest {
 
 
     //                                  COMPANIES SECTION
-    @GET("3/search/company?api_key=$apiKey")
-    fun searchForCompanies(@Query("query") someText : String) : Call<CompanyListResponse>
-
     @GET("3/company/{companyID}?api_key=$apiKey")
     fun getCompanyDetails(@Path("companyID") companyID : Int) : Call<ProductionCompany>
 
 
 
     //                                  GENERAL SECTION
-    @GET("3/search/multi?api_key=$apiKey")
-    fun searchMulti(@Query("query") someText : String) : Call<GeneralObjectListResponse>
-
     @GET("3/person/{personID}/combined_credits?api_key=$apiKey")
     fun getMoviesAndTVShowsFromThisPerson(@Path("personID") personID : Int) : Call<MoviesAndTVShowsFromPersonListResponse>
 

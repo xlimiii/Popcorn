@@ -14,11 +14,9 @@ import com.example.popcorn.R
 import com.example.popcorn.viewmodel.*
 import com.example.popcorn.viewmodel.adapters.general.ActorListAdapter
 import com.example.popcorn.viewmodel.adapters.general.MovieListAdapter
-import com.example.popcorn.viewmodel.adapters.general.MultiListAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
-    private lateinit var multiListAdapter : MultiListAdapter
     private lateinit var movieListAdapter : MovieListAdapter
 
     private lateinit var personListAdapter : ActorListAdapter
