@@ -66,6 +66,9 @@ interface ApiRequest {
     @GET("3/company/{companyID}?api_key=$apiKey")
     fun getCompanyDetails(@Path("companyID") companyID : Int) : Call<ProductionCompany>
 
+    //                                  GENERAL SECTION
+    @GET("3/search/multi?api_key=$apiKey")
+    fun searchMulti(@Query("query") someText : String) : Call<GeneralObjectListResponse>
 
 
     //                  INSTANCE WHICH PROVIDES COMMUNICATION WITH API
