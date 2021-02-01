@@ -41,8 +41,23 @@ class TVShowListAdapter(private val TVShows : LiveData<List<TVShow>>,
             movieRowBackground.findNavController().navigate(R.id.action_tvShowListFragment_to_TVShowDetailsFragment)
         }
 
-        val addToFav = holder.itemView.findViewById<ImageButton>(R.id.btn_addMovieToFav)
+        val addToFav = holder.itemView.findViewById<ImageButton>(R.id.btn_addToFav)
         addToFav.setOnClickListener{ TVShows.value?.get(position)?.let { item -> favVM.addFavourite(item) } }
+
+        // IF THIS MOVIE IS IN FAVOURITES:
+        val favouriteMovie = favVM.favourites.value?.find {
+            x -> x.media_type == "tv" && x.movieOrTVShowID == TVShows.value?.get(position)?.id }
+        if (favouriteMovie != null)
+        {
+            val delFromFav = holder.itemView.findViewById<ImageButton>(R.id.btn_delFromFav)
+            delFromFav.setOnClickListener {
+                favVM.deleteFavorite(favouriteMovie.id)
+                addToFav.visibility = View.VISIBLE
+                delFromFav.visibility = View.GONE
+            }
+            addToFav.visibility = View.GONE
+            delFromFav.visibility = View.VISIBLE
+        }
     }
 
     override fun getItemCount(): Int = TVShows.value?.size ?: 0

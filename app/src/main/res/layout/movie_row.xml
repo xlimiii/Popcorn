@@ -32,7 +32,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/btn_addMovieToFav"
+        android:visibility="visible"
+        android:id="@+id/btn_addToFav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -40,6 +41,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_favorite_24" />
+        app:srcCompat="@drawable/ic_baseline_favorite_24"/>
+
+    <ImageButton
+        android:visibility="gone"
+        android:id="@+id/btn_delFromFav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_favorite_added_24"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

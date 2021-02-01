@@ -30,6 +30,7 @@ class TvShowListFragment : Fragment() {
         TVShowVM.setTVShowsWithMatchingTitle("")
         TVShowListAdapter = TVShowListAdapter(TVShowVM.TVShowsWithMatchingTitle, TVShowVM, favVM)
         TVShowVM.TVShowsWithMatchingTitle.observe(viewLifecycleOwner, { TVShowListAdapter.notifyDataSetChanged() })
+        favVM.favourites.observe(viewLifecycleOwner, { TVShowListAdapter.notifyDataSetChanged() })
 
         return inflater.inflate(R.layout.fragment_tv_show_list, container, false)
     }

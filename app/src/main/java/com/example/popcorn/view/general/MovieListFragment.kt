@@ -30,6 +30,7 @@ class MovieListFragment : Fragment() {
         movieVM.setMoviesWithMatchingTitle("")
         movieListAdapter = MovieListAdapter(movieVM.moviesWithMatchingTitle, movieVM, favVM, 0)
         movieVM.moviesWithMatchingTitle.observe(viewLifecycleOwner, { movieListAdapter.notifyDataSetChanged() })
+        favVM.favourites.observe(viewLifecycleOwner, { movieListAdapter.notifyDataSetChanged() })
 
         return inflater.inflate(R.layout.fragment_movie_list, container, false)
     }

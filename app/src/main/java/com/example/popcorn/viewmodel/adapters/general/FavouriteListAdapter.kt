@@ -34,7 +34,10 @@ class FavouriteListAdapter(private val favouriteMovies: LiveData<List<Favourite>
         val movieRowBackground = holder.itemView.findViewById<ConstraintLayout>(R.id.movieRowBackground)
         movieRowBackground.setOnClickListener { view->view.findNavController().navigate(R.id.action_favouriteListFragment_to_movieDetailsFragment) }
 
-        val delFromFav = holder.itemView.findViewById<ImageButton>(R.id.btn_addMovieToFav)
+        val addToFav = holder.itemView.findViewById<ImageButton>(R.id.btn_addToFav)
+        addToFav.visibility = View.GONE
+        val delFromFav = holder.itemView.findViewById<ImageButton>(R.id.btn_delFromFav)
+        delFromFav.visibility = View.VISIBLE
         delFromFav.setOnClickListener{ favouriteMovies.value?.get(position)?.let { item -> favVM.deleteFavorite(item.id) } }
     }
 

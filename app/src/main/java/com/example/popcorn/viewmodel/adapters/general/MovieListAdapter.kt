@@ -22,32 +22,44 @@ class MovieListAdapter(private val movies : LiveData<List<Movie>>, private val m
     inner class MovieHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieHolder {
-        val view: View = if(fromCalled == 0) {
-            LayoutInflater.from(parent.context).inflate(R.layout.movie_row, parent, false)
-        }
-        else{
-            LayoutInflater.from(parent.context).inflate(R.layout.tile, parent, false)
-        }
+        val view: View =
+                if (fromCalled == 0) LayoutInflater.from(parent.context).inflate(R.layout.movie_row, parent, false)
+                else LayoutInflater.from(parent.context).inflate(R.layout.tile, parent, false)
         return MovieHolder(view)
     }
 
     override fun onBindViewHolder(holder: MovieHolder, position: Int) {
-        if(fromCalled == 0){
-        val name = holder.itemView.findViewById<TextView>(R.id.tv_movieTitle)
-        name.text = movies.value?.get(position)?.title.toString()
+        if (fromCalled == 0) {
+            val name = holder.itemView.findViewById<TextView>(R.id.tv_movieTitle)
+            name.text = movies.value?.get(position)?.title.toString()
 
-        val poster = holder.itemView.findViewById<ImageView>(R.id.iv_moviePoster)
-        val url = "https://image.tmdb.org/t/p/w185${movies.value?.get(position)?.poster_path}"
-        Glide.with(holder.itemView).load(url).centerCrop().into(poster)
+            val poster = holder.itemView.findViewById<ImageView>(R.id.iv_moviePoster)
+            val url = "https://image.tmdb.org/t/p/w185${movies.value?.get(position)?.poster_path}"
+            Glide.with(holder.itemView).load(url).centerCrop().into(poster)
 
-        val movieRowBackground = holder.itemView.findViewById<ConstraintLayout>(R.id.movieRowBackground)
-        movieRowBackground.setOnClickListener {  movies.value?.let { it1 -> movieVM.setCurrentMovie(it1.get(position).id) }
-            movieRowBackground.findNavController().navigate(R.id.action_movieListFragment_to_movieDetailsFragment) }
+            val movieRowBackground = holder.itemView.findViewById<ConstraintLayout>(R.id.movieRowBackground)
+            movieRowBackground.setOnClickListener {  movies.value?.let { it1 -> movieVM.setCurrentMovie(it1.get(position).id) }
+                movieRowBackground.findNavController().navigate(R.id.action_movieListFragment_to_movieDetailsFragment) }
 
-        val addToFav = holder.itemView.findViewById<ImageButton>(R.id.btn_addMovieToFav)
-        addToFav.setOnClickListener{ movies.value?.get(position)?.let { item -> favVM.addFavourite(item) } }
-        }
-        else{
+            val addToFav = holder.itemView.findViewById<ImageButton>(R.id.btn_addToFav)
+            addToFav.setOnClickListener { movies.value?.get(position)?.let { item -> favVM.addFavourite(item) } }
+
+            // IF THIS MOVIE IS IN FAVOURITES:
+            val favouriteMovie = favVM.favourites.value?.find {
+                x -> x.media_type == "movie" && x.movieOrTVShowID == movies.value?.get(position)?.id }
+            if (favouriteMovie != null)
+            {
+                val delFromFav = holder.itemView.findViewById<ImageButton>(R.id.btn_delFromFav)
+                delFromFav.setOnClickListener {
+                    favVM.deleteFavorite(favouriteMovie.id)
+                    addToFav.visibility = View.VISIBLE
+                    delFromFav.visibility = View.GONE
+                }
+                addToFav.visibility = View.GONE
+                delFromFav.visibility = View.VISIBLE
+            }
+
+        } else {
             val name = holder.itemView.findViewById<TextView>(R.id.tv_personName)
             val character = holder.itemView.findViewById<TextView>(R.id.tv_characterName)
 
