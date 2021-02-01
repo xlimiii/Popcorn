@@ -22,18 +22,37 @@ import kotlinx.android.synthetic.main.fragment_movie_list.sv_movieList
 
 class HomeFragment : Fragment() {
     private lateinit var multiListAdapter : MultiListAdapter
+    private lateinit var movieListAdapter : MovieListAdapter
+
+    private lateinit var personListAdapter : ActorListAdapter
+
     private lateinit var myLayoutManager : LinearLayoutManager
+    private lateinit var myLayoutManager2 : LinearLayoutManager
+
     private lateinit var recyclerView : RecyclerView
-    private lateinit var multiVM : MultiViewModel
+    private lateinit var recyclerView2: RecyclerView
+
+    private lateinit var personVM : PersonViewModel
+    private lateinit var movieVM : MovieViewModel
+    private lateinit var favVM : FavouriteViewModel
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        myLayoutManager = LinearLayoutManager(context)
-        multiVM = ViewModelProvider(requireActivity()).get(MultiViewModel::class.java)
+        myLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        myLayoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-        multiVM.setObjectsWithMatchingName("")
-        multiListAdapter = MultiListAdapter(multiVM.objectsWithMatchingName, multiVM)
-        multiVM.objectsWithMatchingName.observe(viewLifecycleOwner, { multiListAdapter.notifyDataSetChanged() })
+        personVM = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
+        movieVM = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
+        favVM = ViewModelProvider(requireActivity()).get(FavouriteViewModel::class.java)
 
+        movieVM.setMoviesWithMatchingTitle("")
+        personVM.setPeopleWithMatchingName("")
+        movieListAdapter = MovieListAdapter(movieVM.moviesWithMatchingTitle, movieVM, favVM, 1)
+        personListAdapter = ActorListAdapter(personVM.peopleWithMatchingName, personVM, 1)
+
+        movieVM.moviesWithMatchingTitle.observe(viewLifecycleOwner, { movieListAdapter.notifyDataSetChanged() })
+        personVM.peopleWithMatchingName.observe(viewLifecycleOwner, { personListAdapter.notifyDataSetChanged() })
 
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
@@ -41,12 +60,21 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = rv_multiList.apply {
             this.layoutManager = myLayoutManager
-            this.adapter = multiListAdapter
+            this.adapter = movieListAdapter
+        }
+        recyclerView2 = rv_multiList2.apply {
+            this.layoutManager = myLayoutManager2
+            this.adapter = personListAdapter
         }
 
         sv_multiList.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextChange(givenText : String) : Boolean { multiVM.setObjectsWithMatchingName(givenText); return false }
+            override fun onQueryTextChange(givenText : String) : Boolean {
+                movieVM.setMoviesWithMatchingTitle(givenText)
+                personVM.setPeopleWithMatchingName(givenText)
+                return false
+            }
             override fun onQueryTextSubmit(query: String): Boolean { return false }
+
         })
     }
 

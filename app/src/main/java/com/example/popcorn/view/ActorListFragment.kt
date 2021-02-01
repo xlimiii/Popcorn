@@ -33,7 +33,7 @@ class ActorListFragment : Fragment() {
 
 
         personVM.setPeopleWithMatchingName("")
-        personListAdapter = ActorListAdapter(personVM.peopleWithMatchingName, personVM)
+        personListAdapter = ActorListAdapter(personVM.peopleWithMatchingName, personVM, 0)
         personVM.peopleWithMatchingName.observe(viewLifecycleOwner, { personListAdapter.notifyDataSetChanged() })
 
         return inflater.inflate(R.layout.fragment_actor_list, container, false)

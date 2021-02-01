@@ -30,7 +30,7 @@ class MovieListFragment : Fragment() {
         favVM = ViewModelProvider(requireActivity()).get(FavouriteViewModel::class.java)
 
         movieVM.setMoviesWithMatchingTitle("")
-        movieListAdapter = MovieListAdapter(movieVM.moviesWithMatchingTitle, movieVM, favVM)
+        movieListAdapter = MovieListAdapter(movieVM.moviesWithMatchingTitle, movieVM, favVM, 0)
         movieVM.moviesWithMatchingTitle.observe(viewLifecycleOwner, { movieListAdapter.notifyDataSetChanged() })
 
         return inflater.inflate(R.layout.fragment_movie_list, container, false)

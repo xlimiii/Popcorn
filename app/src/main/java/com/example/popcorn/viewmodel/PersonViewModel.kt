@@ -19,7 +19,10 @@ class PersonViewModel(application: Application) : AndroidViewModel(application) 
     fun setPeopleWithMatchingName(givenText : String)
     {
         viewModelScope.launch {
-            val response = repository.searchForPeople(givenText).awaitResponse()
+            val response =
+                    if (givenText != "") { repository.searchForPeople(givenText).awaitResponse() }
+                    else { repository.getPopularPeople().awaitResponse() }
+
             if (response.isSuccessful)
             {
                 val data = response.body()!!
