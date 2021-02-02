@@ -41,7 +41,12 @@ class CrewInMovieAndTVShowAdapter(var peopleInMovie: LiveData<List<Person>>, val
 
         character.text = peopleInMovie.value?.get(position)?.department
         movieRowBackground.setOnClickListener {  peopleInMovie.value?.let { it1 -> personVM.setCurrentPerson(it1.get(position).id) }
+            try{
             movieRowBackground.findNavController().navigate(R.id.action_movieDetailsFragment_to_actorDetailsFragment) }
+        catch(e: Exception){
+            movieRowBackground.findNavController().navigate(R.id.action_TVShowDetailsFragment_to_actorDetailsFragment)
+        }
+    }
     }
 
     override fun getItemCount(): Int {
