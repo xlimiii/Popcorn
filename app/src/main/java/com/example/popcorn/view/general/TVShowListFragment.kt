@@ -15,7 +15,7 @@ import com.example.popcorn.viewmodel.TVShowViewModel
 import com.example.popcorn.viewmodel.adapters.general.TVShowListAdapter
 import kotlinx.android.synthetic.main.fragment_tv_show_list.*
 
-class TvShowListFragment : Fragment() {
+class TVShowListFragment : Fragment() {
     private lateinit var TVShowListAdapter : TVShowListAdapter
     private lateinit var myLayoutManager : LinearLayoutManager
     private lateinit var recyclerView : RecyclerView
@@ -29,6 +29,7 @@ class TvShowListFragment : Fragment() {
 
         TVShowVM.setTVShowsWithMatchingTitle("")
         TVShowListAdapter = TVShowListAdapter(TVShowVM.TVShowsWithMatchingTitle, TVShowVM, favVM, 0)
+
         TVShowVM.TVShowsWithMatchingTitle.observe(viewLifecycleOwner, { TVShowListAdapter.notifyDataSetChanged() })
         favVM.favourites.observe(viewLifecycleOwner, { TVShowListAdapter.notifyDataSetChanged() })
 
@@ -37,16 +38,19 @@ class TvShowListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         recyclerView = rv_tvShowList.apply {
             this.layoutManager = myLayoutManager
             this.adapter = TVShowListAdapter
         }
 
         sv_tvShowList.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextChange(givenText : String) : Boolean { TVShowVM.setTVShowsWithMatchingTitle(givenText); return false }
+            override fun onQueryTextChange(givenText : String) : Boolean {
+                TVShowVM.setTVShowsWithMatchingTitle(givenText)
+                return false
+            }
+
             override fun onQueryTextSubmit(query: String): Boolean { return false }
         })
     }
-
-    companion object { fun newInstance() = TvShowListFragment() }
 }

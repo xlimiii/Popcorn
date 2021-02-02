@@ -5,34 +5,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.popcorn.R
-import com.example.popcorn.view.general.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MainActivity : AppCompatActivity() {
-    private val homeFragment = HomeFragment.newInstance()
-    private val movieListFragment = MovieListFragment.newInstance()
-    private val actorListFragment = ActorListFragment.newInstance()
-    private val directorListFragment = TvShowListFragment.newInstance()
-    private val favouriteListFragment = FavouriteListFragment.newInstance()
     private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setUpNavigation();
-
-
-
+        setUpNavigation()
     }
 
-    fun setUpNavigation() {
+    private fun setUpNavigation() {
         bottomNavigationView = findViewById(R.id.bttm_nav)
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
-        NavigationUI.setupWithNavController(
-            bottomNavigationView,
-            navHostFragment!!.navController
-        )
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
+        NavigationUI.setupWithNavController(bottomNavigationView, navHostFragment!!.navController)
     }
 }

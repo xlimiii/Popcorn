@@ -29,6 +29,7 @@ class MovieListFragment : Fragment() {
 
         movieVM.setMoviesWithMatchingTitle("")
         movieListAdapter = MovieListAdapter(movieVM.moviesWithMatchingTitle, movieVM, favVM, 0)
+
         movieVM.moviesWithMatchingTitle.observe(viewLifecycleOwner, { movieListAdapter.notifyDataSetChanged() })
         favVM.favourites.observe(viewLifecycleOwner, { movieListAdapter.notifyDataSetChanged() })
 
@@ -37,16 +38,19 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         recyclerView = rv_movieList.apply {
             this.layoutManager = myLayoutManager
             this.adapter = movieListAdapter
         }
 
         sv_movieList.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextChange(givenText : String) : Boolean { movieVM.setMoviesWithMatchingTitle(givenText); return false }
+            override fun onQueryTextChange(givenText : String) : Boolean {
+                movieVM.setMoviesWithMatchingTitle(givenText)
+                return false
+            }
+
             override fun onQueryTextSubmit(query: String): Boolean { return false }
         })
     }
-
-    companion object { fun newInstance() = MovieListFragment() }
 }

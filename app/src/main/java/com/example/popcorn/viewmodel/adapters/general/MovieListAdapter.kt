@@ -18,7 +18,11 @@ import com.bumptech.glide.Glide
 import com.example.popcorn.viewmodel.FavouriteViewModel
 
 
-class MovieListAdapter(private val movies : LiveData<List<Movie>>, private val movieVM : MovieViewModel, private val favVM : FavouriteViewModel, private val fromCalled: Int) : RecyclerView.Adapter<MovieListAdapter.MovieHolder>() {
+class MovieListAdapter(private val movies : LiveData<List<Movie>>,
+                       private val movieVM : MovieViewModel,
+                       private val favVM : FavouriteViewModel,
+                       private val fromCalled: Int) : RecyclerView.Adapter<MovieListAdapter.MovieHolder>() {
+
     inner class MovieHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieHolder {
@@ -30,6 +34,7 @@ class MovieListAdapter(private val movies : LiveData<List<Movie>>, private val m
 
     override fun onBindViewHolder(holder: MovieHolder, position: Int) {
         val url = "https://image.tmdb.org/t/p/w185${movies.value?.get(position)?.poster_path}"
+
         if (fromCalled == 0) {
             val name = holder.itemView.findViewById<TextView>(R.id.tv_movieTitle)
             name.text = movies.value?.get(position)?.title.toString()
@@ -38,8 +43,10 @@ class MovieListAdapter(private val movies : LiveData<List<Movie>>, private val m
             Glide.with(holder.itemView).load(url).centerCrop().into(poster)
 
             val movieRowBackground = holder.itemView.findViewById<ConstraintLayout>(R.id.movieRowBackground)
-            movieRowBackground.setOnClickListener {  movies.value?.let { it1 -> movieVM.setCurrentMovie(it1.get(position).id) }
-                movieRowBackground.findNavController().navigate(R.id.action_movieListFragment_to_movieDetailsFragment) }
+            movieRowBackground.setOnClickListener {
+                movies.value?.let { item -> movieVM.setCurrentMovie(item[position].id) }
+                movieRowBackground.findNavController().navigate(R.id.action_movieListFragment_to_movieDetailsFragment)
+            }
 
             val addToFav = holder.itemView.findViewById<ImageButton>(R.id.btn_addToFav)
             addToFav.setOnClickListener { movies.value?.get(position)?.let { item -> favVM.addFavourite(item) } }
@@ -62,19 +69,18 @@ class MovieListAdapter(private val movies : LiveData<List<Movie>>, private val m
         } else {
             val name = holder.itemView.findViewById<TextView>(R.id.tv_personName)
             name.text = movies.value?.get(position)?.title.toString()
+
             val character = holder.itemView.findViewById<TextView>(R.id.tv_characterName)
+            character.text = movies.value?.get(position)?.character
 
             val poster = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
+            Glide.with(holder.itemView).load(url).centerCrop().into(poster)
+
             val movieRowBackground = holder.itemView.findViewById<LinearLayout>(R.id.tileBackground)
-
-            Glide.with(holder.itemView)
-                    .load(url)
-                    .centerCrop()
-                    .into(poster)
-
-            character.text = movies.value?.get(position)?.character
-            movieRowBackground.setOnClickListener {  movies.value?.let { it1 -> movieVM.setCurrentMovie(it1.get(position).id) }
-                movieRowBackground.findNavController().navigate(R.id.action_homeFragment_to_movieDetailsFragment) }
+            movieRowBackground.setOnClickListener {
+                movies.value?.let { item -> movieVM.setCurrentMovie(item[position].id) }
+                movieRowBackground.findNavController().navigate(R.id.action_homeFragment_to_movieDetailsFragment)
+            }
         }
 
     }

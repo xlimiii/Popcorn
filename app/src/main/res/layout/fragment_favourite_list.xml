@@ -18,7 +18,7 @@
         app:layout_constraintVertical_bias="0.112" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_favMovieList"
+        android:id="@+id/rv_favList"
         android:layout_width="409dp"
         android:layout_height="500dp"
         android:layout_marginTop="8dp"

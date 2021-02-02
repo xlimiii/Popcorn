@@ -14,13 +14,13 @@
         app:showAsAction="always"
         />
     <item
-        android:id="@+id/actorListFragment"
+        android:id="@+id/personListFragment"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="@string/people"
         app:showAsAction="always"
         />
     <item
-        android:id="@+id/tvShowListFragment"
+        android:id="@+id/TVShowListFragment"
         android:icon="@drawable/ic_baseline_tv_shows"
         android:title="Tv Shows"
         app:showAsAction="always"

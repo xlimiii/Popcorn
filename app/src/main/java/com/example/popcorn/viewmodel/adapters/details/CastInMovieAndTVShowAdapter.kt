@@ -14,34 +14,34 @@ import com.example.popcorn.R
 import com.example.popcorn.model.Person
 import com.example.popcorn.viewmodel.PersonViewModel
 
-class CrewInMovieAndTVShowAdapter(private val crew: LiveData<List<Person>>,
-                                  private val personVM: PersonViewModel) : RecyclerView.Adapter<CrewInMovieAndTVShowAdapter.PersonHolder>() {
+class CastInMovieAndTVShowAdapter(private val cast: LiveData<List<Person>>,
+                                  private val personVM: PersonViewModel) : RecyclerView.Adapter<CastInMovieAndTVShowAdapter.MovieHolder>() {
 
-    inner class PersonHolder(view: View): RecyclerView.ViewHolder(view)
+    inner class MovieHolder(view: View): RecyclerView.ViewHolder(view)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.tile, parent, false)
-        return PersonHolder(view)
+        return MovieHolder(view)
     }
 
-    override fun onBindViewHolder(holder: PersonHolder, position: Int) {
+    override fun onBindViewHolder(holder: MovieHolder, position: Int) {
         val name = holder.itemView.findViewById<TextView>(R.id.tv_personName)
-        name.text = crew.value?.get(position)?.name.toString()
+        name.text = cast.value?.get(position)?.name.toString()
 
         val character = holder.itemView.findViewById<TextView>(R.id.tv_characterName)
-        character.text = crew.value?.get(position)?.department
+        character.text = cast.value?.get(position)?.character
 
-        val poster = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
-        val url = "https://image.tmdb.org/t/p/w185${crew.value?.get(position)?.profile_path}"
-        Glide.with(holder.itemView).load(url).centerCrop().into(poster)
+        val avatar = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
+        val url = "https://image.tmdb.org/t/p/w185${cast.value?.get(position)?.profile_path}"
+        Glide.with(holder.itemView).load(url).centerCrop().into(avatar)
 
         val rowBackground = holder.itemView.findViewById<LinearLayout>(R.id.tileBackground)
         rowBackground.setOnClickListener {
-            crew.value?.let { item -> personVM.setCurrentPerson(item[position].id) }
+            cast.value?.let { item -> personVM.setCurrentPerson(item[position].id) }
             try { rowBackground.findNavController().navigate(R.id.action_movieDetailsFragment_to_personDetailsFragment) }
             catch(e: Exception) { rowBackground.findNavController().navigate(R.id.action_TVShowDetailsFragment_to_personDetailsFragment) }
         }
     }
 
-    override fun getItemCount(): Int = crew.value?.size ?: 0
+    override fun getItemCount(): Int = cast.value?.size ?: 0
 }

@@ -16,40 +16,44 @@ import com.bumptech.glide.Glide
 import com.example.popcorn.R
 import com.example.popcorn.viewmodel.MovieViewModel
 import com.example.popcorn.viewmodel.PersonViewModel
-import com.example.popcorn.viewmodel.adapters.details.CrewAdapter
-import com.example.popcorn.viewmodel.adapters.details.PersonDetailsAdapter
+import com.example.popcorn.viewmodel.TVShowViewModel
+import com.example.popcorn.viewmodel.adapters.details.PersonInCrewAdapter
+import com.example.popcorn.viewmodel.adapters.details.PersonInCastAdapter
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.fragment_details.view.*
 
 class PersonDetailsFragment : Fragment() {
-    private lateinit var personViewModel: PersonViewModel
-    private lateinit var movieViewModel: MovieViewModel
-    private lateinit var personDetailsAdapter: PersonDetailsAdapter
-    private lateinit var crewAdapter: CrewAdapter
+    private lateinit var inCastAdapter: PersonInCastAdapter
+    private lateinit var inCrewAdapter: PersonInCrewAdapter
 
-    private lateinit var myLayoutManager : LinearLayoutManager
-    private lateinit var recyclerView : RecyclerView
-    private lateinit var myLayoutManager2 : LinearLayoutManager
-    private lateinit var recyclerView2 : RecyclerView
+    private lateinit var personViewModel : PersonViewModel
+    private lateinit var movieViewModel : MovieViewModel
+    private lateinit var tvShowViewModel : TVShowViewModel
+
+    private lateinit var inCastLayoutManager : LinearLayoutManager
+    private lateinit var inCrewLayoutManager : LinearLayoutManager
+    private lateinit var inCastRecyclerView : RecyclerView
+    private lateinit var inCrewRecyclerView : RecyclerView
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        myLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        myLayoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        inCastLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        inCrewLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         personViewModel = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
         movieViewModel = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
-        personViewModel.currentPerson.value?.id?.let { personViewModel.setCurrentPersonCollection(it) }
+        tvShowViewModel = ViewModelProvider(requireActivity()).get(TVShowViewModel::class.java)
+
+        inCastAdapter = PersonInCastAdapter(personViewModel.currentPersonInCastCollection, movieViewModel, tvShowViewModel)
+        inCrewAdapter = PersonInCrewAdapter(personViewModel.currentPersonInCrewCollection, movieViewModel, tvShowViewModel)
+
         val view =  inflater.inflate(R.layout.fragment_details, container, false)
         view.tv_movieDescription.justificationMode = (LineBreaker.JUSTIFICATION_MODE_INTER_WORD)
         view.tv_header1.text = "Biography"
         view.tv_header2.text = "Performed in"
         view.tv_header3.text = "Crew of"
 
-        personDetailsAdapter= PersonDetailsAdapter(personViewModel.currentPersonInCastCollection, movieViewModel)
-        crewAdapter= CrewAdapter(personViewModel.currentPersonInCrewCollection, movieViewModel)
         personViewModel.currentPerson.observe(viewLifecycleOwner, {
             view.tv_movieDetailsTitle.text = it.name
             view.tv_movieDescription.text = it.biography
@@ -57,27 +61,30 @@ class PersonDetailsFragment : Fragment() {
             view.tv_year2.text = it.deathday
             view.tv_genresForMovie.text = "Known for: " + it.known_for_department
             view.tv_oryginalLang.text = "Place of Birth: " + it.place_of_birth
+
             val url = "https://image.tmdb.org/t/p/w185${it.profile_path}"
             Glide.with(view.iv_movieDetailsPoster).load(url).centerCrop().into(view.iv_movieDetailsPoster)
+
             personViewModel.setCurrentPersonCollection(it.id)
         })
 
-        personViewModel.currentPersonInCastCollection.observe(viewLifecycleOwner, { personDetailsAdapter.notifyDataSetChanged() })
-        personViewModel.currentPersonInCrewCollection.observe(viewLifecycleOwner, { crewAdapter.notifyDataSetChanged() })
+        personViewModel.currentPersonInCastCollection.observe(viewLifecycleOwner, { inCastAdapter.notifyDataSetChanged() })
+        personViewModel.currentPersonInCrewCollection.observe(viewLifecycleOwner, { inCrewAdapter.notifyDataSetChanged() })
 
         return view
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView = rv_actorsInMovie.apply {
-            this.layoutManager = myLayoutManager
-            this.adapter = personDetailsAdapter
+
+        inCastRecyclerView = rv_actorsInMovie.apply {
+            this.layoutManager = inCastLayoutManager
+            this.adapter = inCastAdapter
         }
-        recyclerView2 = rv_crewInMovie.apply {
-            this.layoutManager = myLayoutManager2
-            this.adapter = crewAdapter
+
+        inCrewRecyclerView = rv_crewInMovie.apply {
+            this.layoutManager = inCrewLayoutManager
+            this.adapter = inCrewAdapter
         }
     }
-
-    companion object { fun newInstance() = MovieDetailsFragment() }
 }

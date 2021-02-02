@@ -11,6 +11,6 @@ interface FavouriteDao {
     @Delete
     suspend fun deleteFavourite(fav : Favourite)
 
-    @Query("SELECT * FROM favourites_table ORDER BY date")
+    @Query("SELECT * FROM favourites_table ORDER BY id DESC")
     fun getAllFavourites() : LiveData<List<Favourite>>
 }

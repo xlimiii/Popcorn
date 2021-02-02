@@ -16,34 +16,34 @@ import com.bumptech.glide.Glide
 import com.example.popcorn.R
 import com.example.popcorn.viewmodel.MovieViewModel
 import com.example.popcorn.viewmodel.PersonViewModel
-import com.example.popcorn.viewmodel.adapters.details.CrewAdapter
 import com.example.popcorn.viewmodel.adapters.details.CrewInMovieAndTVShowAdapter
-import com.example.popcorn.viewmodel.adapters.details.MovieDetailsAdapter
+import com.example.popcorn.viewmodel.adapters.details.CastInMovieAndTVShowAdapter
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.fragment_details.view.*
 
 class MovieDetailsFragment : Fragment() {
     private lateinit var movieViewModel: MovieViewModel
     private lateinit var personViewModel: PersonViewModel
-    private lateinit var movieDetailsAdapter: MovieDetailsAdapter
+
+    private lateinit var castAdapter: CastInMovieAndTVShowAdapter
     private lateinit var crewAdapter: CrewInMovieAndTVShowAdapter
 
-    private lateinit var myLayoutManager : LinearLayoutManager
-    private lateinit var myLayoutManager2 : LinearLayoutManager
-
-    private lateinit var recyclerView : RecyclerView
-    private lateinit var recyclerView2 : RecyclerView
-
+    private lateinit var castLayoutManager : LinearLayoutManager
+    private lateinit var crewLayoutManager : LinearLayoutManager
+    private lateinit var castRecyclerView : RecyclerView
+    private lateinit var crewRecyclerView : RecyclerView
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        myLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        myLayoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        castLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        crewLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         movieViewModel = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
         personViewModel = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
+
+        castAdapter = CastInMovieAndTVShowAdapter(movieViewModel.currentMovieCast, personViewModel)
+        crewAdapter = CrewInMovieAndTVShowAdapter(movieViewModel.currentMovieCrew, personViewModel)
 
         val view =  inflater.inflate(R.layout.fragment_details, container, false)
         view.tv_movieDescription.justificationMode = (LineBreaker.JUSTIFICATION_MODE_INTER_WORD)
@@ -51,39 +51,41 @@ class MovieDetailsFragment : Fragment() {
         view.tv_header2.text = "Cast"
         view.tv_header3.text = "Crew"
 
-        movieDetailsAdapter= MovieDetailsAdapter(movieViewModel.currentMovieCast, personViewModel)
-        crewAdapter = CrewInMovieAndTVShowAdapter(movieViewModel.currentMovieCrew, personViewModel)
         movieViewModel.currentMovie.observe(viewLifecycleOwner, {
             view.tv_movieDetailsTitle.text = it.title
             view.tv_movieDescription.text = it.overview
             view.tv_year.text = it.release_date
-            var genresText = ""
-            var languagesText = ""
 
+            var genresText = ""
             it.genres.forEach { x -> genresText += x.name + " "}
             view.tv_genresForMovie.text = genresText
+
+            var languagesText = ""
             it.spoken_languages.forEach{ x -> languagesText += x.english_name + " "}
             view.tv_oryginalLang.text = "Languages: $languagesText"
+
             val url = "https://image.tmdb.org/t/p/w185${it.poster_path}"
             Glide.with(view.iv_movieDetailsPoster).load(url).centerCrop().into(view.iv_movieDetailsPoster)
+
             movieViewModel.setPeopleConnectedWithCurrentMovie(it.id)
         })
 
-        movieViewModel.currentMovieCast.observe(viewLifecycleOwner, { movieDetailsAdapter.notifyDataSetChanged() })
+        movieViewModel.currentMovieCast.observe(viewLifecycleOwner, { castAdapter.notifyDataSetChanged() })
         movieViewModel.currentMovieCrew.observe(viewLifecycleOwner, { crewAdapter.notifyDataSetChanged() })
 
         return view
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView = rv_actorsInMovie.apply {
-            this.layoutManager = myLayoutManager
-            this.adapter = movieDetailsAdapter
+
+        castRecyclerView = rv_actorsInMovie.apply {
+            this.layoutManager = castLayoutManager
+            this.adapter = castAdapter
         }
-        recyclerView2 = rv_crewInMovie.apply {
-            this.layoutManager = myLayoutManager2
+
+        crewRecyclerView = rv_crewInMovie.apply {
+            this.layoutManager = crewLayoutManager
             this.adapter = crewAdapter
         }
     }
-    companion object { fun newInstance() = MovieDetailsFragment() }
 }
