@@ -25,7 +25,7 @@ class PersonListFragment : Fragment() {
         personVM = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
 
         personVM.setPeopleWithMatchingName("")
-        personListAdapter = PersonListAdapter(personVM.peopleWithMatchingName, personVM, 0)
+        personListAdapter = PersonListAdapter(personVM.peopleWithMatchingName, personVM, "PersonListFragment")
 
         personVM.peopleWithMatchingName.observe(viewLifecycleOwner, { personListAdapter.notifyDataSetChanged() })
 

@@ -16,18 +16,20 @@ import com.example.popcorn.viewmodel.PersonViewModel
 
 class PersonListAdapter(private val people: LiveData<List<Person>>,
                         private val personVM : PersonViewModel,
-                        private val fromCalled: Int) : RecyclerView.Adapter<PersonListAdapter.ActorHolder>() {
+                        private val inFragment : String) : RecyclerView.Adapter<PersonListAdapter.PersonHolder>() {
 
-    inner class ActorHolder(view: View): RecyclerView.ViewHolder(view)
+    inner class PersonHolder(view: View): RecyclerView.ViewHolder(view)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonHolder {
         val view : View =
-                if (fromCalled == 0)  LayoutInflater.from(parent.context).inflate(R.layout.person_row, parent, false)
-                else LayoutInflater.from(parent.context).inflate(R.layout.tile, parent, false)
-        return ActorHolder(view)
+                if (inFragment == "PersonListFragment")
+                    LayoutInflater.from(parent.context).inflate(R.layout.person_row, parent, false)
+                else
+                    LayoutInflater.from(parent.context).inflate(R.layout.tile, parent, false)
+        return PersonHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ActorHolder, position: Int) {
+    override fun onBindViewHolder(holder: PersonHolder, position: Int) {
         val name = holder.itemView.findViewById<TextView>(R.id.tv_personName)
         name.text = people.value?.get(position)?.name.toString()
 
@@ -35,7 +37,7 @@ class PersonListAdapter(private val people: LiveData<List<Person>>,
         val url = "https://image.tmdb.org/t/p/w185${people.value?.get(position)?.profile_path}"
         Glide.with(holder.itemView).load(url).centerCrop().into(avatar)
 
-        if (fromCalled == 0) {
+        if (inFragment == "PersonListFragment") {
             val actorRowBackground = holder.itemView.findViewById<LinearLayout>(R.id.actorRowBackground)
             actorRowBackground.setOnClickListener {
                 people.value?.let { item -> personVM.setCurrentPerson(item[position].id) }

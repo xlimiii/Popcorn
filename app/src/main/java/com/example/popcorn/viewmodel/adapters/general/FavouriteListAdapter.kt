@@ -20,16 +20,16 @@ import com.example.popcorn.viewmodel.TVShowViewModel
 class FavouriteListAdapter(private val favouriteMovies: LiveData<List<Favourite>>,
                            private val favVM: FavouriteViewModel,
                            private val movieVM: MovieViewModel,
-                           private val tvsVM: TVShowViewModel) : RecyclerView.Adapter<FavouriteListAdapter.MovieHolder>() {
+                           private val tvsVM: TVShowViewModel) : RecyclerView.Adapter<FavouriteListAdapter.FavouriteHolder>() {
 
-    inner class MovieHolder(view: View): RecyclerView.ViewHolder(view)
+    inner class FavouriteHolder(view: View): RecyclerView.ViewHolder(view)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouriteHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_row, parent, false)
-        return MovieHolder(view)
+        return FavouriteHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MovieHolder, position: Int) {
+    override fun onBindViewHolder(holder: FavouriteHolder, position: Int) {
         val name = holder.itemView.findViewById<TextView>(R.id.tv_movieTitle)
         name.text = favouriteMovies.value?.get(position)?.title.toString()
 

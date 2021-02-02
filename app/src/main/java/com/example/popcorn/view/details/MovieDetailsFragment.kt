@@ -16,8 +16,7 @@ import com.bumptech.glide.Glide
 import com.example.popcorn.R
 import com.example.popcorn.viewmodel.MovieViewModel
 import com.example.popcorn.viewmodel.PersonViewModel
-import com.example.popcorn.viewmodel.adapters.details.CrewInMovieAndTVShowAdapter
-import com.example.popcorn.viewmodel.adapters.details.CastInMovieAndTVShowAdapter
+import com.example.popcorn.viewmodel.adapters.details.PeopleInMovieAndTVShowAdapter
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.fragment_details.view.*
 
@@ -25,8 +24,8 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var movieViewModel: MovieViewModel
     private lateinit var personViewModel: PersonViewModel
 
-    private lateinit var castAdapter: CastInMovieAndTVShowAdapter
-    private lateinit var crewAdapter: CrewInMovieAndTVShowAdapter
+    private lateinit var castAdapter: PeopleInMovieAndTVShowAdapter
+    private lateinit var crewAdapter: PeopleInMovieAndTVShowAdapter
 
     private lateinit var castLayoutManager : LinearLayoutManager
     private lateinit var crewLayoutManager : LinearLayoutManager
@@ -42,8 +41,10 @@ class MovieDetailsFragment : Fragment() {
         movieViewModel = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
         personViewModel = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
 
-        castAdapter = CastInMovieAndTVShowAdapter(movieViewModel.currentMovieCast, personViewModel)
-        crewAdapter = CrewInMovieAndTVShowAdapter(movieViewModel.currentMovieCrew, personViewModel)
+        castAdapter = PeopleInMovieAndTVShowAdapter(movieViewModel.currentMovieCast,
+                personViewModel, "movie", "cast")
+        crewAdapter = PeopleInMovieAndTVShowAdapter(movieViewModel.currentMovieCrew,
+                personViewModel, "movie", "crew")
 
         val view =  inflater.inflate(R.layout.fragment_details, container, false)
         view.tv_movieDescription.justificationMode = (LineBreaker.JUSTIFICATION_MODE_INTER_WORD)

@@ -17,14 +17,13 @@ import com.example.popcorn.R
 import com.example.popcorn.viewmodel.MovieViewModel
 import com.example.popcorn.viewmodel.PersonViewModel
 import com.example.popcorn.viewmodel.TVShowViewModel
-import com.example.popcorn.viewmodel.adapters.details.PersonInCrewAdapter
-import com.example.popcorn.viewmodel.adapters.details.PersonInCastAdapter
+import com.example.popcorn.viewmodel.adapters.details.MoviesAndTVShowsInPersonAdapter
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.fragment_details.view.*
 
 class PersonDetailsFragment : Fragment() {
-    private lateinit var inCastAdapter: PersonInCastAdapter
-    private lateinit var inCrewAdapter: PersonInCrewAdapter
+    private lateinit var inCastAdapter: MoviesAndTVShowsInPersonAdapter
+    private lateinit var inCrewAdapter: MoviesAndTVShowsInPersonAdapter
 
     private lateinit var personViewModel : PersonViewModel
     private lateinit var movieViewModel : MovieViewModel
@@ -45,8 +44,10 @@ class PersonDetailsFragment : Fragment() {
         movieViewModel = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
         tvShowViewModel = ViewModelProvider(requireActivity()).get(TVShowViewModel::class.java)
 
-        inCastAdapter = PersonInCastAdapter(personViewModel.currentPersonInCastCollection, movieViewModel, tvShowViewModel)
-        inCrewAdapter = PersonInCrewAdapter(personViewModel.currentPersonInCrewCollection, movieViewModel, tvShowViewModel)
+        inCastAdapter = MoviesAndTVShowsInPersonAdapter(personViewModel.currentPersonInCastCollection,
+                movieViewModel, tvShowViewModel, "inCast")
+        inCrewAdapter = MoviesAndTVShowsInPersonAdapter(personViewModel.currentPersonInCrewCollection,
+                movieViewModel, tvShowViewModel, "inCrew")
 
         val view =  inflater.inflate(R.layout.fragment_details, container, false)
         view.tv_movieDescription.justificationMode = (LineBreaker.JUSTIFICATION_MODE_INTER_WORD)

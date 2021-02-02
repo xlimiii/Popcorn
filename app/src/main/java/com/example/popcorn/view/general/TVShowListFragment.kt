@@ -28,7 +28,7 @@ class TVShowListFragment : Fragment() {
         favVM = ViewModelProvider(requireActivity()).get(FavouriteViewModel::class.java)
 
         TVShowVM.setTVShowsWithMatchingTitle("")
-        TVShowListAdapter = TVShowListAdapter(TVShowVM.TVShowsWithMatchingTitle, TVShowVM, favVM, 0)
+        TVShowListAdapter = TVShowListAdapter(TVShowVM.TVShowsWithMatchingTitle, TVShowVM, favVM, "TVShowListFragment")
 
         TVShowVM.TVShowsWithMatchingTitle.observe(viewLifecycleOwner, { TVShowListAdapter.notifyDataSetChanged() })
         favVM.favourites.observe(viewLifecycleOwner, { TVShowListAdapter.notifyDataSetChanged() })

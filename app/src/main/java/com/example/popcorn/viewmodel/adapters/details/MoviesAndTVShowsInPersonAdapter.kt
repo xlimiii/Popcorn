@@ -15,9 +15,10 @@ import com.example.popcorn.model.GeneralObject
 import com.example.popcorn.viewmodel.MovieViewModel
 import com.example.popcorn.viewmodel.TVShowViewModel
 
-class PersonInCrewAdapter(private val moviesAndTVShows: LiveData<List<GeneralObject>>,
-                          private val movieVM: MovieViewModel,
-                          private val tvsVM : TVShowViewModel) : RecyclerView.Adapter<PersonInCrewAdapter.PersonHolder>() {
+class MoviesAndTVShowsInPersonAdapter(private val moviesAndTVShows: LiveData<List<GeneralObject>>,
+                                      private val movieVM: MovieViewModel,
+                                      private val tvsVM: TVShowViewModel,
+                                      private val inCastOrInCrew : String) : RecyclerView.Adapter<MoviesAndTVShowsInPersonAdapter.PersonHolder>() {
 
     inner class PersonHolder(view: View): RecyclerView.ViewHolder(view)
 
@@ -34,7 +35,9 @@ class PersonInCrewAdapter(private val moviesAndTVShows: LiveData<List<GeneralObj
                 else moviesAndTVShows.value?.get(position)?.name.toString()
 
         val character = holder.itemView.findViewById<TextView>(R.id.tv_characterName)
-        character.text = moviesAndTVShows.value?.get(position)?.department
+        character.text =
+                if (inCastOrInCrew == "inCast") moviesAndTVShows.value?.get(position)?.character
+                else moviesAndTVShows.value?.get(position)?.department
 
         val poster = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
         val url = "https://image.tmdb.org/t/p/w185${moviesAndTVShows.value?.get(position)?.poster_path}"

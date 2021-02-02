@@ -20,21 +20,23 @@ import com.example.popcorn.viewmodel.TVShowViewModel
 class TVShowListAdapter(private val TVShows : LiveData<List<TVShow>>,
                         private val TVShowVM : TVShowViewModel,
                         private val favVM : FavouriteViewModel,
-                        private val fromCalled: Int) : RecyclerView.Adapter<TVShowListAdapter.TVShowHolder>() {
+                        private val inFragment : String) : RecyclerView.Adapter<TVShowListAdapter.TVShowHolder>() {
 
     inner class TVShowHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TVShowHolder {
         val view: View =
-                if (fromCalled == 0) LayoutInflater.from(parent.context).inflate(R.layout.movie_row, parent, false)
-                else LayoutInflater.from(parent.context).inflate(R.layout.tile, parent, false)
+                if (inFragment == "TVShowListFragment")
+                    LayoutInflater.from(parent.context).inflate(R.layout.movie_row, parent, false)
+                else
+                    LayoutInflater.from(parent.context).inflate(R.layout.tile, parent, false)
         return TVShowHolder(view)
     }
 
     override fun onBindViewHolder(holder: TVShowHolder, position: Int) {
         val url = "https://image.tmdb.org/t/p/w185${TVShows.value?.get(position)?.poster_path}"
 
-        if (fromCalled == 0) {
+        if (inFragment == "TVShowListFragment") {
             val name = holder.itemView.findViewById<TextView>(R.id.tv_movieTitle)
             name.text = TVShows.value?.get(position)?.name.toString()
 

@@ -28,7 +28,7 @@ class MovieListFragment : Fragment() {
         favVM = ViewModelProvider(requireActivity()).get(FavouriteViewModel::class.java)
 
         movieVM.setMoviesWithMatchingTitle("")
-        movieListAdapter = MovieListAdapter(movieVM.moviesWithMatchingTitle, movieVM, favVM, 0)
+        movieListAdapter = MovieListAdapter(movieVM.moviesWithMatchingTitle, movieVM, favVM, "MovieListFragment")
 
         movieVM.moviesWithMatchingTitle.observe(viewLifecycleOwner, { movieListAdapter.notifyDataSetChanged() })
         favVM.favourites.observe(viewLifecycleOwner, { movieListAdapter.notifyDataSetChanged() })

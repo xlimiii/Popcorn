@@ -50,9 +50,9 @@ class HomeFragment : Fragment() {
         personVM.setPeopleWithMatchingName("")
         tvShowVM.setTVShowsWithMatchingTitle("")
 
-        movieListAdapter = MovieListAdapter(movieVM.moviesWithMatchingTitle, movieVM, favVM, 1)
-        personListAdapter = PersonListAdapter(personVM.peopleWithMatchingName, personVM, 1)
-        tvShowListAdapter = TVShowListAdapter(tvShowVM.TVShowsWithMatchingTitle, tvShowVM, favVM,1)
+        movieListAdapter = MovieListAdapter(movieVM.moviesWithMatchingTitle, movieVM, favVM, "HomeFragment")
+        personListAdapter = PersonListAdapter(personVM.peopleWithMatchingName, personVM, "HomeFragment")
+        tvShowListAdapter = TVShowListAdapter(tvShowVM.TVShowsWithMatchingTitle, tvShowVM, favVM,"HomeFragment")
 
         movieVM.moviesWithMatchingTitle.observe(viewLifecycleOwner, { movieListAdapter.notifyDataSetChanged() })
         personVM.peopleWithMatchingName.observe(viewLifecycleOwner, { personListAdapter.notifyDataSetChanged() })

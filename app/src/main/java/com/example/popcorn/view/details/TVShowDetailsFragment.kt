@@ -16,8 +16,7 @@ import com.bumptech.glide.Glide
 import com.example.popcorn.R
 import com.example.popcorn.viewmodel.PersonViewModel
 import com.example.popcorn.viewmodel.TVShowViewModel
-import com.example.popcorn.viewmodel.adapters.details.CastInMovieAndTVShowAdapter
-import com.example.popcorn.viewmodel.adapters.details.CrewInMovieAndTVShowAdapter
+import com.example.popcorn.viewmodel.adapters.details.PeopleInMovieAndTVShowAdapter
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.fragment_details.view.*
 
@@ -25,8 +24,8 @@ class TVShowDetailsFragment : Fragment() {
     private lateinit var tvsViewModel : TVShowViewModel
     private lateinit var personViewModel : PersonViewModel
 
-    private lateinit var castAdapter : CastInMovieAndTVShowAdapter
-    private lateinit var crewAdapter : CrewInMovieAndTVShowAdapter
+    private lateinit var castAdapter : PeopleInMovieAndTVShowAdapter
+    private lateinit var crewAdapter : PeopleInMovieAndTVShowAdapter
 
     private lateinit var castLayoutManager : LinearLayoutManager
     private lateinit var crewLayoutManager : LinearLayoutManager
@@ -42,8 +41,10 @@ class TVShowDetailsFragment : Fragment() {
         tvsViewModel = ViewModelProvider(requireActivity()).get(TVShowViewModel::class.java)
         personViewModel = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
 
-        castAdapter = CastInMovieAndTVShowAdapter(tvsViewModel.currentTVShowCast, personViewModel)
-        crewAdapter = CrewInMovieAndTVShowAdapter(tvsViewModel.currentTVShowCrew, personViewModel)
+        castAdapter = PeopleInMovieAndTVShowAdapter(tvsViewModel.currentTVShowCast,
+                personViewModel, "TVShow", "cast")
+        crewAdapter = PeopleInMovieAndTVShowAdapter(tvsViewModel.currentTVShowCrew,
+                personViewModel, "TVShow", "crew")
 
         val view =  inflater.inflate(R.layout.fragment_details, container, false)
         view.tv_movieDescription.justificationMode = (LineBreaker.JUSTIFICATION_MODE_INTER_WORD)
