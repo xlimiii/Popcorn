@@ -29,12 +29,12 @@ class MovieListAdapter(private val movies : LiveData<List<Movie>>, private val m
     }
 
     override fun onBindViewHolder(holder: MovieHolder, position: Int) {
+        val url = "https://image.tmdb.org/t/p/w185${movies.value?.get(position)?.poster_path}"
         if (fromCalled == 0) {
             val name = holder.itemView.findViewById<TextView>(R.id.tv_movieTitle)
             name.text = movies.value?.get(position)?.title.toString()
 
             val poster = holder.itemView.findViewById<ImageView>(R.id.iv_moviePoster)
-            val url = "https://image.tmdb.org/t/p/w185${movies.value?.get(position)?.poster_path}"
             Glide.with(holder.itemView).load(url).centerCrop().into(poster)
 
             val movieRowBackground = holder.itemView.findViewById<ConstraintLayout>(R.id.movieRowBackground)
@@ -61,19 +61,20 @@ class MovieListAdapter(private val movies : LiveData<List<Movie>>, private val m
 
         } else {
             val name = holder.itemView.findViewById<TextView>(R.id.tv_personName)
+            name.text = movies.value?.get(position)?.title.toString()
             val character = holder.itemView.findViewById<TextView>(R.id.tv_characterName)
 
             val poster = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
             val movieRowBackground = holder.itemView.findViewById<LinearLayout>(R.id.tileBackground)
-            val url = "https://image.tmdb.org/t/p/w185${movies.value?.get(position)?.poster_path}"
+
             Glide.with(holder.itemView)
                     .load(url)
                     .centerCrop()
                     .into(poster)
-            name.text = movies.value?.get(position)?.title.toString()
+
             character.text = movies.value?.get(position)?.character
             movieRowBackground.setOnClickListener {  movies.value?.let { it1 -> movieVM.setCurrentMovie(it1.get(position).id) }
-                movieRowBackground.findNavController().navigate(R.id.action_actorDetailsFragment_to_movieDetailsFragment) }
+                movieRowBackground.findNavController().navigate(R.id.action_homeFragment_to_movieDetailsFragment) }
         }
 
     }

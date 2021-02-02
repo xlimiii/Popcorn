@@ -28,21 +28,21 @@ class ActorListAdapter(val actors: LiveData<List<Person>>, private val personVM 
     }
 
     override fun onBindViewHolder(holder: ActorHolder, position: Int) {
-        if(fromCalled == 0){
         val name = holder.itemView.findViewById<TextView>(R.id.tv_personName)
         val avatar = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
-        val actorRowBackground = holder.itemView.findViewById<LinearLayout>(R.id.actorRowBackground)
+
         val url = "https://image.tmdb.org/t/p/w185${actors.value?.get(position)?.profile_path}"
         Glide.with(holder.itemView)
-            .load(url)
-            .centerCrop()
-            .into(avatar)
+                .load(url)
+                .centerCrop()
+                .into(avatar)
         name.text = actors.value?.get(position)?.name.toString()
+        if(fromCalled == 0){
+            val actorRowBackground = holder.itemView.findViewById<LinearLayout>(R.id.actorRowBackground)
         actorRowBackground.setOnClickListener {  actors.value?.let { it1 -> personVM.setCurrentPerson(it1.get(position).id) }
             actorRowBackground.findNavController().navigate(R.id.action_actorListFragment_to_actorDetailsFragment) }}
         else {
-            val name = holder.itemView.findViewById<TextView>(R.id.tv_personName)
-            val avatar = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
+
             val character = holder.itemView.findViewById<TextView>(R.id.tv_characterName)
             val actorRowBackground = holder.itemView.findViewById<LinearLayout>(R.id.tileBackground)
             val url = "https://image.tmdb.org/t/p/w185${actors.value?.get(position)?.profile_path}"
@@ -53,7 +53,7 @@ class ActorListAdapter(val actors: LiveData<List<Person>>, private val personVM 
             name.text = actors.value?.get(position)?.name.toString()
             character.text = actors.value?.get(position)?.character
             actorRowBackground.setOnClickListener {  actors.value?.let { it1 -> personVM.setCurrentPerson(it1.get(position).id) }
-                actorRowBackground.findNavController().navigate(R.id.action_movieDetailsFragment_to_actorDetailsFragment) }
+                actorRowBackground.findNavController().navigate(R.id.action_homeFragment_to_actorDetailsFragment) }
         }
     }
 

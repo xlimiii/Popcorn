@@ -7,5 +7,6 @@
     <string name="actors">Actors</string>
     <string name="directors">Directors</string>
     <string name="favourite">Favourite</string>
+    <string name="people">People</string>
 
 </resources>

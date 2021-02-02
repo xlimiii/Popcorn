@@ -11,6 +11,15 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
 
+        <action
+            android:id="@+id/action_homeFragment_to_actorDetailsFragment"
+            app:destination="@id/actorDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_TVShowDetailsFragment"
+            app:destination="@id/TVShowDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieListFragment"
