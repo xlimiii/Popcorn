@@ -16,6 +16,8 @@ import com.bumptech.glide.Glide
 import com.example.popcorn.R
 import com.example.popcorn.viewmodel.MovieViewModel
 import com.example.popcorn.viewmodel.PersonViewModel
+import com.example.popcorn.viewmodel.adapters.details.CrewAdapter
+import com.example.popcorn.viewmodel.adapters.details.CrewInMovieAndTVShowAdapter
 import com.example.popcorn.viewmodel.adapters.details.MovieDetailsAdapter
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.fragment_details.view.*
@@ -24,14 +26,22 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var movieViewModel: MovieViewModel
     private lateinit var personViewModel: PersonViewModel
     private lateinit var movieDetailsAdapter: MovieDetailsAdapter
+    private lateinit var crewAdapter: CrewInMovieAndTVShowAdapter
+
     private lateinit var myLayoutManager : LinearLayoutManager
+    private lateinit var myLayoutManager2 : LinearLayoutManager
+
     private lateinit var recyclerView : RecyclerView
+    private lateinit var recyclerView2 : RecyclerView
+
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         myLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        myLayoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
         movieViewModel = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
         personViewModel = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
 
@@ -39,7 +49,10 @@ class MovieDetailsFragment : Fragment() {
         view.tv_movieDescription.justificationMode = (LineBreaker.JUSTIFICATION_MODE_INTER_WORD)
         view.tv_header1.text = "Description"
         view.tv_header2.text = "Cast"
+        view.tv_header3.text = "Crew"
+
         movieDetailsAdapter= MovieDetailsAdapter(movieViewModel.currentMovieCast, personViewModel)
+        crewAdapter = CrewInMovieAndTVShowAdapter(movieViewModel.currentMovieCrew, personViewModel)
         movieViewModel.currentMovie.observe(viewLifecycleOwner, {
             view.tv_movieDetailsTitle.text = it.title
             view.tv_movieDescription.text = it.overview
@@ -57,6 +70,8 @@ class MovieDetailsFragment : Fragment() {
         })
 
         movieViewModel.currentMovieCast.observe(viewLifecycleOwner, { movieDetailsAdapter.notifyDataSetChanged() })
+        movieViewModel.currentMovieCrew.observe(viewLifecycleOwner, { crewAdapter.notifyDataSetChanged() })
+
         return view
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,6 +79,10 @@ class MovieDetailsFragment : Fragment() {
         recyclerView = rv_actorsInMovie.apply {
             this.layoutManager = myLayoutManager
             this.adapter = movieDetailsAdapter
+        }
+        recyclerView2 = rv_crewInMovie.apply {
+            this.layoutManager = myLayoutManager2
+            this.adapter = crewAdapter
         }
     }
     companion object { fun newInstance() = MovieDetailsFragment() }

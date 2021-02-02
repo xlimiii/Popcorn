@@ -7,5 +7,8 @@ data class GeneralObject (
         val title : String,
         val name : String,
         val profile_path : String,
-        val character : String
+        val character : String,
+        val department: String,
+
+
         )

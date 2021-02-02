@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.example.popcorn.R
 import com.example.popcorn.viewmodel.PersonViewModel
 import com.example.popcorn.viewmodel.TVShowViewModel
+import com.example.popcorn.viewmodel.adapters.details.CrewInMovieAndTVShowAdapter
 import com.example.popcorn.viewmodel.adapters.details.TVShowDetailsAdapter
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.fragment_details.view.*
@@ -24,14 +25,19 @@ class TVShowDetailsFragment : Fragment() {
     private lateinit var tvsViewModel : TVShowViewModel
     private lateinit var personViewModel : PersonViewModel
     private lateinit var tvsDetailsAdapter : TVShowDetailsAdapter
+    private lateinit var crewAdapter : CrewInMovieAndTVShowAdapter
     private lateinit var myLayoutManager : LinearLayoutManager
     private lateinit var recyclerView : RecyclerView
+    private lateinit var myLayoutManager2 : LinearLayoutManager
+    private lateinit var recyclerView2 : RecyclerView
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         myLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        myLayoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
         tvsViewModel = ViewModelProvider(requireActivity()).get(TVShowViewModel::class.java)
         personViewModel = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
 
@@ -39,7 +45,11 @@ class TVShowDetailsFragment : Fragment() {
         view.tv_movieDescription.justificationMode = (LineBreaker.JUSTIFICATION_MODE_INTER_WORD)
         view.tv_header1.text = "Description"
         view.tv_header2.text = "Cast"
+        view.tv_header3.text = "Crew"
+
         tvsDetailsAdapter = TVShowDetailsAdapter(tvsViewModel.currentTVShowCast, personViewModel)
+        crewAdapter = CrewInMovieAndTVShowAdapter(tvsViewModel.currentTVShowCrew, personViewModel)
+
         tvsViewModel.currentTVShow.observe(viewLifecycleOwner, {
             view.tv_movieDetailsTitle.text = it.name
             view.tv_movieDescription.text = it.overview
@@ -57,6 +67,8 @@ class TVShowDetailsFragment : Fragment() {
         })
 
         tvsViewModel.currentTVShowCast.observe(viewLifecycleOwner, { tvsDetailsAdapter.notifyDataSetChanged() })
+        tvsViewModel.currentTVShowCast.observe(viewLifecycleOwner, { crewAdapter.notifyDataSetChanged() })
+
         return view
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,6 +76,10 @@ class TVShowDetailsFragment : Fragment() {
         recyclerView = rv_actorsInMovie.apply {
             this.layoutManager = myLayoutManager
             this.adapter = tvsDetailsAdapter
+        }
+        recyclerView2 = rv_crewInMovie.apply {
+            this.layoutManager = myLayoutManager2
+            this.adapter = crewAdapter
         }
     }
     companion object { fun newInstance() = MovieDetailsFragment() }
