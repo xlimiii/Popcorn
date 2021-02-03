@@ -29,7 +29,7 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
             if (response.isSuccessful)
             {
                 val data = response.body()!!
-                moviesWithMatchingTitle.value = data.results
+                moviesWithMatchingTitle.value = data.results.sortedByDescending { it.popularity }
             }
         }
     }
@@ -58,8 +58,8 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
             if (response.isSuccessful)
             {
                 val data = response.body()!!
-                currentMovieCast.value = data.cast
-                currentMovieCrew.value = data.crew
+                currentMovieCast.value = data.cast.sortedByDescending { it.popularity }
+                currentMovieCrew.value = data.crew.sortedByDescending { it.popularity }
             }
         }
     }

@@ -9,6 +9,5 @@ data class GeneralObject (
         val profile_path : String,
         val character : String,
         val department: String,
-
-
-        )
+        val popularity : Double,
+)

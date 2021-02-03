@@ -28,7 +28,7 @@ class TVShowViewModel(application: Application) : AndroidViewModel(application) 
             if (response.isSuccessful)
             {
                 val data = response.body()!!
-                TVShowsWithMatchingTitle.value = data.results
+                TVShowsWithMatchingTitle.value = data.results.sortedByDescending { it.popularity }
             }
         }
     }
@@ -57,8 +57,8 @@ class TVShowViewModel(application: Application) : AndroidViewModel(application) 
             if (response.isSuccessful)
             {
                 val data = response.body()!!
-                currentTVShowCast.value = data.cast
-                currentTVShowCrew.value = data.crew
+                currentTVShowCast.value = data.cast.sortedByDescending { it.popularity }
+                currentTVShowCrew.value = data.crew.sortedByDescending { it.popularity }
             }
         }
     }

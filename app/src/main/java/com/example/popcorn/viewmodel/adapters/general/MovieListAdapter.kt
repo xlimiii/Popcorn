@@ -52,13 +52,15 @@ class MovieListAdapter(private val movies : LiveData<List<Movie>>,
 
             val addToFav = holder.itemView.findViewById<ImageButton>(R.id.btn_addToFav)
             addToFav.setOnClickListener { movies.value?.get(position)?.let { item -> favVM.addFavourite(item) } }
+            val delFromFav = holder.itemView.findViewById<ImageButton>(R.id.btn_delFromFav)
+            addToFav.visibility = View.VISIBLE
+            delFromFav.visibility = View.GONE
 
             // IF THIS MOVIE IS IN FAVOURITES:
             val favouriteMovie = favVM.favourites.value?.find {
                 x -> x.media_type == "movie" && x.movieOrTVShowID == movies.value?.get(position)?.id }
             if (favouriteMovie != null)
             {
-                val delFromFav = holder.itemView.findViewById<ImageButton>(R.id.btn_delFromFav)
                 delFromFav.setOnClickListener {
                     favVM.deleteFavorite(favouriteMovie.id)
                     addToFav.visibility = View.VISIBLE

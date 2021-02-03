@@ -28,7 +28,7 @@ class PersonViewModel(application: Application) : AndroidViewModel(application) 
             if (response.isSuccessful)
             {
                 val data = response.body()!!
-                peopleWithMatchingName.value = data.results
+                peopleWithMatchingName.value = data.results.sortedByDescending { it.popularity }
             }
         }
     }
@@ -57,8 +57,8 @@ class PersonViewModel(application: Application) : AndroidViewModel(application) 
             if (response.isSuccessful)
             {
                 val data = response.body()!!
-                currentPersonInCastCollection.value = data.cast
-                currentPersonInCrewCollection.value = data.crew
+                currentPersonInCastCollection.value = data.cast.sortedByDescending { it.popularity }
+                currentPersonInCrewCollection.value = data.crew.sortedByDescending { it.popularity }
             }
         }
     }
