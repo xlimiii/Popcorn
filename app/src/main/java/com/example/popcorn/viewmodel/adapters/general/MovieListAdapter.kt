@@ -16,6 +16,7 @@ import com.example.popcorn.model.Movie
 import com.example.popcorn.viewmodel.MovieViewModel
 import com.bumptech.glide.Glide
 import com.example.popcorn.viewmodel.FavouriteViewModel
+import org.w3c.dom.Text
 
 
 class MovieListAdapter(private val movies : LiveData<List<Movie>>,
@@ -28,33 +29,42 @@ class MovieListAdapter(private val movies : LiveData<List<Movie>>,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieHolder {
         val view: View =
                 if (inFragment == "MovieListFragment")
-                    LayoutInflater.from(parent.context).inflate(R.layout.movie_row, parent, false)
+                    LayoutInflater.from(parent.context).inflate(R.layout.movie_tv_fav_row, parent, false)
                 else
                     LayoutInflater.from(parent.context).inflate(R.layout.tile, parent, false)
         return MovieHolder(view)
     }
 
     override fun onBindViewHolder(holder: MovieHolder, position: Int) {
-        val url = "https://image.tmdb.org/t/p/w185${movies.value?.get(position)?.poster_path}"
-
         if (inFragment == "MovieListFragment") {
+            // title:
             val name = holder.itemView.findViewById<TextView>(R.id.tv_movieTitle)
             name.text = movies.value?.get(position)?.title.toString()
 
+            // poster:
             val poster = holder.itemView.findViewById<ImageView>(R.id.iv_moviePoster)
-            Glide.with(holder.itemView).load(url).centerCrop().into(poster)
+            if (!movies.value?.get(position)?.poster_path.isNullOrEmpty())
+            {
+                val url = "https://image.tmdb.org/t/p/w185${movies.value?.get(position)?.poster_path}"
+                Glide.with(holder.itemView).load(url).centerCrop().into(poster)
+            }
+            //else Glide.with(holder.itemView).load("LINK HERE").centerCrop().into(poster)
 
+            // navigation:
             val movieRowBackground = holder.itemView.findViewById<ConstraintLayout>(R.id.movieRowBackground)
             movieRowBackground.setOnClickListener {
                 movies.value?.let { item -> movieVM.setCurrentMovie(item[position].id) }
                 movieRowBackground.findNavController().navigate(R.id.action_movieListFragment_to_movieDetailsFragment)
             }
 
+            // fav button:
             val addToFav = holder.itemView.findViewById<ImageButton>(R.id.btn_addToFav)
-            addToFav.setOnClickListener { movies.value?.get(position)?.let { item -> favVM.addFavourite(item) } }
             val delFromFav = holder.itemView.findViewById<ImageButton>(R.id.btn_delFromFav)
+            val favDate = holder.itemView.findViewById<TextView>(R.id.tv_favDate)
+            addToFav.setOnClickListener { movies.value?.get(position)?.let { item -> favVM.addFavourite(item) } }
             addToFav.visibility = View.VISIBLE
             delFromFav.visibility = View.GONE
+            favDate.text = ""
 
             // IF THIS MOVIE IS IN FAVOURITES:
             val favouriteMovie = favVM.favourites.value?.find {
@@ -68,18 +78,28 @@ class MovieListAdapter(private val movies : LiveData<List<Movie>>,
                 }
                 addToFav.visibility = View.GONE
                 delFromFav.visibility = View.VISIBLE
+                favDate.text = favouriteMovie.date
             }
 
         } else {
+            // title:
             val name = holder.itemView.findViewById<TextView>(R.id.tv_personName)
             name.text = movies.value?.get(position)?.title.toString()
 
+            // who was played:
             val character = holder.itemView.findViewById<TextView>(R.id.tv_characterName)
             character.text = movies.value?.get(position)?.character
 
+            // poster:
             val poster = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
-            Glide.with(holder.itemView).load(url).centerCrop().into(poster)
+            if (!movies.value?.get(position)?.poster_path.isNullOrEmpty())
+            {
+                val url = "https://image.tmdb.org/t/p/w185${movies.value?.get(position)?.poster_path}"
+                Glide.with(holder.itemView).load(url).centerCrop().into(poster)
+            }
+            //else Glide.with(holder.itemView).load("LINK HERE").centerCrop().into(poster)
 
+            // navigation:
             val movieRowBackground = holder.itemView.findViewById<LinearLayout>(R.id.tileBackground)
             movieRowBackground.setOnClickListener {
                 movies.value?.let { item -> movieVM.setCurrentMovie(item[position].id) }

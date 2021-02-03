@@ -24,7 +24,7 @@ class FavouriteViewModel(application: Application) : AndroidViewModel(applicatio
     {
         viewModelScope.launch { repository.add(
             Favourite(id = 0, movieOrTVShowID = movie.id, title = movie.title, media_type = "movie",
-                    poster_path = movie.poster_path, release_date = movie.release_date,
+                    poster_path = movie.poster_path ?: "", release_date = movie.release_date,
                     date = SimpleDateFormat("dd-MM-yyyy").format(Date()))
         )}
     }
@@ -34,7 +34,7 @@ class FavouriteViewModel(application: Application) : AndroidViewModel(applicatio
     {
         viewModelScope.launch { repository.add(
                 Favourite(id = 0, movieOrTVShowID = tvs.id, title = tvs.name, media_type = "tv",
-                        poster_path = tvs.poster_path, release_date = tvs.first_air_date,
+                        poster_path = tvs.poster_path ?: "", release_date = tvs.first_air_date,
                         date = SimpleDateFormat("dd-MM-yyyy").format(Date()))
         )}
     }

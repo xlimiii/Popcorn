@@ -54,9 +54,23 @@ class HomeFragment : Fragment() {
         personListAdapter = PersonListAdapter(personVM.peopleWithMatchingName, personVM, "HomeFragment")
         tvShowListAdapter = TVShowListAdapter(tvShowVM.TVShowsWithMatchingTitle, tvShowVM, favVM,"HomeFragment")
 
-        movieVM.moviesWithMatchingTitle.observe(viewLifecycleOwner, { movieListAdapter.notifyDataSetChanged() })
-        personVM.peopleWithMatchingName.observe(viewLifecycleOwner, { personListAdapter.notifyDataSetChanged() })
-        tvShowVM.TVShowsWithMatchingTitle.observe(viewLifecycleOwner, { tvShowListAdapter.notifyDataSetChanged() })
+        movieVM.moviesWithMatchingTitle.observe(viewLifecycleOwner, {
+            movieListAdapter.notifyDataSetChanged()
+            if (movieVM.moviesWithMatchingTitle.value.isNullOrEmpty()) tv_homeHeader1.visibility = View.GONE
+            else tv_homeHeader1.visibility = View.VISIBLE
+        })
+
+        personVM.peopleWithMatchingName.observe(viewLifecycleOwner, {
+            personListAdapter.notifyDataSetChanged()
+            if (personVM.peopleWithMatchingName.value.isNullOrEmpty()) tv_homeHeader2.visibility = View.GONE
+            else tv_homeHeader2.visibility = View.VISIBLE
+        })
+
+        tvShowVM.TVShowsWithMatchingTitle.observe(viewLifecycleOwner, {
+            tvShowListAdapter.notifyDataSetChanged()
+            if (tvShowVM.TVShowsWithMatchingTitle.value.isNullOrEmpty()) tv_homeHeader3.visibility = View.GONE
+            else tv_homeHeader3.visibility = View.VISIBLE
+        })
 
         return inflater.inflate(R.layout.fragment_home, container, false)
     }

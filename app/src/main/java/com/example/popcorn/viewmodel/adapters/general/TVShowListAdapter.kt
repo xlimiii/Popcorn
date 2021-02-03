@@ -27,33 +27,43 @@ class TVShowListAdapter(private val TVShows : LiveData<List<TVShow>>,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TVShowHolder {
         val view: View =
                 if (inFragment == "TVShowListFragment")
-                    LayoutInflater.from(parent.context).inflate(R.layout.movie_row, parent, false)
+                    LayoutInflater.from(parent.context).inflate(R.layout.movie_tv_fav_row, parent, false)
                 else
                     LayoutInflater.from(parent.context).inflate(R.layout.tile, parent, false)
         return TVShowHolder(view)
     }
 
     override fun onBindViewHolder(holder: TVShowHolder, position: Int) {
-        val url = "https://image.tmdb.org/t/p/w185${TVShows.value?.get(position)?.poster_path}"
 
         if (inFragment == "TVShowListFragment") {
+            // title:
             val name = holder.itemView.findViewById<TextView>(R.id.tv_movieTitle)
             name.text = TVShows.value?.get(position)?.name.toString()
 
+            // poster:
             val poster = holder.itemView.findViewById<ImageView>(R.id.iv_moviePoster)
-            Glide.with(holder.itemView).load(url).centerCrop().into(poster)
+            if (!TVShows.value?.get(position)?.poster_path.isNullOrEmpty())
+            {
+                val url = "https://image.tmdb.org/t/p/w185${TVShows.value?.get(position)?.poster_path}"
+                Glide.with(holder.itemView).load(url).centerCrop().into(poster)
+            }
+            //else Glide.with(holder.itemView).load("LINK HERE").centerCrop().into(poster)
 
+            // navigation:
             val movieRowBackground = holder.itemView.findViewById<ConstraintLayout>(R.id.movieRowBackground)
             movieRowBackground.setOnClickListener {
                 TVShows.value?.get(position)?.let { item -> TVShowVM.setCurrentTVShow(item.id) }
                 movieRowBackground.findNavController().navigate(R.id.action_TVShowListFragment_to_TVShowDetailsFragment)
             }
 
+            // fav button:
             val addToFav = holder.itemView.findViewById<ImageButton>(R.id.btn_addToFav)
-            addToFav.setOnClickListener{ TVShows.value?.get(position)?.let { item -> favVM.addFavourite(item) } }
             val delFromFav = holder.itemView.findViewById<ImageButton>(R.id.btn_delFromFav)
+            val favDate = holder.itemView.findViewById<TextView>(R.id.tv_favDate)
+            addToFav.setOnClickListener{ TVShows.value?.get(position)?.let { item -> favVM.addFavourite(item) } }
             addToFav.visibility = View.VISIBLE
             delFromFav.visibility = View.GONE
+            favDate.text = ""
 
             // IF THIS MOVIE IS IN FAVOURITES:
             val favouriteMovie = favVM.favourites.value?.find {
@@ -67,17 +77,28 @@ class TVShowListAdapter(private val TVShows : LiveData<List<TVShow>>,
                 }
                 addToFav.visibility = View.GONE
                 delFromFav.visibility = View.VISIBLE
+                favDate.text = favouriteMovie.date
             }
+
         } else {
+            // title:
             val name = holder.itemView.findViewById<TextView>(R.id.tv_personName)
             name.text = TVShows.value?.get(position)?.name.toString()
 
+            // who was played:
             val character = holder.itemView.findViewById<TextView>(R.id.tv_characterName)
             character.text = TVShows.value?.get(position)?.character
 
+            // poster:
             val poster = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
-            Glide.with(holder.itemView).load(url).centerCrop().into(poster)
+            if (!TVShows.value?.get(position)?.poster_path.isNullOrEmpty())
+            {
+                val url = "https://image.tmdb.org/t/p/w185${TVShows.value?.get(position)?.poster_path}"
+                Glide.with(holder.itemView).load(url).centerCrop().into(poster)
+            }
+           // else Glide.with(holder.itemView).load("LINK HERE").centerCrop().into(poster)
 
+            // navigation:
             val movieRowBackground = holder.itemView.findViewById<LinearLayout>(R.id.tileBackground)
             movieRowBackground.setOnClickListener {
                 TVShows.value?.let { item -> TVShowVM.setCurrentTVShow(item[position].id) }

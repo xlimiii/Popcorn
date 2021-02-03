@@ -28,21 +28,28 @@ class MoviesAndTVShowsInPersonAdapter(private val moviesAndTVShows: LiveData<Lis
     }
 
     override fun onBindViewHolder(holder: PersonHolder, position: Int) {
-
+        // title:
         val name = holder.itemView.findViewById<TextView>(R.id.tv_personName)
         name.text =
                 if (moviesAndTVShows.value?.get(position)?.media_type == "movie") moviesAndTVShows.value?.get(position)?.title.toString()
                 else moviesAndTVShows.value?.get(position)?.name.toString()
 
+        // who was played:
         val character = holder.itemView.findViewById<TextView>(R.id.tv_characterName)
         character.text =
                 if (inCastOrInCrew == "inCast") moviesAndTVShows.value?.get(position)?.character
                 else moviesAndTVShows.value?.get(position)?.department
 
+        // poster:
         val poster = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
-        val url = "https://image.tmdb.org/t/p/w185${moviesAndTVShows.value?.get(position)?.poster_path}"
-        Glide.with(holder.itemView).load(url).centerCrop().into(poster)
+        if (!moviesAndTVShows.value?.get(position)?.poster_path.isNullOrEmpty())
+        {
+            val url = "https://image.tmdb.org/t/p/w185${moviesAndTVShows.value?.get(position)?.poster_path}"
+            Glide.with(holder.itemView).load(url).centerCrop().into(poster)
+        }
+        //else Glide.with(holder.itemView).load("LINK HERE").centerCrop().into(poster)
 
+        // navigation:
         val rowBackground = holder.itemView.findViewById<LinearLayout>(R.id.tileBackground)
         rowBackground.setOnClickListener {
             if (moviesAndTVShows.value?.get(position)?.media_type == "movie")

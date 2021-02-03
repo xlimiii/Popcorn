@@ -30,23 +30,35 @@ class PersonListAdapter(private val people: LiveData<List<Person>>,
     }
 
     override fun onBindViewHolder(holder: PersonHolder, position: Int) {
+        // name:
         val name = holder.itemView.findViewById<TextView>(R.id.tv_personName)
         name.text = people.value?.get(position)?.name.toString()
 
+        // photo:
         val avatar = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
-        val url = "https://image.tmdb.org/t/p/w185${people.value?.get(position)?.profile_path}"
-        Glide.with(holder.itemView).load(url).centerCrop().into(avatar)
+        if (!people.value?.get(position)?.profile_path.isNullOrEmpty())
+        {
+            val url = "https://image.tmdb.org/t/p/w185${people.value?.get(position)?.profile_path}"
+            Glide.with(holder.itemView).load(url).centerCrop().into(avatar)
+        }
+        //else Glide.with(holder.itemView).load("LINK HERE").centerCrop().into(avatar)
 
-        if (inFragment == "PersonListFragment") {
+        if (inFragment == "PersonListFragment")
+        {
+            // navigation:
             val actorRowBackground = holder.itemView.findViewById<LinearLayout>(R.id.actorRowBackground)
             actorRowBackground.setOnClickListener {
                 people.value?.let { item -> personVM.setCurrentPerson(item[position].id) }
                 actorRowBackground.findNavController().navigate(R.id.action_personListFragment_to_personDetailsFragment)
             }
-        } else {
+        }
+        else
+        {
+            // who was played:
             val character = holder.itemView.findViewById<TextView>(R.id.tv_characterName)
             character.text = people.value?.get(position)?.character
 
+            // navigation:
             val actorRowBackground = holder.itemView.findViewById<LinearLayout>(R.id.tileBackground)
             actorRowBackground.setOnClickListener {
                 people.value?.let { item -> personVM.setCurrentPerson(item[position].id) }

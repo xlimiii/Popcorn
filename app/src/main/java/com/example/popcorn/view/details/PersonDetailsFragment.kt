@@ -56,21 +56,84 @@ class PersonDetailsFragment : Fragment() {
         view.tv_header3.text = "Crew of"
 
         personViewModel.currentPerson.observe(viewLifecycleOwner, {
+            // name:
             view.tv_movieDetailsTitle.text = it.name
-            view.tv_movieDescription.text = it.biography
-            view.tv_year.text = it.birthday
-            view.tv_year2.text = it.deathday
-            view.tv_genresForMovie.text = "Known for: " + it.known_for_department
-            view.tv_oryginalLang.text = "Place of Birth: " + it.place_of_birth
 
-            val url = "https://image.tmdb.org/t/p/w185${it.profile_path}"
-            Glide.with(view.iv_movieDetailsPoster).load(url).centerCrop().into(view.iv_movieDetailsPoster)
+            // biography:
+            if (it.biography.isNullOrEmpty())
+            {
+                view.tv_header1.visibility = View.GONE
+                view.tv_movieDescription.visibility = View.GONE
+            }
+            else
+            {
+                view.tv_movieDescription.text = it.biography
+                view.tv_header1.visibility = View.VISIBLE
+                view.tv_movieDescription.visibility = View.VISIBLE
+            }
+
+            // date of birth and date of death:
+            if (it.birthday.isNullOrEmpty())
+            {
+                view.tv_year.visibility = View.GONE
+                view.tv_year2.visibility = View.GONE
+            }
+            else
+            {
+                view.tv_year.text = it.birthday
+                view.tv_year2.text = it.deathday
+                view.tv_year.visibility = View.VISIBLE
+                view.tv_year2.visibility = View.VISIBLE
+            }
+
+            // place of birth:
+            view.tv_oryginalLang.text = "Place of Birth: " + it.place_of_birth
+            if (it.place_of_birth.isNullOrEmpty()) view.tv_oryginalLang.visibility = View.GONE
+            else view.tv_oryginalLang.visibility = View.VISIBLE
+
+            // department:
+            view.tv_genresForMovie.text = "Known for: " + it.known_for_department
+
+            // photo:
+            if (!it.profile_path.isNullOrEmpty())
+            {
+                val url = "https://image.tmdb.org/t/p/w185${it.profile_path}"
+                Glide.with(view.iv_movieDetailsPoster).load(url).centerCrop().into(view.iv_movieDetailsPoster)
+            }
+            //else Glide.with(view.iv_movieDetailsPoster).load("LINK HERE").centerCrop().into(view.iv_movieDetailsPoster)
 
             personViewModel.setCurrentPersonCollection(it.id)
         })
 
-        personViewModel.currentPersonInCastCollection.observe(viewLifecycleOwner, { inCastAdapter.notifyDataSetChanged() })
-        personViewModel.currentPersonInCrewCollection.observe(viewLifecycleOwner, { inCrewAdapter.notifyDataSetChanged() })
+        // performed in
+        personViewModel.currentPersonInCastCollection.observe(viewLifecycleOwner, {
+            inCastAdapter.notifyDataSetChanged()
+            if (personViewModel.currentPersonInCastCollection.value.isNullOrEmpty())
+            {
+                view.tv_header2.visibility = View.GONE
+                view.rv_actorsInMovie.visibility = View.GONE
+            }
+            else
+            {
+                view.tv_header2.visibility = View.VISIBLE
+                view.rv_actorsInMovie.visibility = View.VISIBLE
+            }
+        })
+
+        // crew of
+        personViewModel.currentPersonInCrewCollection.observe(viewLifecycleOwner, {
+            inCrewAdapter.notifyDataSetChanged()
+            if (personViewModel.currentPersonInCrewCollection.value.isNullOrEmpty())
+            {
+                view.tv_header3.visibility = View.GONE
+                view.rv_crewInMovie.visibility = View.GONE
+            }
+            else
+            {
+                view.tv_header3.visibility = View.VISIBLE
+                view.rv_crewInMovie.visibility = View.VISIBLE
+            }
+        })
 
         return view
     }

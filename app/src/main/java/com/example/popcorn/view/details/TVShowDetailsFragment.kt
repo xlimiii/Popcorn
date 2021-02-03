@@ -53,25 +53,75 @@ class TVShowDetailsFragment : Fragment() {
         view.tv_header3.text = "Crew"
 
         tvsViewModel.currentTVShow.observe(viewLifecycleOwner, {
+            // title:
             view.tv_movieDetailsTitle.text = it.name
-            view.tv_movieDescription.text = it.overview
+
+            // release date:
             view.tv_year.text = it.first_air_date
 
+            // genres:
             var genresText = ""
             it.genres.forEach { x -> genresText += x.name + " "}
             view.tv_genresForMovie.text = genresText
 
+            // languages:
             var languagesText = ""
             it.spoken_languages.forEach{ x -> languagesText += x.english_name + " "}
             view.tv_oryginalLang.text = "Languages: $languagesText"
 
-            val url = "https://image.tmdb.org/t/p/w185${it.poster_path}"
-            Glide.with(view.iv_movieDetailsPoster).load(url).centerCrop().into(view.iv_movieDetailsPoster)
+            // poster:
+            if (!it.poster_path.isNullOrEmpty())
+            {
+                val url = "https://image.tmdb.org/t/p/w185${it.poster_path}"
+                Glide.with(view.iv_movieDetailsPoster).load(url).centerCrop().into(view.iv_movieDetailsPoster)
+            }
+            //else Glide.with(view.iv_movieDetailsPoster).load("LINK HERE").centerCrop().into(view.iv_movieDetailsPoster)
+
+            // description:
+            if (it.overview.isNullOrEmpty())
+            {
+                view.tv_header1.visibility = View.GONE
+                view.tv_movieDescription.visibility = View.GONE
+            }
+            else
+            {
+                view.tv_movieDescription.text = it.overview
+                view.tv_movieDescription.visibility = View.VISIBLE
+                view.tv_header1.visibility = View.VISIBLE
+            }
+
             tvsViewModel.setPeopleConnectedWithCurrentTVShow(it.id)
         })
 
-        tvsViewModel.currentTVShowCast.observe(viewLifecycleOwner, { castAdapter.notifyDataSetChanged() })
-        tvsViewModel.currentTVShowCast.observe(viewLifecycleOwner, { crewAdapter.notifyDataSetChanged() })
+        // cast:
+        tvsViewModel.currentTVShowCast.observe(viewLifecycleOwner, {
+            castAdapter.notifyDataSetChanged()
+            if (tvsViewModel.currentTVShowCast.value.isNullOrEmpty())
+            {
+                view.tv_header2.visibility = View.GONE
+                view.rv_actorsInMovie.visibility = View.GONE
+            }
+            else
+            {
+                view.tv_header2.visibility = View.VISIBLE
+                view.rv_actorsInMovie.visibility = View.VISIBLE
+            }
+        })
+
+        // crew:
+        tvsViewModel.currentTVShowCrew.observe(viewLifecycleOwner, {
+            crewAdapter.notifyDataSetChanged()
+            if (tvsViewModel.currentTVShowCrew.value.isNullOrEmpty())
+            {
+                view.tv_header3.visibility = View.GONE
+                view.rv_crewInMovie.visibility = View.GONE
+            }
+            else
+            {
+                view.tv_header3.visibility = View.VISIBLE
+                view.rv_crewInMovie.visibility = View.VISIBLE
+            }
+        })
 
         return view
     }
