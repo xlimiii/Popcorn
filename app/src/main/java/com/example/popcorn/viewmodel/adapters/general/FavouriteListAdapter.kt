@@ -36,12 +36,12 @@ class FavouriteListAdapter(private val favouriteMovies: LiveData<List<Favourite>
 
         // poster:
         val poster = holder.itemView.findViewById<ImageView>(R.id.iv_moviePoster)
-        if (!favouriteMovies.value?.get(position)?.poster_path.isNullOrEmpty())
-        {
-            val url = "https://image.tmdb.org/t/p/w185${favouriteMovies.value?.get(position)?.poster_path}"
-            Glide.with(holder.itemView).load(url).centerCrop().into(poster)
-        }
-        //else Glide.with(holder.itemView).load("LINK HERE").centerCrop().into(poster)
+
+        val url = "https://image.tmdb.org/t/p/w185${favouriteMovies.value?.get(position)?.poster_path}"
+        if(favouriteMovies.value?.get(position)?.media_type == "movie")
+            Glide.with(holder.itemView).load(url).centerCrop().placeholder(R.drawable.ic_outline_movie_24holder).into(poster)
+        else
+            Glide.with(holder.itemView).load(url).centerCrop().placeholder(R.drawable.ic_twotone_live_tv_24holder).into(poster)
 
         // navigation:
         val movieRowBackground = holder.itemView.findViewById<ConstraintLayout>(R.id.movieRowBackground)

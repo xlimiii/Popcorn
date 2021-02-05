@@ -42,12 +42,11 @@ class MoviesAndTVShowsInPersonAdapter(private val moviesAndTVShows: LiveData<Lis
 
         // poster:
         val poster = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
-        if (!moviesAndTVShows.value?.get(position)?.poster_path.isNullOrEmpty())
-        {
-            val url = "https://image.tmdb.org/t/p/w185${moviesAndTVShows.value?.get(position)?.poster_path}"
-            Glide.with(holder.itemView).load(url).centerCrop().into(poster)
-        }
-        //else Glide.with(holder.itemView).load("LINK HERE").centerCrop().into(poster)
+        val url = "https://image.tmdb.org/t/p/w185${moviesAndTVShows.value?.get(position)?.poster_path}"
+        if(moviesAndTVShows.value?.get(position)?.media_type=="movie")
+            Glide.with(holder.itemView).load(url).centerCrop().placeholder(R.drawable.ic_outline_movie_24holder).into(poster)
+        else
+            Glide.with(holder.itemView).load(url).centerCrop().placeholder(R.drawable.ic_twotone_live_tv_24holder).into(poster)
 
         // navigation:
         val rowBackground = holder.itemView.findViewById<LinearLayout>(R.id.tileBackground)

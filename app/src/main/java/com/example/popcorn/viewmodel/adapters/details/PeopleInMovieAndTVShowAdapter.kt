@@ -39,12 +39,17 @@ class PeopleInMovieAndTVShowAdapter(private val people: LiveData<List<Person>>,
 
         // photo:
         val avatar = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
-        if (!people.value?.get(position)?.profile_path.isNullOrEmpty())
-        {
-            val url = "https://image.tmdb.org/t/p/w185${people.value?.get(position)?.profile_path}"
-            Glide.with(holder.itemView).load(url).centerCrop().into(avatar)
+        val url = "https://image.tmdb.org/t/p/w185${people.value?.get(position)?.profile_path}"
+        val placeholderImg: Int
+        when(people.value?.get(position)?.gender){
+            2 -> placeholderImg = R.drawable.ic_baseline_person_outline_24
+            1 -> placeholderImg = R.drawable.ic_baseline_person_outline_242
+            else -> placeholderImg = R.drawable.ic_baseline_person_outline_24e
         }
-        //else Glide.with(holder.itemView).load("LINK HERE").centerCrop().into(avatar)
+
+        Glide.with(holder.itemView).load(url).centerCrop().placeholder(placeholderImg).into(avatar)
+
+
 
         // navigation:
         val rowBackground = holder.itemView.findViewById<LinearLayout>(R.id.tileBackground)

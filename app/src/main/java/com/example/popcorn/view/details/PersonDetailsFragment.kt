@@ -95,13 +95,14 @@ class PersonDetailsFragment : Fragment() {
             view.tv_genresForMovie.text = "Known for: " + it.known_for_department
 
             // photo:
-            if (!it.profile_path.isNullOrEmpty())
-            {
-                val url = "https://image.tmdb.org/t/p/w185${it.profile_path}"
-                Glide.with(view.iv_movieDetailsPoster).load(url).centerCrop().into(view.iv_movieDetailsPoster)
+            val url = "https://image.tmdb.org/t/p/w185${it.profile_path}"
+            val placeholderImg: Int
+            when(it.gender){
+                2 -> placeholderImg = R.drawable.ic_baseline_person_outline_24
+                1 -> placeholderImg = R.drawable.ic_baseline_person_outline_242
+                else -> placeholderImg = R.drawable.ic_baseline_person_outline_24e
             }
-            //else Glide.with(view.iv_movieDetailsPoster).load("LINK HERE").centerCrop().into(view.iv_movieDetailsPoster)
-
+            Glide.with(view.iv_movieDetailsPoster).load(url).centerCrop().placeholder(placeholderImg).into(view.iv_movieDetailsPoster)
             personViewModel.setCurrentPersonCollection(it.id)
         })
 

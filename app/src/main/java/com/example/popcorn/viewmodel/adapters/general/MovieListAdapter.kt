@@ -16,6 +16,7 @@ import com.example.popcorn.model.Movie
 import com.example.popcorn.viewmodel.MovieViewModel
 import com.bumptech.glide.Glide
 import com.example.popcorn.viewmodel.FavouriteViewModel
+import kotlinx.android.synthetic.main.fragment_details.view.*
 import org.w3c.dom.Text
 
 
@@ -43,12 +44,8 @@ class MovieListAdapter(private val movies : LiveData<List<Movie>>,
 
             // poster:
             val poster = holder.itemView.findViewById<ImageView>(R.id.iv_moviePoster)
-            if (!movies.value?.get(position)?.poster_path.isNullOrEmpty())
-            {
-                val url = "https://image.tmdb.org/t/p/w185${movies.value?.get(position)?.poster_path}"
-                Glide.with(holder.itemView).load(url).centerCrop().into(poster)
-            }
-            //else Glide.with(holder.itemView).load("LINK HERE").centerCrop().into(poster)
+            val url = "https://image.tmdb.org/t/p/w185${movies.value?.get(position)?.poster_path}"
+            Glide.with(holder.itemView).load(url).centerCrop().placeholder(R.drawable.ic_outline_movie_24holder).into(poster)
 
             // navigation:
             val movieRowBackground = holder.itemView.findViewById<ConstraintLayout>(R.id.movieRowBackground)
@@ -92,12 +89,8 @@ class MovieListAdapter(private val movies : LiveData<List<Movie>>,
 
             // poster:
             val poster = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
-            if (!movies.value?.get(position)?.poster_path.isNullOrEmpty())
-            {
-                val url = "https://image.tmdb.org/t/p/w185${movies.value?.get(position)?.poster_path}"
-                Glide.with(holder.itemView).load(url).centerCrop().into(poster)
-            }
-            //else Glide.with(holder.itemView).load("LINK HERE").centerCrop().into(poster)
+            val url = "https://image.tmdb.org/t/p/w185${movies.value?.get(position)?.poster_path}"
+            Glide.with(holder.itemView).load(url).centerCrop().placeholder(R.drawable.ic_outline_movie_24holder).into(poster)
 
             // navigation:
             val movieRowBackground = holder.itemView.findViewById<LinearLayout>(R.id.tileBackground)

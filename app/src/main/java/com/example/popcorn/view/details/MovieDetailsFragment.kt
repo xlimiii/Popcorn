@@ -70,12 +70,8 @@ class MovieDetailsFragment : Fragment() {
             view.tv_oryginalLang.text = "Languages: $languagesText"
 
             // poster:
-            if (!it.poster_path.isNullOrEmpty())
-            {
-                val url = "https://image.tmdb.org/t/p/w185${it.poster_path}"
-                Glide.with(view.iv_movieDetailsPoster).load(url).centerCrop().into(view.iv_movieDetailsPoster)
-            }
-            //else Glide.with(view.iv_movieDetailsPoster).load("LINK HERE").centerCrop().into(view.iv_movieDetailsPoster)
+            val url = "https://image.tmdb.org/t/p/w185${it.poster_path}"
+            Glide.with(view.iv_movieDetailsPoster).load(url).centerCrop().placeholder(R.drawable.ic_outline_movie_24holder).into(view.iv_movieDetailsPoster)
 
             // description:
             if (it.overview.isNullOrEmpty())
