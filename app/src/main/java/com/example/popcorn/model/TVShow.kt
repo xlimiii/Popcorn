@@ -4,7 +4,7 @@ data class TVShow(
     val backdrop_path : String,
     val created_by : List<Person>,
     val run_time: List<Int>,
-    val first_air_date: String,
+    val first_air_date: String?,
     val last_air_date: String,
     val genres : List<Genre>,
     val genre_ids : List<Int>,

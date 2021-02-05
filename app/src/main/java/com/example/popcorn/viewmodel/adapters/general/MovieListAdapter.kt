@@ -42,6 +42,11 @@ class MovieListAdapter(private val movies : LiveData<List<Movie>>,
             val name = holder.itemView.findViewById<TextView>(R.id.tv_movieTitle)
             name.text = movies.value?.get(position)?.title.toString()
 
+            // release date:
+            val date = holder.itemView.findViewById<TextView>(R.id.tv_movieDate)
+            if (!movies.value?.get(position)?.release_date.isNullOrEmpty())
+                date.text = movies.value?.get(position)?.release_date.toString().slice(IntRange(0,3))
+
             // poster:
             val poster = holder.itemView.findViewById<ImageView>(R.id.iv_moviePoster)
             val url = "https://image.tmdb.org/t/p/w185${movies.value?.get(position)?.poster_path}"

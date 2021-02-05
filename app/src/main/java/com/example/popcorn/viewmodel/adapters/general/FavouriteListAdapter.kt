@@ -34,9 +34,13 @@ class FavouriteListAdapter(private val favouriteMovies: LiveData<List<Favourite>
         val name = holder.itemView.findViewById<TextView>(R.id.tv_movieTitle)
         name.text = favouriteMovies.value?.get(position)?.title.toString()
 
+        // release date:
+        val date = holder.itemView.findViewById<TextView>(R.id.tv_movieDate)
+        if (!favouriteMovies.value?.get(position)?.release_date.isNullOrEmpty())
+            date.text = favouriteMovies.value?.get(position)?.release_date.toString().slice(IntRange(0,3))
+
         // poster:
         val poster = holder.itemView.findViewById<ImageView>(R.id.iv_moviePoster)
-
         val url = "https://image.tmdb.org/t/p/w185${favouriteMovies.value?.get(position)?.poster_path}"
         if(favouriteMovies.value?.get(position)?.media_type == "movie")
             Glide.with(holder.itemView).load(url).centerCrop().placeholder(R.drawable.ic_outline_movie_24holder).into(poster)

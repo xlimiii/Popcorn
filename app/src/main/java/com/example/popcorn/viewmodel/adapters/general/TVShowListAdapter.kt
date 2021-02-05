@@ -40,6 +40,11 @@ class TVShowListAdapter(private val TVShows : LiveData<List<TVShow>>,
             val name = holder.itemView.findViewById<TextView>(R.id.tv_movieTitle)
             name.text = TVShows.value?.get(position)?.name.toString()
 
+            // release date:
+            val date = holder.itemView.findViewById<TextView>(R.id.tv_movieDate)
+            if (!TVShows.value?.get(position)?.first_air_date.isNullOrEmpty())
+                date.text = TVShows.value?.get(position)?.first_air_date.toString().slice(IntRange(0,3))
+
             // poster:
             val poster = holder.itemView.findViewById<ImageView>(R.id.iv_moviePoster)
 

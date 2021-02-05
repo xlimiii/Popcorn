@@ -1,5 +1,6 @@
 package com.example.popcorn.viewmodel.adapters.general
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.DrawableRes
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Placeholder
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
@@ -32,6 +34,7 @@ class PersonListAdapter(private val people: LiveData<List<Person>>,
         return PersonHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: PersonHolder, position: Int) {
         // name:
         val name = holder.itemView.findViewById<TextView>(R.id.tv_personName)
@@ -39,20 +42,18 @@ class PersonListAdapter(private val people: LiveData<List<Person>>,
 
         // photo:
         val avatar = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
-
         val url = "https://image.tmdb.org/t/p/w185${people.value?.get(position)?.profile_path}"
-        val placeholderImg: Int
-        when(people.value?.get(position)?.gender){
-            2 -> placeholderImg = R.drawable.ic_baseline_person_outline_24
-            1 -> placeholderImg = R.drawable.ic_baseline_person_outline_242
-            else -> placeholderImg = R.drawable.ic_baseline_person_outline_24e
+        val placeholderImg : Int = when(people.value?.get(position)?.gender){
+            2 -> R.drawable.ic_baseline_person_outline_24
+            1 -> R.drawable.ic_baseline_person_outline_242
+            else -> R.drawable.ic_baseline_person_outline_24e
         }
-            Glide.with(holder.itemView).load(url).centerCrop().placeholder(placeholderImg).into(avatar)
+        Glide.with(holder.itemView).load(url).centerCrop().placeholder(placeholderImg).into(avatar)
 
         if (inFragment == "PersonListFragment")
         {
             // navigation:
-            val actorRowBackground = holder.itemView.findViewById<LinearLayout>(R.id.actorRowBackground)
+            val actorRowBackground = holder.itemView.findViewById<ConstraintLayout>(R.id.actorRowBackground)
             actorRowBackground.setOnClickListener {
                 people.value?.let { item -> personVM.setCurrentPerson(item[position].id) }
                 actorRowBackground.findNavController().navigate(R.id.action_personListFragment_to_personDetailsFragment)
