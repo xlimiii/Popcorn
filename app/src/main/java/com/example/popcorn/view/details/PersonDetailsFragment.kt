@@ -67,8 +67,8 @@ class PersonDetailsFragment : Fragment() {
             }
             else
             {
-                view.tv_movieDescription.text = it.biography
                 view.tv_header1.visibility = View.VISIBLE
+                view.tv_movieDescription.text = it.biography
                 view.tv_movieDescription.visibility = View.VISIBLE
             }
 
@@ -93,14 +93,15 @@ class PersonDetailsFragment : Fragment() {
 
             // department:
             view.tv_genresForMovie.text = "Known for: " + it.known_for_department
+            if (it.known_for_department.isNullOrEmpty()) view.tv_genresForMovie.visibility = View.GONE
+            else view.tv_genresForMovie.visibility = View.VISIBLE
 
             // photo:
             val url = "https://image.tmdb.org/t/p/w185${it.profile_path}"
-            val placeholderImg: Int
-            when(it.gender){
-                2 -> placeholderImg = R.drawable.ic_baseline_person_outline_24
-                1 -> placeholderImg = R.drawable.ic_baseline_person_outline_242
-                else -> placeholderImg = R.drawable.ic_baseline_person_outline_24e
+            val placeholderImg : Int = when(it.gender) {
+                2 -> R.drawable.ic_baseline_person_outline_24
+                1 -> R.drawable.ic_baseline_person_outline_242
+                else -> R.drawable.ic_baseline_person_outline_24e
             }
             Glide.with(view.iv_movieDetailsPoster).load(url).centerCrop().placeholder(placeholderImg).into(view.iv_movieDetailsPoster)
             personViewModel.setCurrentPersonCollection(it.id)

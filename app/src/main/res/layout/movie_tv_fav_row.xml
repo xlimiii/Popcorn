@@ -78,7 +78,6 @@
         android:id="@+id/tv_favDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="02-02-2021"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/btn_delFromFav"

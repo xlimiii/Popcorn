@@ -101,7 +101,12 @@ class HomeFragment : Fragment() {
                 return false
             }
 
-            override fun onQueryTextSubmit(query: String): Boolean { return false }
+            override fun onQueryTextSubmit(givenText: String): Boolean {
+                movieVM.setMoviesWithMatchingTitle(givenText)
+                personVM.setPeopleWithMatchingName(givenText)
+                tvShowVM.setTVShowsWithMatchingTitle(givenText)
+                return false
+            }
         })
     }
 }

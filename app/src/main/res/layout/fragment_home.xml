@@ -35,24 +35,26 @@
 
             <TextView
                 android:id="@+id/tv_homeHeader1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Movies"
+                android:text="MOVIES"
+                android:textAlignment="center"
                 android:textSize="30sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_multiList"
-                android:layout_width="409dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp" />
 
             <TextView
                 android:id="@+id/tv_homeHeader2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="People"
+                android:text="PEOPLE"
+                android:textAlignment="center"
                 android:textSize="30sp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -67,7 +69,9 @@
                 android:id="@+id/tv_homeHeader3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TV Shows"
+                android:layout_marginTop="8dp"
+                android:text="TV SHOWS"
+                android:textAlignment="center"
                 android:textSize="30sp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -75,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="2dp">
+                android:layout_marginBottom="10dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -83,7 +87,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_blue_long_1_8ba2ac31f354005783fab473602c34c3f4fd207150182061e425d366e4f34596" />
+                android:src="@drawable/ic_blue_long_1_8ba2ac31f354005783fab473602c34c3f4fd207150182061e425d366e4f34596"/>
 
             <TextView
                 android:id="@+id/textView"

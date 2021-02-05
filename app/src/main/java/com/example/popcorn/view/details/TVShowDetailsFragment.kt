@@ -57,22 +57,36 @@ class TVShowDetailsFragment : Fragment() {
             view.tv_movieDetailsTitle.text = it.name
 
             // release date:
-            view.tv_year.text = it.first_air_date
+            if (!it.first_air_date.isNullOrEmpty())
+            {
+                view.tv_year.text = it.first_air_date
+                view.tv_year.visibility = View.VISIBLE
+            }
+            else view.tv_year.visibility = View.GONE
 
             // genres:
-            var genresText = ""
-            it.genres.forEach { x -> genresText += x.name + " "}
-            view.tv_genresForMovie.text = genresText
+            if (!it.genres.isNullOrEmpty())
+            {
+                var genresText = ""
+                it.genres.forEach { x -> genresText += x.name + " "}
+                view.tv_genresForMovie.text = "Genres: $genresText"
+                view.tv_genresForMovie.visibility = View.VISIBLE
+            }
+            else view.tv_genresForMovie.visibility = View.GONE
 
             // languages:
-            var languagesText = ""
-            it.spoken_languages.forEach{ x -> languagesText += x.english_name + " "}
-            view.tv_oryginalLang.text = "Languages: $languagesText"
+            if (!it.spoken_languages.isNullOrEmpty())
+            {
+                var languagesText = ""
+                it.spoken_languages.forEach{ x -> languagesText += x.english_name + " "}
+                view.tv_oryginalLang.text = "Languages: $languagesText"
+                view.tv_oryginalLang.visibility = View.VISIBLE
+            }
+            else view.tv_oryginalLang.visibility = View.GONE
 
             // poster:
             val url = "https://image.tmdb.org/t/p/w185${it.poster_path}"
             Glide.with(view.iv_movieDetailsPoster).load(url).centerCrop().placeholder(R.drawable.ic_twotone_live_tv_24holder).into(view.iv_movieDetailsPoster)
-
 
             // description:
             if (it.overview.isNullOrEmpty())

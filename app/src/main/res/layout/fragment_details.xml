@@ -19,9 +19,8 @@
                 android:id="@+id/tv_header3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Crew of"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
@@ -44,13 +43,12 @@
                 android:id="@+id/tv_movieDetailsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
-                android:text="TYTUŁ"
                 android:layout_weight="1"
                 android:ellipsize="none"
-                android:textSize="24sp"
                 android:maxLines="4"
+                android:textSize="24sp"
                 app:layout_constraintStart_toEndOf="@+id/iv_movieDetailsPoster"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,9 +68,8 @@
                 android:id="@+id/tv_header1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Header1"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_movieDetailsPoster" />
@@ -90,9 +87,8 @@
                 android:id="@+id/tv_header2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Header2"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_movieDescription" />

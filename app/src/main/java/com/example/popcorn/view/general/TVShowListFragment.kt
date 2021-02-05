@@ -50,7 +50,10 @@ class TVShowListFragment : Fragment() {
                 return false
             }
 
-            override fun onQueryTextSubmit(query: String): Boolean { return false }
+            override fun onQueryTextSubmit(givenText: String): Boolean {
+                TVShowVM.setTVShowsWithMatchingTitle(givenText)
+                return false
+            }
         })
     }
 }

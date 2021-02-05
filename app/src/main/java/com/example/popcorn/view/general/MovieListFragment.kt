@@ -50,7 +50,10 @@ class MovieListFragment : Fragment() {
                 return false
             }
 
-            override fun onQueryTextSubmit(query: String): Boolean { return false }
+            override fun onQueryTextSubmit(givenText: String): Boolean {
+                movieVM.setMoviesWithMatchingTitle(givenText)
+                return false
+            }
         })
     }
 }
