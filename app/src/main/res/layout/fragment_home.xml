@@ -31,7 +31,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="60dp"
             android:orientation="vertical">
 
             <TextView
@@ -76,9 +75,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="100dp">
+                android:layout_marginBottom="2dp">
 
             </androidx.recyclerview.widget.RecyclerView>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_blue_long_1_8ba2ac31f354005783fab473602c34c3f4fd207150182061e425d366e4f34596" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="120dp"
+                android:text="This product uses the TMDb API for data and images"
+                android:textAlignment="center" />
 
         </LinearLayout>
     </ScrollView>
