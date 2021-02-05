@@ -9,7 +9,7 @@ data class Favourite(
         val media_type : String,
         val movieOrTVShowID : Int,
         val title: String,
-        val poster_path : String,
-        val release_date : String,
+        val poster_path : String?,
+        val release_date : String?,
         val date : String
 )
