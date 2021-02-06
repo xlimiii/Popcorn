@@ -20,8 +20,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
 
@@ -50,6 +51,7 @@
                 android:ellipsize="none"
                 android:maxLines="4"
                 android:textSize="22sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/iv_movieDetailsPoster"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -73,6 +75,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="32dp"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_oryginalLang" />
 
@@ -90,8 +93,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_movieDescription" />
 
