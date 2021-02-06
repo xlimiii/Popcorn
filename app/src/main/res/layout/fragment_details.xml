@@ -41,25 +41,26 @@
 
             <TextView
                 android:id="@+id/tv_movieDetailsTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
                 android:layout_weight="1"
                 android:ellipsize="none"
                 android:maxLines="4"
-                android:textSize="24sp"
+                android:textSize="22sp"
                 app:layout_constraintStart_toEndOf="@+id/iv_movieDetailsPoster"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/iv_movieDetailsPoster"
                 android:layout_width="120dp"
-                android:layout_height="180dp"
+                android:layout_height="160dp"
                 android:paddingLeft="5dp"
                 android:paddingTop="2dp"
                 android:paddingRight="5dp"
                 android:paddingBottom="2dp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_header1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_person_24" />
@@ -69,10 +70,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="32dp"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_movieDetailsPoster" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_oryginalLang" />
 
             <TextView
                 android:id="@+id/tv_genresForMovie"
