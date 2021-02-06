@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="4dp"
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="32dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:textAlignment="gravity"
@@ -76,7 +76,7 @@
 
             <TextView
                 android:id="@+id/tv_genresForMovie"
-                android:layout_width="wrap_content"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
@@ -151,7 +151,7 @@
             </ScrollView>
             <TextView
                 android:id="@+id/tv_oryginalLang"
-                android:layout_width="0dp"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
