@@ -17,11 +17,13 @@
 
             <TextView
                 android:id="@+id/tv_header3"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:textSize="18sp"
+                android:background="@color/phthalo_green"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
@@ -36,6 +38,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:textAlignment="gravity"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +53,8 @@
                 android:layout_weight="1"
                 android:ellipsize="none"
                 android:maxLines="4"
-                android:textSize="22sp"
+                android:textColor="@color/phthalo_green"
+                android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/iv_movieDetailsPoster"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -70,11 +74,13 @@
 
             <TextView
                 android:id="@+id/tv_header1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="32dp"
-                android:textSize="18sp"
+                android:background="@color/phthalo_green"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_oryginalLang" />
@@ -90,11 +96,13 @@
 
             <TextView
                 android:id="@+id/tv_header2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:textSize="18sp"
+                android:background="@color/phthalo_green"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_movieDescription" />
@@ -113,6 +121,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:fillViewport="false"
                 android:measureAllChildren="false"
