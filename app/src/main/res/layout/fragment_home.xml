@@ -38,9 +38,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="MOVIES"
-                android:textAlignment="center"
                 android:background="@color/phthalo_green"
+                android:text="@string/moviesHeader"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="30sp" />
 
@@ -55,12 +55,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="PEOPLE"
-                android:textAlignment="center"
-                android:textSize="30sp"
                 android:background="@color/phthalo_green"
+                android:text="@string/peopleHeader"
+                android:textAlignment="center"
                 android:textColor="@color/white"
-                />
+                android:textSize="30sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_multiList2"
@@ -75,12 +74,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="TV SHOWS"
-                android:textAlignment="center"
-                android:textSize="30sp"
                 android:background="@color/phthalo_green"
+                android:text="@string/tvShowsHeader"
+                android:textAlignment="center"
                 android:textColor="@color/white"
-                />
+                android:textSize="30sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_multiList3"

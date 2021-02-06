@@ -22,9 +22,8 @@
     <item
         android:id="@+id/TVShowListFragment"
         android:icon="@drawable/ic_baseline_tv_shows"
-        android:title="Tv Shows"
-        app:showAsAction="always"
-        />
+        android:title="@string/tvShows"
+        app:showAsAction="always" />
     <item
         android:id="@+id/favouriteListFragment"
         android:icon="@drawable/ic_baseline_favorite_24"

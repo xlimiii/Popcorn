@@ -51,9 +51,9 @@ class PersonDetailsFragment : Fragment() {
 
         val view =  inflater.inflate(R.layout.fragment_details, container, false)
         view.tv_movieDescription.justificationMode = (LineBreaker.JUSTIFICATION_MODE_INTER_WORD)
-        view.tv_header1.text = "Biography"
-        view.tv_header2.text = "Performed in"
-        view.tv_header3.text = "Crew of"
+        view.tv_header1.text = resources.getString(R.string.biographyHeader)
+        view.tv_header2.text = resources.getString(R.string.inCastHeader)
+        view.tv_header3.text = resources.getString(R.string.inCrewHeader)
 
         personViewModel.currentPerson.observe(viewLifecycleOwner, {
             // name:
@@ -72,17 +72,25 @@ class PersonDetailsFragment : Fragment() {
                 view.tv_movieDescription.visibility = View.VISIBLE
             }
 
-            // date of birth and date of death:
+            // date of birth:
             if (it.birthday.isNullOrEmpty())
             {
                 view.tv_year.visibility = View.GONE
+            }
+            else
+            {
+                view.tv_year.text = "Born: ${it.birthday}"
+                view.tv_year.visibility = View.VISIBLE
+            }
+
+            // date of death:
+            if (it.deathday.isNullOrEmpty())
+            {
                 view.tv_year2.visibility = View.GONE
             }
             else
             {
-                view.tv_year.text = it.birthday
-                view.tv_year2.text = it.deathday
-                view.tv_year.visibility = View.VISIBLE
+                view.tv_year2.text = "Died: ${it.deathday}"
                 view.tv_year2.visibility = View.VISIBLE
             }
 

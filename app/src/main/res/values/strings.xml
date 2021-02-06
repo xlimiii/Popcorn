@@ -1,12 +1,26 @@
 <resources>
     <string name="app_name">Popcorn</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- TABS -->
     <string name="home">Home</string>
     <string name="movies">Movies</string>
-    <string name="actors">Actors</string>
-    <string name="directors">Directors</string>
-    <string name="favourite">Favourite</string>
     <string name="people">People</string>
+    <string name="tvShows">TV Shows</string>
+    <string name="favourite">Favourite</string>
+
+    <!-- HOME FRAGMENT -->
+    <string name="moviesHeader">MOVIES</string>
+    <string name="peopleHeader">PEOPLE</string>
+    <string name="tvShowsHeader">TV SHOWS</string>
+
+    <!-- MOVIE / TV SHOW DETAILS -->
+    <string name="descriptionHeader">Description</string>
+    <string name="castHeader">Cast</string>
+    <string name="crewHeader">Crew</string>
+
+    <!-- PERSON DETAILS -->
+    <string name="biographyHeader">Biography</string>
+    <string name="inCastHeader">Performed in</string>
+    <string name="inCrewHeader">Crew of</string>
 
 </resources>

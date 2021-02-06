@@ -52,9 +52,9 @@ class MovieDetailsFragment : Fragment() {
 
         val view =  inflater.inflate(R.layout.fragment_details, container, false)
         view.tv_movieDescription.justificationMode = (LineBreaker.JUSTIFICATION_MODE_INTER_WORD)
-        view.tv_header1.text = "Description"
-        view.tv_header2.text = "Cast"
-        view.tv_header3.text = "Crew"
+        view.tv_header1.text = resources.getString(R.string.descriptionHeader)
+        view.tv_header2.text = resources.getString(R.string.castHeader)
+        view.tv_header3.text = resources.getString(R.string.crewHeader)
 
         movieViewModel.currentMovie.observe(viewLifecycleOwner, {
             // title:
@@ -63,7 +63,7 @@ class MovieDetailsFragment : Fragment() {
             // release date:
             if (!it.release_date.isNullOrEmpty())
             {
-                view.tv_year.text = it.release_date
+                view.tv_year.text = "Release date: ${it.release_date}"
                 view.tv_year.visibility = View.VISIBLE
             }
             else view.tv_year.visibility = View.GONE
