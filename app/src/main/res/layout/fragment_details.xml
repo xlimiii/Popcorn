@@ -27,15 +27,16 @@
 
             <TextView
                 android:id="@+id/tv_movieDescription"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="8dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:textAlignment="gravity"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_header1" />
 
@@ -170,6 +171,15 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toEndOf="@+id/tv_year"
                 app:layout_constraintTop_toBottomOf="@+id/tv_movieDetailsTitle" />
+
+            <TextView
+                android:id="@+id/tv_mainCompany"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toEndOf="@+id/iv_movieDetailsPoster"
+                app:layout_constraintTop_toBottomOf="@+id/tv_oryginalLang" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

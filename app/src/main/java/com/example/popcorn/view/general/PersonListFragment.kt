@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.popcorn.R
 import com.example.popcorn.viewmodel.PersonViewModel
 import com.example.popcorn.viewmodel.adapters.general.PersonListAdapter
-import kotlinx.android.synthetic.main.fragment_actor_list.*
+import kotlinx.android.synthetic.main.fragment_person_list.*
 
 class PersonListFragment : Fragment() {
     private lateinit var personListAdapter : PersonListAdapter
@@ -29,7 +29,7 @@ class PersonListFragment : Fragment() {
 
         personVM.peopleWithMatchingName.observe(viewLifecycleOwner, { personListAdapter.notifyDataSetChanged() })
 
-        return inflater.inflate(R.layout.fragment_actor_list, container, false)
+        return inflater.inflate(R.layout.fragment_person_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

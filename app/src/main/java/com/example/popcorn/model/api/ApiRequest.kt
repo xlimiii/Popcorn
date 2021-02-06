@@ -54,20 +54,14 @@ interface ApiRequest {
     @GET("3/person/{personID}?api_key=$apiKey")
     fun getPersonDetails(@Path("personID") personID : Int) : Call<Person>
 
-    @GET("3/person/{personID}/movie_credits?api_key=$apiKey")
-    fun getMoviesFromThisPerson(@Path("personID") personID : Int) : Call<MoviesFromPersonListResponse>
+    @GET("3/person/{personID}/combined_credits?api_key=$apiKey")
+    fun getMoviesAndTVShowsFromThisPerson(@Path("personID") personID : Int) : Call<MoviesAndTVShowsFromPersonListResponse>
 
 
 
     //                                  COMPANIES SECTION
     @GET("3/company/{companyID}?api_key=$apiKey")
     fun getCompanyDetails(@Path("companyID") companyID : Int) : Call<ProductionCompany>
-
-
-
-    //                                  GENERAL SECTION
-    @GET("3/person/{personID}/combined_credits?api_key=$apiKey")
-    fun getMoviesAndTVShowsFromThisPerson(@Path("personID") personID : Int) : Call<MoviesAndTVShowsFromPersonListResponse>
 
 
 

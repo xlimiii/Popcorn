@@ -56,8 +56,8 @@
     <fragment
         android:id="@+id/personListFragment"
         android:name="com.example.popcorn.view.general.PersonListFragment"
-        android:label="fragment_actor_list"
-        tools:layout="@layout/fragment_actor_list" >
+        android:label="fragment_person_list"
+        tools:layout="@layout/fragment_person_list">
         <action
             android:id="@+id/action_personListFragment_to_personDetailsFragment"
             app:destination="@id/personDetailsFragment" />
@@ -70,12 +70,15 @@
         <action
             android:id="@+id/action_movieDetailsFragment_to_personDetailsFragment"
             app:destination="@id/personDetailsFragment" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_companyDetailsFragment"
+            app:destination="@id/companyDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/personDetailsFragment"
         android:name="com.example.popcorn.view.details.PersonDetailsFragment"
-        android:label="fragment_actor_details"
-        tools:layout="@layout/fragment_details" >
+        android:label="fragment_person_details"
+        tools:layout="@layout/fragment_details">
         <action
             android:id="@+id/action_personDetailsFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
@@ -86,9 +89,16 @@
     <fragment
         android:id="@+id/TVShowDetailsFragment"
         android:name="com.example.popcorn.view.details.TVShowDetailsFragment"
-        android:label="TVShowDetailsFragment" >
+        android:label="fragment_tv_show_details">
         <action
             android:id="@+id/action_TVShowDetailsFragment_to_personDetailsFragment"
             app:destination="@id/personDetailsFragment" />
+        <action
+            android:id="@+id/action_TVShowDetailsFragment_to_companyDetailsFragment"
+            app:destination="@id/companyDetailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/companyDetailsFragment"
+        android:name="com.example.popcorn.view.details.CompanyDetailsFragment"
+        android:label="fragment_company_details" />
 </navigation>

@@ -10,6 +10,5 @@ class PersonRepository(private val apiRequest : ApiRequest) {
     fun searchForPeople(someText : String) : Call<PersonListResponse> = apiRequest.searchForPeople(someText)
     fun getPopularPeople() : Call<PersonListResponse> = apiRequest.getPopularPeople()
     fun getPersonDetails(personID : Int) : Call<Person> = apiRequest.getPersonDetails(personID)
-    fun getMoviesFromThisPerson(personID : Int) : Call<MoviesFromPersonListResponse> = apiRequest.getMoviesFromThisPerson(personID)
     fun getMoviesAndTVShowsFromThisPerson(personID : Int) : Call<MoviesAndTVShowsFromPersonListResponse> = apiRequest.getMoviesAndTVShowsFromThisPerson(personID)
 }

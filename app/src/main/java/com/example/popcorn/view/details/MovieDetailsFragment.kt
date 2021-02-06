@@ -10,10 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.popcorn.R
+import com.example.popcorn.viewmodel.CompanyViewModel
 import com.example.popcorn.viewmodel.MovieViewModel
 import com.example.popcorn.viewmodel.PersonViewModel
 import com.example.popcorn.viewmodel.adapters.details.PeopleInMovieAndTVShowAdapter
@@ -23,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_details.view.*
 class MovieDetailsFragment : Fragment() {
     private lateinit var movieViewModel: MovieViewModel
     private lateinit var personViewModel: PersonViewModel
+    private lateinit var companyViewModel: CompanyViewModel
 
     private lateinit var castAdapter: PeopleInMovieAndTVShowAdapter
     private lateinit var crewAdapter: PeopleInMovieAndTVShowAdapter
@@ -40,6 +43,7 @@ class MovieDetailsFragment : Fragment() {
 
         movieViewModel = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
         personViewModel = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
+        companyViewModel = ViewModelProvider(requireActivity()).get(CompanyViewModel::class.java)
 
         castAdapter = PeopleInMovieAndTVShowAdapter(movieViewModel.currentMovieCast,
                 personViewModel, "movie", "cast")
@@ -83,6 +87,19 @@ class MovieDetailsFragment : Fragment() {
                 view.tv_oryginalLang.visibility = View.VISIBLE
             }
             else view.tv_oryginalLang.visibility = View.GONE
+
+            // main company:
+            if (!it.production_companies.isNullOrEmpty())
+            {
+                val currentCompany = it.production_companies[0]
+                view.tv_mainCompany.text = "Main company: ${currentCompany.name}"
+                view.tv_mainCompany.visibility = View.VISIBLE
+                view.tv_mainCompany.setOnClickListener {
+                    companyViewModel.setCurrentCompany(currentCompany.id)
+                    view.findNavController().navigate(R.id.action_movieDetailsFragment_to_companyDetailsFragment)
+                }
+            }
+            else view.tv_mainCompany.visibility = View.GONE
 
             // poster:
             val url = "https://image.tmdb.org/t/p/w185${it.poster_path}"
