@@ -107,9 +107,9 @@ class PersonDetailsFragment : Fragment() {
             // photo:
             val url = "https://image.tmdb.org/t/p/w185${it.profile_path}"
             val placeholderImg : Int = when(it.gender) {
-                2 -> R.drawable.ic_baseline_person_outline_24
-                1 -> R.drawable.ic_baseline_person_outline_242
-                else -> R.drawable.ic_baseline_person_outline_24e
+                2 -> R.drawable.ic_person_placeholder_24
+                1 -> R.drawable.ic_person_placeholder_24_2
+                else -> R.drawable.ic_person_placeholder_24_e
             }
             Glide.with(view.iv_movieDetailsPoster).load(url).centerCrop().placeholder(placeholderImg).into(view.iv_movieDetailsPoster)
             personViewModel.setCurrentPersonCollection(it.id)
