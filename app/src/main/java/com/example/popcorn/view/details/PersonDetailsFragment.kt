@@ -84,7 +84,7 @@ class PersonDetailsFragment : Fragment() {
             }
 
             // date of death:
-            if (it.deathday.isNullOrEmpty())
+            if (it.deathday.isNullOrEmpty() || it.birthday.isNullOrEmpty())
             {
                 view.tv_year2.visibility = View.GONE
             }

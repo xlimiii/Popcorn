@@ -57,9 +57,9 @@
                 android:id="@+id/tv_year2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
+                android:layout_marginStart="264dp"
                 android:layout_marginTop="8dp"
-                app:layout_constraintStart_toEndOf="@+id/tv_year"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_movieDetailsTitle" />
 
             <TextView
