@@ -3,19 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <item
     android:id="@+id/homeFragment"
-    android:icon="@drawable/ic_baseline_home_24"
+    android:icon="@drawable/ic_home_24"
     android:title="@string/home"
     app:showAsAction="always"
 />
     <item
         android:id="@+id/movieListFragment"
-        android:icon="@drawable/ic_baseline_movie_24"
+        android:icon="@drawable/ic_film_24"
         android:title="@string/movies"
         app:showAsAction="always"
         />
     <item
         android:id="@+id/personListFragment"
-        android:icon="@drawable/ic_baseline_person_24"
+        android:icon="@drawable/ic_person_24"
         android:title="@string/people"
         app:showAsAction="always"
         />
@@ -26,7 +26,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/favouriteListFragment"
-        android:icon="@drawable/ic_baseline_favorite_24"
+        android:icon="@drawable/ic_star_fav_24"
         android:title="@string/favourite"
         app:showAsAction="always"
         />

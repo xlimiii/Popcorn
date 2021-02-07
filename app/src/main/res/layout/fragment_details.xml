@@ -46,16 +46,18 @@
 
             <TextView
                 android:id="@+id/tv_movieDetailsTitle"
-                android:layout_width="240dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="144dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:ellipsize="none"
                 android:maxLines="4"
                 android:textColor="@color/phthalo_green"
                 android:textSize="30sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_movieDetailsPoster"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -87,10 +89,12 @@
 
             <TextView
                 android:id="@+id/tv_genresForMovie"
-                android:layout_width="240dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="144dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_movieDetailsPoster"
                 app:layout_constraintTop_toBottomOf="@+id/tv_year" />
 
@@ -164,15 +168,18 @@
 
                 </androidx.recyclerview.widget.RecyclerView>
             </ScrollView>
+
             <TextView
                 android:id="@+id/tv_oryginalLang"
-                android:layout_width="240dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="144dp"
                 android:layout_marginTop="8dp"
-                android:maxLines="4"
-                android:ellipsize="none"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
+                android:ellipsize="none"
+                android:maxLines="4"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_movieDetailsPoster"
                 app:layout_constraintTop_toBottomOf="@+id/tv_genresForMovie" />
 
@@ -187,10 +194,12 @@
 
             <TextView
                 android:id="@+id/tv_mainCompany"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="144dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_oryginalLang"
                 app:layout_constraintStart_toEndOf="@+id/iv_movieDetailsPoster"
                 app:layout_constraintTop_toBottomOf="@+id/tv_oryginalLang" />
         </androidx.constraintlayout.widget.ConstraintLayout>
