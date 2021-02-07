@@ -42,9 +42,9 @@ class PeopleInMovieAndTVShowAdapter(private val people: LiveData<List<Person>>,
         val url = "https://image.tmdb.org/t/p/w185${people.value?.get(position)?.profile_path}"
         val placeholderImg: Int
         when(people.value?.get(position)?.gender){
-            2 -> placeholderImg = R.drawable.ic_baseline_person_outline_24
-            1 -> placeholderImg = R.drawable.ic_baseline_person_outline_242
-            else -> placeholderImg = R.drawable.ic_baseline_person_outline_24e
+            2 -> placeholderImg = R.drawable.ic_person_placeholder_24
+            1 -> placeholderImg = R.drawable.ic_person_placeholder_24_2
+            else -> placeholderImg = R.drawable.ic_person_placeholder_24_e
         }
 
         Glide.with(holder.itemView).load(url).centerCrop().placeholder(placeholderImg).into(avatar)

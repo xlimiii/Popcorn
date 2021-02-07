@@ -44,9 +44,9 @@ class PersonListAdapter(private val people: LiveData<List<Person>>,
         val avatar = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
         val url = "https://image.tmdb.org/t/p/w185${people.value?.get(position)?.profile_path}"
         val placeholderImg : Int = when(people.value?.get(position)?.gender){
-            2 -> R.drawable.ic_baseline_person_outline_24
-            1 -> R.drawable.ic_baseline_person_outline_242
-            else -> R.drawable.ic_baseline_person_outline_24e
+            2 -> R.drawable.ic_person_placeholder_24
+            1 -> R.drawable.ic_person_placeholder_24_2
+            else -> R.drawable.ic_person_placeholder_24_e
         }
         Glide.with(holder.itemView).load(url).centerCrop().placeholder(placeholderImg).into(avatar)
 
