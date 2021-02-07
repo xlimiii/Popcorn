@@ -62,7 +62,7 @@ class PersonDetailsFragment : Fragment() {
             // biography:
             if (it.biography.isNullOrEmpty())
             {
-                view.tv_header1.visibility = View.GONE
+                view.tv_header1.visibility = View.INVISIBLE
                 view.tv_movieDescription.visibility = View.GONE
             }
             else
