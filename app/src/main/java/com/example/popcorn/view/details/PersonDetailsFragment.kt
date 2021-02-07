@@ -95,9 +95,9 @@ class PersonDetailsFragment : Fragment() {
             }
 
             // place of birth:
-            view.tv_oryginalLang.text = "Place of Birth: " + it.place_of_birth
-            if (it.place_of_birth.isNullOrEmpty()) view.tv_oryginalLang.visibility = View.GONE
-            else view.tv_oryginalLang.visibility = View.VISIBLE
+            view.tv_originalLang.text = "Place of Birth: " + it.place_of_birth
+            if (it.place_of_birth.isNullOrEmpty()) view.tv_originalLang.visibility = View.GONE
+            else view.tv_originalLang.visibility = View.VISIBLE
 
             // department:
             view.tv_genresForMovie.text = "Known for: " + it.known_for_department

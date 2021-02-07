@@ -72,8 +72,8 @@ class TVShowDetailsFragment : Fragment() {
             if (!it.genres.isNullOrEmpty())
             {
                 var genresText = ""
-                it.genres.forEach { x -> genresText += x.name + " "}
-                view.tv_genresForMovie.text = "Genres: $genresText"
+                it.genres.forEach { x -> genresText += x.name + ", "}
+                view.tv_genresForMovie.text = "Genres: ${genresText.slice(IntRange(0, genresText.length - 3))}"
                 view.tv_genresForMovie.visibility = View.VISIBLE
             }
             else view.tv_genresForMovie.visibility = View.GONE
@@ -83,10 +83,10 @@ class TVShowDetailsFragment : Fragment() {
             {
                 var languagesText = ""
                 it.spoken_languages.forEach{ x -> languagesText += x.english_name + " "}
-                view.tv_oryginalLang.text = "Languages: $languagesText"
-                view.tv_oryginalLang.visibility = View.VISIBLE
+                view.tv_originalLang.text = "Languages: $languagesText"
+                view.tv_originalLang.visibility = View.VISIBLE
             }
-            else view.tv_oryginalLang.visibility = View.GONE
+            else view.tv_originalLang.visibility = View.GONE
 
             // main company:
             if (!it.production_companies.isNullOrEmpty())
