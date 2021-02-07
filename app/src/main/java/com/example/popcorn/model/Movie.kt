@@ -1,38 +1,17 @@
 package com.example.popcorn.model
 
-
 data class Movie (
-        val adult : Boolean,
-        val backdrop_path : String,
-        val belongs_to_collection : BelongsToCollection,
-        val budget : Int,
-        val genres : List<Genre>,
-        val genre_ids : List<Int>,
-        val homepage : String,
-        val id : Int,
-        val imdb_id : String,
-        val media_type : String,
-        val original_language : String,
-        val original_title : String,
-        val overview : String?,
-        val popularity : Double,
-        val poster_path : String?,
-        val production_companies : List<ProductionCompany>,
-        val production_countries : List<ProductionCountry>,
-        val release_date : String?,
-        val revenue : Long,
-        val runtime : Int,
-        val spoken_languages : List<SpokenLanguage>,
-        val status : String,
-        val tagline : String,
-        val title : String,
-        val video : Boolean,
-        val vote_average : Double,
-        val vote_count : Int,
-//Crew and Cast
-        val credit_id : String,
-        val department : String,
-        val job : String,
-        val character : String,
-        val order : Int
+    val genres : List<Genre>,
+    val id : Int,
+    val media_type : String,
+    val overview : String?,
+    val popularity : Double,
+    val poster_path : String?,
+    val production_companies : List<ProductionCompany>,
+    val release_date : String?,
+    val spoken_languages : List<SpokenLanguage>,
+    val title : String,
+    // Cast and Crew:
+    val character : String?,
+    val department: String?
 )
