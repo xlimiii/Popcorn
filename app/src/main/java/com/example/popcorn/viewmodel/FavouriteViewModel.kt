@@ -2,8 +2,10 @@ package com.example.popcorn.viewmodel
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.os.Debug
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.popcorn.model.Movie
 import com.example.popcorn.model.TVShow
@@ -11,6 +13,7 @@ import com.example.popcorn.model.db.Favourite
 import com.example.popcorn.model.db.FavouriteRepository
 import com.example.popcorn.model.db.PopcornDatabase
 import kotlinx.coroutines.launch
+import retrofit2.awaitResponse
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,6 +22,7 @@ class FavouriteViewModel(application: Application) : AndroidViewModel(applicatio
     private val repository : FavouriteRepository = FavouriteRepository(database.favouriteDao())
     val favourites : LiveData<List<Favourite>> = repository.readAll
 
+    //                              ADDING MOVIE TO FAVOURITES
     @SuppressLint("SimpleDateFormat")
     fun addFavourite(movie : Movie)
     {
@@ -29,6 +33,7 @@ class FavouriteViewModel(application: Application) : AndroidViewModel(applicatio
         )}
     }
 
+    //                              ADDING TV SHOW TO FAVOURITES
     @SuppressLint("SimpleDateFormat")
     fun addFavourite(tvs : TVShow)
     {
@@ -39,11 +44,24 @@ class FavouriteViewModel(application: Application) : AndroidViewModel(applicatio
         )}
     }
 
+    //                              DELETING FROM FAVOURITES
     fun deleteFavorite(favID : Int)
     {
         val thisFav = favourites.value!!.find { x -> x.id == favID }
         viewModelScope.launch {
             if (thisFav != null) { repository.delete(thisFav) }
+        }
+    }
+
+
+    //                              FAVOURITES SEARCH
+    var favouritesWithMatchingTitle = MutableLiveData<List<Favourite>>()
+    fun setFavouritesWithMatchingTitle(givenText : String)
+    {
+        viewModelScope.launch {
+            favouritesWithMatchingTitle.value =
+                    if (givenText == "") { favourites.value }
+                    else { favourites.value?.filter { x -> x.title.contains(givenText) } }
         }
     }
 }

@@ -19,11 +19,11 @@
                 android:id="@+id/iv_movieDetailsPoster"
                 android:layout_width="120dp"
                 android:layout_height="160dp"
+                android:layout_marginTop="8dp"
                 android:paddingLeft="5dp"
                 android:paddingTop="2dp"
                 android:paddingRight="5dp"
                 android:paddingBottom="2dp"
-                app:layout_constraintBottom_toTopOf="@+id/tv_header1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_person_24" />
@@ -102,14 +102,14 @@
                 android:id="@+id/tv_header1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="120dp"
+                android:layout_marginTop="140dp"
                 android:background="@color/phthalo_green"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_year" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_movieDetailsTitle" />
 
             <TextView
                 android:id="@+id/tv_movieDescription"

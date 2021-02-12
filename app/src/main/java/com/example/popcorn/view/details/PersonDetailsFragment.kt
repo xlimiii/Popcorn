@@ -60,11 +60,7 @@ class PersonDetailsFragment : Fragment() {
             view.tv_movieDetailsTitle.text = it.name
 
             // biography:
-            if (it.biography.isNullOrEmpty())
-            {
-                view.tv_header1.visibility = View.INVISIBLE
-                view.tv_movieDescription.visibility = View.GONE
-            }
+            if (it.biography.isNullOrEmpty()) view.tv_movieDescription.visibility = View.GONE
             else
             {
                 view.tv_header1.visibility = View.VISIBLE
@@ -127,6 +123,13 @@ class PersonDetailsFragment : Fragment() {
             {
                 view.tv_header2.visibility = View.VISIBLE
                 view.rv_actorsInMovie.visibility = View.VISIBLE
+
+                if (personViewModel.currentPerson.value?.biography.isNullOrEmpty())
+                {
+                    view.tv_header1.text = view.tv_header2.text
+                    view.tv_header2.visibility = View.GONE
+                }
+                else view.tv_header1.text = resources.getString(R.string.biographyHeader)
             }
         })
 
@@ -142,6 +145,13 @@ class PersonDetailsFragment : Fragment() {
             {
                 view.tv_header3.visibility = View.VISIBLE
                 view.rv_crewInMovie.visibility = View.VISIBLE
+
+                if (personViewModel.currentPerson.value?.biography.isNullOrEmpty()
+                    && personViewModel.currentPersonInCastCollection.value.isNullOrEmpty())
+                {
+                    view.tv_header1.text = view.tv_header3.text
+                    view.tv_header3.visibility = View.GONE
+                }
             }
         })
 

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ import com.example.popcorn.viewmodel.MovieViewModel
 import com.example.popcorn.viewmodel.TVShowViewModel
 import com.example.popcorn.viewmodel.adapters.general.FavouriteListAdapter
 import kotlinx.android.synthetic.main.fragment_favourite_list.*
+import kotlinx.android.synthetic.main.fragment_movie_list.*
 
 class FavouriteListFragment : Fragment() {
     private lateinit var favListAdapter : FavouriteListAdapter
@@ -30,11 +32,13 @@ class FavouriteListFragment : Fragment() {
         favVM = ViewModelProvider(requireActivity()).get(FavouriteViewModel::class.java)
         tvsVM = ViewModelProvider(requireActivity()).get(TVShowViewModel::class.java)
 
-        favListAdapter = FavouriteListAdapter(favVM.favourites, favVM, movieVM, tvsVM)
-        favVM.favourites.observe(viewLifecycleOwner, { favListAdapter.notifyDataSetChanged() })
+        favListAdapter = FavouriteListAdapter(favVM.favouritesWithMatchingTitle, favVM, movieVM, tvsVM)
+        favVM.favourites.observe(viewLifecycleOwner, { favListAdapter.notifyDataSetChanged(); favVM.setFavouritesWithMatchingTitle("") })
+        favVM.favouritesWithMatchingTitle.observe(viewLifecycleOwner, { favListAdapter.notifyDataSetChanged() })
 
         return inflater.inflate(R.layout.fragment_favourite_list, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -42,5 +46,17 @@ class FavouriteListFragment : Fragment() {
             this.layoutManager = myLayoutManager
             this.adapter = favListAdapter
         }
+
+        sv_favList.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(givenText : String) : Boolean {
+                favVM.setFavouritesWithMatchingTitle(givenText)
+                return false
+            }
+
+            override fun onQueryTextSubmit(givenText: String): Boolean {
+                favVM.setFavouritesWithMatchingTitle(givenText)
+                return false
+            }
+        })
     }
 }
