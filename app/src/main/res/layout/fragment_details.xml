@@ -199,6 +199,25 @@
                 </androidx.recyclerview.widget.RecyclerView>
             </ScrollView>
 
+            <ImageButton
+                android:id="@+id/btn_addToFav"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@color/white"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/iv_movieDetailsPoster"
+                app:layout_constraintTop_toTopOf="@+id/iv_movieDetailsPoster"
+                app:srcCompat="@drawable/ic_star_unfav_24" />
+
+            <ImageButton
+                android:id="@+id/btn_delFromFav"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                android:background="@color/white"
+                app:layout_constraintStart_toStartOf="@+id/iv_movieDetailsPoster"
+                app:layout_constraintTop_toTopOf="@+id/iv_movieDetailsPoster"
+                app:srcCompat="@drawable/ic_star_fav_24"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

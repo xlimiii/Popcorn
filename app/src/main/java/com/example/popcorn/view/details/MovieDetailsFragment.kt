@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.popcorn.R
 import com.example.popcorn.viewmodel.CompanyViewModel
+import com.example.popcorn.viewmodel.FavouriteViewModel
 import com.example.popcorn.viewmodel.MovieViewModel
 import com.example.popcorn.viewmodel.PersonViewModel
 import com.example.popcorn.viewmodel.adapters.details.PeopleInMovieAndTVShowAdapter
@@ -26,6 +29,7 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var movieViewModel: MovieViewModel
     private lateinit var personViewModel: PersonViewModel
     private lateinit var companyViewModel: CompanyViewModel
+    private lateinit var favouriteViewModel: FavouriteViewModel
 
     private lateinit var castAdapter: PeopleInMovieAndTVShowAdapter
     private lateinit var crewAdapter: PeopleInMovieAndTVShowAdapter
@@ -44,6 +48,7 @@ class MovieDetailsFragment : Fragment() {
         movieViewModel = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
         personViewModel = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
         companyViewModel = ViewModelProvider(requireActivity()).get(CompanyViewModel::class.java)
+        favouriteViewModel = ViewModelProvider(requireActivity()).get(FavouriteViewModel::class.java)
 
         castAdapter = PeopleInMovieAndTVShowAdapter(movieViewModel.currentMovieCast,
                 personViewModel, "movie", "cast")
@@ -104,6 +109,26 @@ class MovieDetailsFragment : Fragment() {
             // poster:
             val url = "https://image.tmdb.org/t/p/w185${it.poster_path}"
             Glide.with(view.iv_movieDetailsPoster).load(url).centerCrop().placeholder(R.drawable.ic_outline_movie_24holder).into(view.iv_movieDetailsPoster)
+
+            // fav button:
+            favouriteViewModel.favourites.observe(viewLifecycleOwner, {
+                view.btn_addToFav.setOnClickListener {
+                    movieViewModel.currentMovie.value?.let { item -> favouriteViewModel.addFavourite(item) } }
+                view.btn_addToFav.visibility = View.VISIBLE
+                view.btn_delFromFav.visibility = View.GONE
+                val favouriteMovie = favouriteViewModel.favourites.value?.find {
+                        x -> x.media_type == "movie" && x.movieOrTVShowID == movieViewModel.currentMovie.value?.id }
+                if (favouriteMovie != null)
+                {
+                    view.btn_delFromFav.setOnClickListener {
+                        favouriteViewModel.deleteFavorite(favouriteMovie.id)
+                        view.btn_addToFav.visibility = View.VISIBLE
+                        view.btn_delFromFav.visibility = View.GONE
+                    }
+                    view.btn_addToFav.visibility = View.GONE
+                    view.btn_delFromFav.visibility = View.VISIBLE
+                }
+            })
 
             // description:
             if (it.overview.isNullOrEmpty())

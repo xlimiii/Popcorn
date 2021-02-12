@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.popcorn.R
 import com.example.popcorn.viewmodel.CompanyViewModel
+import com.example.popcorn.viewmodel.FavouriteViewModel
 import com.example.popcorn.viewmodel.PersonViewModel
 import com.example.popcorn.viewmodel.TVShowViewModel
 import com.example.popcorn.viewmodel.adapters.details.PeopleInMovieAndTVShowAdapter
@@ -25,7 +26,8 @@ import kotlinx.android.synthetic.main.fragment_details.view.*
 class TVShowDetailsFragment : Fragment() {
     private lateinit var tvsViewModel : TVShowViewModel
     private lateinit var personViewModel : PersonViewModel
-    private lateinit var companyViewModel: CompanyViewModel
+    private lateinit var companyViewModel : CompanyViewModel
+    private lateinit var favouriteViewModel : FavouriteViewModel
 
     private lateinit var castAdapter : PeopleInMovieAndTVShowAdapter
     private lateinit var crewAdapter : PeopleInMovieAndTVShowAdapter
@@ -44,6 +46,7 @@ class TVShowDetailsFragment : Fragment() {
         tvsViewModel = ViewModelProvider(requireActivity()).get(TVShowViewModel::class.java)
         personViewModel = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
         companyViewModel = ViewModelProvider(requireActivity()).get(CompanyViewModel::class.java)
+        favouriteViewModel = ViewModelProvider(requireActivity()).get(FavouriteViewModel::class.java)
 
         castAdapter = PeopleInMovieAndTVShowAdapter(tvsViewModel.currentTVShowCast,
                 personViewModel, "TVShow", "cast")
@@ -104,6 +107,26 @@ class TVShowDetailsFragment : Fragment() {
             // poster:
             val url = "https://image.tmdb.org/t/p/w185${it.poster_path}"
             Glide.with(view.iv_movieDetailsPoster).load(url).centerCrop().placeholder(R.drawable.ic_twotone_live_tv_24holder).into(view.iv_movieDetailsPoster)
+
+            // fav button:
+            favouriteViewModel.favourites.observe(viewLifecycleOwner, {
+                view.btn_addToFav.setOnClickListener {
+                    tvsViewModel.currentTVShow.value?.let { item -> favouriteViewModel.addFavourite(item) } }
+                view.btn_addToFav.visibility = View.VISIBLE
+                view.btn_delFromFav.visibility = View.GONE
+                val favouriteMovie = favouriteViewModel.favourites.value?.find {
+                        x -> x.media_type == "tv" && x.movieOrTVShowID == tvsViewModel.currentTVShow.value?.id }
+                if (favouriteMovie != null)
+                {
+                    view.btn_delFromFav.setOnClickListener {
+                        favouriteViewModel.deleteFavorite(favouriteMovie.id)
+                        view.btn_addToFav.visibility = View.VISIBLE
+                        view.btn_delFromFav.visibility = View.GONE
+                    }
+                    view.btn_addToFav.visibility = View.GONE
+                    view.btn_delFromFav.visibility = View.VISIBLE
+                }
+            })
 
             // description:
             if (it.overview.isNullOrEmpty())
