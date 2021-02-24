@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/homeFragment">
-
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.popcorn.view.general.HomeFragment"
@@ -25,7 +24,7 @@
         android:id="@+id/movieListFragment"
         android:name="com.example.popcorn.view.general.MovieListFragment"
         android:label="fragment_movie_list"
-        tools:layout="@layout/fragment_movie_list" >
+        tools:layout="@layout/fragment_general_list" >
 
         <action
             android:id="@+id/action_movieListFragment_to_movieDetailsFragment"
@@ -35,7 +34,7 @@
         android:id="@+id/favouriteListFragment"
         android:name="com.example.popcorn.view.general.FavouriteListFragment"
         android:label="fragment_favourite_list"
-        tools:layout="@layout/fragment_favourite_list" >
+        tools:layout="@layout/fragment_general_list" >
 
         <action
             android:id="@+id/action_favouriteListFragment_to_movieDetailsFragment"
@@ -48,7 +47,7 @@
         android:id="@+id/TVShowListFragment"
         android:name="com.example.popcorn.view.general.TVShowListFragment"
         android:label="fragment_tv_show_list"
-        tools:layout="@layout/fragment_tv_show_list" >
+        tools:layout="@layout/fragment_general_list" >
         <action
             android:id="@+id/action_TVShowListFragment_to_TVShowDetailsFragment"
             app:destination="@id/TVShowDetailsFragment" />
@@ -57,7 +56,7 @@
         android:id="@+id/personListFragment"
         android:name="com.example.popcorn.view.general.PersonListFragment"
         android:label="fragment_person_list"
-        tools:layout="@layout/fragment_person_list">
+        tools:layout="@layout/fragment_general_list">
         <action
             android:id="@+id/action_personListFragment_to_personDetailsFragment"
             app:destination="@id/personDetailsFragment" />
@@ -89,7 +88,8 @@
     <fragment
         android:id="@+id/TVShowDetailsFragment"
         android:name="com.example.popcorn.view.details.TVShowDetailsFragment"
-        android:label="fragment_tv_show_details">
+        android:label="fragment_tv_show_details"
+        tools:layout="@layout/fragment_details">
         <action
             android:id="@+id/action_TVShowDetailsFragment_to_personDetailsFragment"
             app:destination="@id/personDetailsFragment" />
@@ -100,5 +100,6 @@
     <fragment
         android:id="@+id/companyDetailsFragment"
         android:name="com.example.popcorn.view.details.CompanyDetailsFragment"
-        android:label="fragment_company_details" />
+        android:label="fragment_company_details"
+        tools:layout="@layout/fragment_company_details"/>
 </navigation>

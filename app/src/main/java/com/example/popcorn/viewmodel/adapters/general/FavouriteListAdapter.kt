@@ -17,55 +17,62 @@ import com.example.popcorn.viewmodel.FavouriteViewModel
 import com.example.popcorn.viewmodel.MovieViewModel
 import com.example.popcorn.viewmodel.TVShowViewModel
 
-class FavouriteListAdapter(private val favouriteMovies: LiveData<List<Favourite>>,
-                           private val favVM: FavouriteViewModel,
-                           private val movieVM: MovieViewModel,
-                           private val tvsVM: TVShowViewModel) : RecyclerView.Adapter<FavouriteListAdapter.FavouriteHolder>() {
+// Adapter used in FavouriteList fragment, responsible for displaying list of favourite movies and TV shows:
+class FavouriteListAdapter(private val favouriteMoviesAndTVShows: LiveData<List<Favourite>>,
+                           private val favViewModel: FavouriteViewModel,
+                           private val movieViewModel: MovieViewModel,
+                           private val tvShowViewModel: TVShowViewModel) : RecyclerView.Adapter<FavouriteListAdapter.FavouriteHolder>() {
 
     inner class FavouriteHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouriteHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_tv_fav_row, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.one_item_row, parent, false)
         return FavouriteHolder(view)
     }
 
     override fun onBindViewHolder(holder: FavouriteHolder, position: Int) {
-        // title:
-        val name = holder.itemView.findViewById<TextView>(R.id.tv_movieTitle)
-        name.text = favouriteMovies.value?.get(position)?.title.toString()
+        // Title:
+        val name = holder.itemView.findViewById<TextView>(R.id.tv_titleOrName)
+        name.text = favouriteMoviesAndTVShows.value?.get(position)?.title.toString()
 
-        // release date:
-        val date = holder.itemView.findViewById<TextView>(R.id.tv_movieDate)
-        if (!favouriteMovies.value?.get(position)?.release_date.isNullOrEmpty())
-            date.text = favouriteMovies.value?.get(position)?.release_date.toString().slice(IntRange(0,3))
+        // Release date:
+        val date = holder.itemView.findViewById<TextView>(R.id.tv_releaseOrBirth)
+        if (!favouriteMoviesAndTVShows.value?.get(position)?.release_date.isNullOrEmpty())
+            date.text = favouriteMoviesAndTVShows.value?.get(position)?.release_date.toString().slice(IntRange(0,3))
 
-        // poster:
-        val poster = holder.itemView.findViewById<ImageView>(R.id.iv_moviePoster)
-        val url = "https://image.tmdb.org/t/p/w185${favouriteMovies.value?.get(position)?.poster_path}"
-        if(favouriteMovies.value?.get(position)?.media_type == "movie")
+        // Poster:
+        val poster = holder.itemView.findViewById<ImageView>(R.id.iv_posterOrPhoto)
+        val url = "https://image.tmdb.org/t/p/w185${favouriteMoviesAndTVShows.value?.get(position)?.poster_path}"
+        if(favouriteMoviesAndTVShows.value?.get(position)?.media_type == "movie")
             Glide.with(holder.itemView).load(url).centerCrop().placeholder(R.drawable.ic_outline_movie_24holder).into(poster)
         else
             Glide.with(holder.itemView).load(url).centerCrop().placeholder(R.drawable.ic_twotone_live_tv_24holder).into(poster)
 
-        // navigation:
-        val movieRowBackground = holder.itemView.findViewById<ConstraintLayout>(R.id.movieRowBackground)
+        // Navigation between fragments:
+        val movieRowBackground = holder.itemView.findViewById<ConstraintLayout>(R.id.rowBackground)
         movieRowBackground.setOnClickListener {
-                view -> if (favouriteMovies.value?.get(position)?.media_type == "movie") view.findNavController().navigate(R.id.action_favouriteListFragment_to_movieDetailsFragment)
-                        else view.findNavController().navigate(R.id.action_favouriteListFragment_to_TVShowDetailsFragment)
+            view ->
+            // Going to Movie Details:
+            if (favouriteMoviesAndTVShows.value?.get(position)?.media_type == "movie")
+                view.findNavController().navigate(R.id.action_favouriteListFragment_to_movieDetailsFragment)
+            // Going to TV Show Details:
+            else
+                view.findNavController().navigate(R.id.action_favouriteListFragment_to_TVShowDetailsFragment)
 
-                if (favouriteMovies.value?.get(position)?.media_type == "movie") movieVM.setCurrentMovie(favouriteMovies.value!![position].movieOrTVShowID)
-                else tvsVM.setCurrentTVShow(favouriteMovies.value!![position].movieOrTVShowID)
+            // Updating current item for displaying in details:
+            if (favouriteMoviesAndTVShows.value?.get(position)?.media_type == "movie") movieViewModel.setCurrentMovie(favouriteMoviesAndTVShows.value!![position].movieOrTVShowID)
+            else tvShowViewModel.setCurrentTVShow(favouriteMoviesAndTVShows.value!![position].movieOrTVShowID)
         }
 
-        // fav button:
+        // Displaying button responsible for deleting item from favourites:
         val addToFav = holder.itemView.findViewById<ImageButton>(R.id.btn_addToFav)
         val delFromFav = holder.itemView.findViewById<ImageButton>(R.id.btn_delFromFav)
         val favDate = holder.itemView.findViewById<TextView>(R.id.tv_favDate)
-        favDate.text = favouriteMovies.value?.get(position)?.date
+        favDate.text = favouriteMoviesAndTVShows.value?.get(position)?.date
         addToFav.visibility = View.GONE
         delFromFav.visibility = View.VISIBLE
-        delFromFav.setOnClickListener{ favouriteMovies.value?.get(position)?.let { item -> favVM.deleteFavorite(item.id) } }
+        delFromFav.setOnClickListener{ favouriteMoviesAndTVShows.value?.get(position)?.let { item -> favViewModel.deleteFavorite(item.id) } }
     }
 
-    override fun getItemCount() : Int = favouriteMovies.value?.size ?: 0
+    override fun getItemCount() : Int = favouriteMoviesAndTVShows.value?.size ?: 0
 }

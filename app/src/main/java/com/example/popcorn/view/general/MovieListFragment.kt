@@ -13,45 +13,60 @@ import com.example.popcorn.R
 import com.example.popcorn.viewmodel.FavouriteViewModel
 import com.example.popcorn.viewmodel.MovieViewModel
 import com.example.popcorn.viewmodel.adapters.general.MovieListAdapter
-import kotlinx.android.synthetic.main.fragment_movie_list.*
+import kotlinx.android.synthetic.main.fragment_general_list.*
 
+// Fragment displayed in second tab:
 class MovieListFragment : Fragment() {
+    // ViewModels:
+    private lateinit var movieViewModel : MovieViewModel
+    private lateinit var favViewModel : FavouriteViewModel
+
+    // Adapter and its RecyclerView:
     private lateinit var movieListAdapter : MovieListAdapter
     private lateinit var myLayoutManager : LinearLayoutManager
     private lateinit var recyclerView : RecyclerView
-    private lateinit var movieVM : MovieViewModel
-    private lateinit var favVM : FavouriteViewModel
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,  savedInstanceState: Bundle?): View? {
+        // ViewModels:
+        movieViewModel = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
+        favViewModel = ViewModelProvider(requireActivity()).get(FavouriteViewModel::class.java)
+
+        // LinearLayoutManager (used by RecyclerView):
         myLayoutManager = LinearLayoutManager(context)
-        movieVM = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
-        favVM = ViewModelProvider(requireActivity()).get(FavouriteViewModel::class.java)
 
-        movieVM.setMoviesWithMatchingTitle("")
-        movieListAdapter = MovieListAdapter(movieVM.moviesWithMatchingTitle, movieVM, favVM, "MovieListFragment")
+        // Initializing list of popular movies (by empty input):
+        movieViewModel.setMoviesWithMatchingTitle("")
 
-        movieVM.moviesWithMatchingTitle.observe(viewLifecycleOwner, { movieListAdapter.notifyDataSetChanged() })
-        favVM.favourites.observe(viewLifecycleOwner, { movieListAdapter.notifyDataSetChanged() })
+        // Adapter (used by RecyclerView):
+        movieListAdapter = MovieListAdapter(movieViewModel.moviesWithMatchingTitle, movieViewModel, favViewModel, "MovieListFragment")
 
-        return inflater.inflate(R.layout.fragment_movie_list, container, false)
+        // Updating movies' RecyclerView after receiving response from API or new data from local database:
+        movieViewModel.moviesWithMatchingTitle.observe(viewLifecycleOwner, { movieListAdapter.notifyDataSetChanged() })
+        favViewModel.favourites.observe(viewLifecycleOwner, { movieListAdapter.notifyDataSetChanged() })
+
+        return inflater.inflate(R.layout.fragment_general_list, container, false)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = rv_movieList.apply {
+        // RecyclerView which displays popular movies or movies with matching title:
+        recyclerView = rv_generalList.apply {
             this.layoutManager = myLayoutManager
             this.adapter = movieListAdapter
         }
 
-        sv_movieList.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        // Search view responsible for finding movies with matching title:
+        sv_generalList.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(givenText : String) : Boolean {
-                movieVM.setMoviesWithMatchingTitle(givenText)
+                movieViewModel.setMoviesWithMatchingTitle(givenText)
                 return false
             }
 
             override fun onQueryTextSubmit(givenText: String): Boolean {
-                movieVM.setMoviesWithMatchingTitle(givenText)
+                movieViewModel.setMoviesWithMatchingTitle(givenText)
                 return false
             }
         })

@@ -13,45 +13,60 @@ import com.example.popcorn.R
 import com.example.popcorn.viewmodel.FavouriteViewModel
 import com.example.popcorn.viewmodel.TVShowViewModel
 import com.example.popcorn.viewmodel.adapters.general.TVShowListAdapter
-import kotlinx.android.synthetic.main.fragment_tv_show_list.*
+import kotlinx.android.synthetic.main.fragment_general_list.*
 
+// Fragment displayed in fourth tab:
 class TVShowListFragment : Fragment() {
-    private lateinit var TVShowListAdapter : TVShowListAdapter
+    // ViewModels:
+    private lateinit var tvShowViewModel : TVShowViewModel
+    private lateinit var favViewModel : FavouriteViewModel
+
+    // Adapter and its RecyclerView:
+    private lateinit var tvShowListAdapter : TVShowListAdapter
     private lateinit var myLayoutManager : LinearLayoutManager
     private lateinit var recyclerView : RecyclerView
-    private lateinit var TVShowVM : TVShowViewModel
-    private lateinit var favVM : FavouriteViewModel
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // ViewModels:
+        tvShowViewModel = ViewModelProvider(requireActivity()).get(TVShowViewModel::class.java)
+        favViewModel = ViewModelProvider(requireActivity()).get(FavouriteViewModel::class.java)
+
+        // LinearLayoutManager (used by RecyclerView):
         myLayoutManager = LinearLayoutManager(context)
-        TVShowVM = ViewModelProvider(requireActivity()).get(TVShowViewModel::class.java)
-        favVM = ViewModelProvider(requireActivity()).get(FavouriteViewModel::class.java)
 
-        TVShowVM.setTVShowsWithMatchingTitle("")
-        TVShowListAdapter = TVShowListAdapter(TVShowVM.TVShowsWithMatchingTitle, TVShowVM, favVM, "TVShowListFragment")
+        // Initializing list of popular TV Shows (by empty input):
+        tvShowViewModel.setTVShowsWithMatchingTitle("")
 
-        TVShowVM.TVShowsWithMatchingTitle.observe(viewLifecycleOwner, { TVShowListAdapter.notifyDataSetChanged() })
-        favVM.favourites.observe(viewLifecycleOwner, { TVShowListAdapter.notifyDataSetChanged() })
+        // Adapter (used by RecyclerView):
+        tvShowListAdapter = TVShowListAdapter(tvShowViewModel.TVShowsWithMatchingTitle, tvShowViewModel, favViewModel, "TVShowListFragment")
 
-        return inflater.inflate(R.layout.fragment_tv_show_list, container, false)
+        // Updating TV Shows' RecyclerView after receiving response from API or new data from local database:
+        tvShowViewModel.TVShowsWithMatchingTitle.observe(viewLifecycleOwner, { tvShowListAdapter.notifyDataSetChanged() })
+        favViewModel.favourites.observe(viewLifecycleOwner, { tvShowListAdapter.notifyDataSetChanged() })
+
+        return inflater.inflate(R.layout.fragment_general_list, container, false)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = rv_tvShowList.apply {
+        // RecyclerView which displays popular TV Shows or TV Shows with matching title:
+        recyclerView = rv_generalList.apply {
             this.layoutManager = myLayoutManager
-            this.adapter = TVShowListAdapter
+            this.adapter = tvShowListAdapter
         }
 
-        sv_tvShowList.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        // Search view responsible for finding TV Shows with matching title:
+        sv_generalList.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(givenText : String) : Boolean {
-                TVShowVM.setTVShowsWithMatchingTitle(givenText)
+                tvShowViewModel.setTVShowsWithMatchingTitle(givenText)
                 return false
             }
 
             override fun onQueryTextSubmit(givenText: String): Boolean {
-                TVShowVM.setTVShowsWithMatchingTitle(givenText)
+                tvShowViewModel.setTVShowsWithMatchingTitle(givenText)
                 return false
             }
         })

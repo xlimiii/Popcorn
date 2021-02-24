@@ -9,6 +9,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+// Interface responsible for communicating with TMDB RESTAPI:
 interface ApiRequest {
 
     //                                  MOVIES SECTION
@@ -23,9 +24,6 @@ interface ApiRequest {
 
     @GET("3/movie/{movieID}/credits?api_key=$apiKey")
     fun getPeopleFromThisMovie(@Path("movieID") movieID : Int) : Call<PeopleFromMovieOrTVShowListResponse>
-
-    @GET("3/genre/movie/list?api_key=$apiKey")
-    fun getAllGenres() : Call<GenreListResponse>
 
 
 

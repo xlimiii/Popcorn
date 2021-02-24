@@ -3,6 +3,7 @@ package com.example.popcorn.model.db
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
+// Functions that modify local database:
 @Dao
 interface FavouriteDao {
     @Insert

@@ -1,10 +1,12 @@
 package com.example.popcorn.model
 
 data class ProductionCompany (
-    val headquarters : String?,
-    val homepage : String?,
     val id : Int,
-    val logo_path : String?,
     val name : String,
+
+    val homepage : String?,    // url leading to website
+    val logo_path : String?,   // url with image
+
     val origin_country : String?,
+    val headquarters : String?
 )

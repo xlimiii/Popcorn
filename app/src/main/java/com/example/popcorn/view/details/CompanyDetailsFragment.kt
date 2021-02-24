@@ -12,19 +12,26 @@ import com.example.popcorn.R
 import com.example.popcorn.viewmodel.CompanyViewModel
 import kotlinx.android.synthetic.main.fragment_company_details.view.*
 
+// Fragment which is displayed after clicking company's name in movie's / tv show's details:
 class CompanyDetailsFragment : Fragment() {
-    private lateinit var companyVM: CompanyViewModel
+    // ViewModel:
+    private lateinit var companyVM : CompanyViewModel
+
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // ViewModel:
         companyVM = ViewModelProvider(requireActivity()).get(CompanyViewModel::class.java)
+
+        // Declaration of view:
         val view =  inflater.inflate(R.layout.fragment_company_details, container, false)
 
+        // Updating fragment after receiving response from API:
         companyVM.currentCompany.observe(viewLifecycleOwner, {
-            // name:
+            // Name:
             view.tv_companyName.text = it.name
 
-            // HQ:
+            // HeadQuarters:
             if (!it.headquarters.isNullOrEmpty())
             {
                 view.tv_companyHQ.text = it.headquarters
@@ -32,11 +39,11 @@ class CompanyDetailsFragment : Fragment() {
             }
             else view.tv_companyHQ.visibility = View.GONE
 
-            // origin country
+            // Origin country:
             if (!it.origin_country.isNullOrEmpty())
                 view.tv_companyHQ.text = "${it.headquarters} (${it.origin_country})"
 
-            // homepage:
+            // Homepage:
             if (!it.homepage.isNullOrEmpty())
             {
                 view.tv_homepage.text = it.homepage
@@ -44,15 +51,16 @@ class CompanyDetailsFragment : Fragment() {
             }
             else view.tv_homepage.visibility = View.GONE
 
-            // logo:
+            // Logo:
             if (!it.logo_path.isNullOrEmpty())
             {
                 val url = "https://image.tmdb.org/t/p/w185${it.logo_path}"
-                Glide.with(view.iv_companyLogo).load(url).override(500, 200).fitCenter().into(view.iv_companyLogo)
+                Glide.with(view.iv_companyLogo).load(url).override(500, 200).fitCenter().into(view.iv_companyLogo) // resizing
                 view.iv_companyLogo.visibility = View.VISIBLE
             }
             else view.iv_companyLogo.visibility = View.GONE
         })
+
         return view
     }
 }

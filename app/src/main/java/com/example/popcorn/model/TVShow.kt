@@ -1,17 +1,21 @@
 package com.example.popcorn.model
 
-data class TVShow(
-    val first_air_date: String?,
-    val last_air_date: String,
-    val genres : List<Genre>,
+data class TVShow (
+    // General:
     val id : Int,
-    val name: String,
+    val name : String,
+    val poster_path : String?, // poster
+    val popularity : Double,
+
+    // Details:
     val overview : String?,
-    val popularity: Double,
-    val poster_path: String?,
+    val genres : List<Genre>,
+    val first_air_date: String?,
+    val last_air_date: String?,
     val production_companies : List<ProductionCompany>,
     val spoken_languages : List<SpokenLanguage>,
-    // Cast and Crew:
+
+    // Who was played / for what was responsible - used in recycler views:
     val character : String?,
     val department: String?
 )

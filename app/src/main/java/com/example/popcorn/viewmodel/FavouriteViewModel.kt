@@ -2,7 +2,6 @@ package com.example.popcorn.viewmodel
 
 import android.annotation.SuppressLint
 import android.app.Application
-import android.os.Debug
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,10 +12,10 @@ import com.example.popcorn.model.db.Favourite
 import com.example.popcorn.model.db.FavouriteRepository
 import com.example.popcorn.model.db.PopcornDatabase
 import kotlinx.coroutines.launch
-import retrofit2.awaitResponse
 import java.text.SimpleDateFormat
 import java.util.*
 
+// ViewModel which connects Favourite's Fragment with Favourite's Repository (and local database):
 class FavouriteViewModel(application: Application) : AndroidViewModel(application) {
     private val database = PopcornDatabase.getDatabase(application)
     private val repository : FavouriteRepository = FavouriteRepository(database.favouriteDao())

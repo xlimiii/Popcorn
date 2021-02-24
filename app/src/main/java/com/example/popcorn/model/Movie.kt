@@ -1,17 +1,20 @@
 package com.example.popcorn.model
 
 data class Movie (
-    val genres : List<Genre>,
+    // General:
     val id : Int,
-    val media_type : String,
-    val overview : String?,
-    val popularity : Double,
-    val poster_path : String?,
-    val production_companies : List<ProductionCompany>,
-    val release_date : String?,
-    val spoken_languages : List<SpokenLanguage>,
     val title : String,
-    // Cast and Crew:
+    val poster_path : String?, // poster
+    val popularity : Double,
+
+    // Details:
+    val overview : String?,    // description
+    val genres : List<Genre>,
+    val release_date : String?,
+    val production_companies : List<ProductionCompany>,
+    val spoken_languages : List<SpokenLanguage>,
+
+    // Who was played / for what was responsible - used in recycler views:
     val character : String?,
     val department: String?
 )

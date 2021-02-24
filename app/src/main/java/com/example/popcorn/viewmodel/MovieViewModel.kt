@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.popcorn.model.Genre
 import com.example.popcorn.model.api.MovieRepository
 import com.example.popcorn.model.api.ApiRequest
 import com.example.popcorn.model.Movie
@@ -12,6 +11,7 @@ import com.example.popcorn.model.Person
 import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 
+// ViewModel which connects Movies' Fragments with Movies' Repository (and API):
 class MovieViewModel(application: Application) : AndroidViewModel(application) {
     private val repository : MovieRepository = MovieRepository(ApiRequest.getAPI())
 
@@ -60,20 +60,6 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
                 val data = response.body()!!
                 currentMovieCast.value = data.cast.sortedByDescending { it.popularity }
                 currentMovieCrew.value = data.crew.sortedByDescending { it.popularity }
-            }
-        }
-    }
-
-    //                                         GENRES
-    var genres = MutableLiveData<List<Genre>>()
-    fun setGenres()
-    {
-        viewModelScope.launch {
-            val response = repository.getAllGenres().awaitResponse()
-            if (response.isSuccessful)
-            {
-                val data = response.body()!!
-                genres.value = data.genres
             }
         }
     }

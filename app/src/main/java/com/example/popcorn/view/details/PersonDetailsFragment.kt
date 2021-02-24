@@ -21,99 +21,110 @@ import com.example.popcorn.viewmodel.adapters.details.MoviesAndTVShowsInPersonAd
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.fragment_details.view.*
 
+// Fragment which is displayed after clicking specific person's row/column:
 class PersonDetailsFragment : Fragment() {
-    private lateinit var inCastAdapter: MoviesAndTVShowsInPersonAdapter
-    private lateinit var inCrewAdapter: MoviesAndTVShowsInPersonAdapter
-
+    // ViewModels:
     private lateinit var personViewModel : PersonViewModel
     private lateinit var movieViewModel : MovieViewModel
     private lateinit var tvShowViewModel : TVShowViewModel
 
+    // Adapters and their RecyclerViews:
+    private lateinit var inCastAdapter: MoviesAndTVShowsInPersonAdapter
+    private lateinit var inCrewAdapter: MoviesAndTVShowsInPersonAdapter
     private lateinit var inCastLayoutManager : LinearLayoutManager
     private lateinit var inCrewLayoutManager : LinearLayoutManager
     private lateinit var inCastRecyclerView : RecyclerView
     private lateinit var inCrewRecyclerView : RecyclerView
 
+
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        inCastLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        inCrewLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-
+        // ViewModels:
         personViewModel = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
         movieViewModel = ViewModelProvider(requireActivity()).get(MovieViewModel::class.java)
         tvShowViewModel = ViewModelProvider(requireActivity()).get(TVShowViewModel::class.java)
 
+        // LinearLayoutManagers (used by RecyclerViews):
+        inCastLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        inCrewLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        // Adapters (used by RecyclerViews):
         inCastAdapter = MoviesAndTVShowsInPersonAdapter(personViewModel.currentPersonInCastCollection,
                 movieViewModel, tvShowViewModel, "inCast")
         inCrewAdapter = MoviesAndTVShowsInPersonAdapter(personViewModel.currentPersonInCrewCollection,
                 movieViewModel, tvShowViewModel, "inCrew")
 
+        // Declaration of view:
         val view =  inflater.inflate(R.layout.fragment_details, container, false)
-        view.tv_movieDescription.justificationMode = (LineBreaker.JUSTIFICATION_MODE_INTER_WORD)
+
+        // Biography settings:
+        view.tv_description.justificationMode = (LineBreaker.JUSTIFICATION_MODE_INTER_WORD)
+
+        // Headers:
         view.tv_header1.text = resources.getString(R.string.biographyHeader)
         view.tv_header2.text = resources.getString(R.string.inCastHeader)
         view.tv_header3.text = resources.getString(R.string.inCrewHeader)
 
         personViewModel.currentPerson.observe(viewLifecycleOwner, {
-            // name:
-            view.tv_movieDetailsTitle.text = it.name
+            // Name:
+            view.tv_titleOrName.text = it.name
 
-            // biography:
-            if (it.biography.isNullOrEmpty()) view.tv_movieDescription.visibility = View.GONE
+            // Biography:
+            if (it.biography.isNullOrEmpty()) view.tv_description.visibility = View.GONE
             else
             {
                 view.tv_header1.visibility = View.VISIBLE
-                view.tv_movieDescription.text = it.biography
-                view.tv_movieDescription.visibility = View.VISIBLE
+                view.tv_description.text = it.biography
+                view.tv_description.visibility = View.VISIBLE
             }
 
-            // date of birth:
+            // Date of birth:
             if (it.birthday.isNullOrEmpty())
-            {
                 view.tv_year.visibility = View.GONE
-            }
             else
             {
                 view.tv_year.text = "Born: ${it.birthday}"
                 view.tv_year.visibility = View.VISIBLE
             }
 
-            // date of death:
-            if (it.deathday.isNullOrEmpty() || it.birthday.isNullOrEmpty())
-            {
+            // Date of death:
+            if (it.deathDay.isNullOrEmpty() || it.birthday.isNullOrEmpty())
                 view.tv_year2.visibility = View.GONE
-            }
             else
             {
-                view.tv_year2.text = "Died: ${it.deathday}"
+                view.tv_year2.text = "Died: ${it.deathDay}"
                 view.tv_year2.visibility = View.VISIBLE
             }
 
-            // place of birth:
-            view.tv_originalLang.text = "Place of Birth: " + it.place_of_birth
-            if (it.place_of_birth.isNullOrEmpty()) view.tv_originalLang.visibility = View.GONE
-            else view.tv_originalLang.visibility = View.VISIBLE
+            // Place of birth:
+            view.tv_origin.text = "Place of Birth: " + it.place_of_birth
+            if (it.place_of_birth.isNullOrEmpty()) view.tv_origin.visibility = View.GONE
+            else view.tv_origin.visibility = View.VISIBLE
 
-            // department:
-            view.tv_genresForMovie.text = "Known for: " + it.known_for_department
-            if (it.known_for_department.isNullOrEmpty()) view.tv_genresForMovie.visibility = View.GONE
-            else view.tv_genresForMovie.visibility = View.VISIBLE
+            // Department:
+            view.tv_genresOrKnownFor.text = "Known for: " + it.known_for_department
+            if (it.known_for_department.isNullOrEmpty()) view.tv_genresOrKnownFor.visibility = View.GONE
+            else view.tv_genresOrKnownFor.visibility = View.VISIBLE
 
-            // photo:
+            // Photo:
             val url = "https://image.tmdb.org/t/p/w185${it.profile_path}"
             val placeholderImg : Int = when(it.gender) {
                 2 -> R.drawable.ic_person_placeholder_24
                 1 -> R.drawable.ic_person_placeholder_24_2
                 else -> R.drawable.ic_person_placeholder_24_e
             }
-            Glide.with(view.iv_movieDetailsPoster).load(url).centerCrop().placeholder(placeholderImg).into(view.iv_movieDetailsPoster)
+            Glide.with(view.iv_posterOrPhoto).load(url).centerCrop().placeholder(placeholderImg).into(view.iv_posterOrPhoto)
+
+            // Updating data of movie and TV shows that current person performed in or was in crew of:
             personViewModel.setCurrentPersonCollection(it.id)
         })
 
-        // performed in
+        // Updating inCast's RecyclerView after receiving response from API:
         personViewModel.currentPersonInCastCollection.observe(viewLifecycleOwner, {
             inCastAdapter.notifyDataSetChanged()
+
+            // Making sure that everything is well displayed:
             if (personViewModel.currentPersonInCastCollection.value.isNullOrEmpty())
             {
                 view.tv_header2.visibility = View.GONE
@@ -133,9 +144,11 @@ class PersonDetailsFragment : Fragment() {
             }
         })
 
-        // crew of
+        // Updating inCrew's RecyclerView after receiving response from API:
         personViewModel.currentPersonInCrewCollection.observe(viewLifecycleOwner, {
             inCrewAdapter.notifyDataSetChanged()
+
+            // Making sure that everything is well displayed:
             if (personViewModel.currentPersonInCrewCollection.value.isNullOrEmpty())
             {
                 view.tv_header3.visibility = View.GONE
@@ -158,14 +171,17 @@ class PersonDetailsFragment : Fragment() {
         return view
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // RecyclerView which displays movies that current person performed in:
         inCastRecyclerView = rv_actorsInMovie.apply {
             this.layoutManager = inCastLayoutManager
             this.adapter = inCastAdapter
         }
 
+        // RecyclerView which displays movies that current person was in crew of:
         inCrewRecyclerView = rv_crewInMovie.apply {
             this.layoutManager = inCrewLayoutManager
             this.adapter = inCrewAdapter

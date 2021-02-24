@@ -17,96 +17,100 @@ import com.example.popcorn.model.TVShow
 import com.example.popcorn.viewmodel.FavouriteViewModel
 import com.example.popcorn.viewmodel.TVShowViewModel
 
+// Adapter used in TVShowList and Home fragments, responsible for displaying list of popular TV Shows and TV Shows with matching title:
 class TVShowListAdapter(private val TVShows : LiveData<List<TVShow>>,
-                        private val TVShowVM : TVShowViewModel,
-                        private val favVM : FavouriteViewModel,
+                        private val tvShowViewModel : TVShowViewModel,
+                        private val favViewModel : FavouriteViewModel,
                         private val inFragment : String) : RecyclerView.Adapter<TVShowListAdapter.TVShowHolder>() {
 
     inner class TVShowHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TVShowHolder {
         val view: View =
-                if (inFragment == "TVShowListFragment")
-                    LayoutInflater.from(parent.context).inflate(R.layout.movie_tv_fav_row, parent, false)
-                else
-                    LayoutInflater.from(parent.context).inflate(R.layout.tile, parent, false)
+            // Display in rows if in TVShowListFragment (fourth tab):
+            if (inFragment == "TVShowListFragment")
+                LayoutInflater.from(parent.context).inflate(R.layout.one_item_row, parent, false)
+            // Display in tiles if in HomeFragment (first tab):
+            else
+                LayoutInflater.from(parent.context).inflate(R.layout.one_item_tile, parent, false)
         return TVShowHolder(view)
     }
 
     override fun onBindViewHolder(holder: TVShowHolder, position: Int) {
-
+        // Binding data in TVShow List Fragment:
         if (inFragment == "TVShowListFragment") {
-            // title:
-            val name = holder.itemView.findViewById<TextView>(R.id.tv_movieTitle)
+            // Title:
+            val name = holder.itemView.findViewById<TextView>(R.id.tv_titleOrName)
             name.text = TVShows.value?.get(position)?.name.toString()
 
-            // release date:
-            val date = holder.itemView.findViewById<TextView>(R.id.tv_movieDate)
+            // Release date:
+            val date = holder.itemView.findViewById<TextView>(R.id.tv_releaseOrBirth)
             if (!TVShows.value?.get(position)?.first_air_date.isNullOrEmpty())
                 date.text = TVShows.value?.get(position)?.first_air_date.toString().slice(IntRange(0,3))
 
-            // poster:
-            val poster = holder.itemView.findViewById<ImageView>(R.id.iv_moviePoster)
-
+            // Poster:
+            val poster = holder.itemView.findViewById<ImageView>(R.id.iv_posterOrPhoto)
             val url = "https://image.tmdb.org/t/p/w185${TVShows.value?.get(position)?.poster_path}"
             Glide.with(holder.itemView).load(url).centerCrop().placeholder(R.drawable.ic_twotone_live_tv_24holder).into(poster)
 
-            // navigation:
-            val movieRowBackground = holder.itemView.findViewById<ConstraintLayout>(R.id.movieRowBackground)
+            // Navigation between fragments - going to TV Show Details:
+            val movieRowBackground = holder.itemView.findViewById<ConstraintLayout>(R.id.rowBackground)
             movieRowBackground.setOnClickListener {
-                TVShows.value?.get(position)?.let { item -> TVShowVM.setCurrentTVShow(item.id) }
+                TVShows.value?.get(position)?.let { item -> tvShowViewModel.setCurrentTVShow(item.id) }
                 movieRowBackground.findNavController().navigate(R.id.action_TVShowListFragment_to_TVShowDetailsFragment)
             }
 
-            // fav button:
+            // Adding to favourites:
             val addToFav = holder.itemView.findViewById<ImageButton>(R.id.btn_addToFav)
+            addToFav.setOnClickListener{ TVShows.value?.get(position)?.let { item -> favViewModel.addFavourite(item) } }
+
+            // Default visibility of "favourite buttons":
             val delFromFav = holder.itemView.findViewById<ImageButton>(R.id.btn_delFromFav)
             val favDate = holder.itemView.findViewById<TextView>(R.id.tv_favDate)
-            addToFav.setOnClickListener{ TVShows.value?.get(position)?.let { item -> favVM.addFavourite(item) } }
             addToFav.visibility = View.VISIBLE
             delFromFav.visibility = View.GONE
             favDate.text = ""
 
-            // IF THIS MOVIE IS IN FAVOURITES:
-            val favouriteMovie = favVM.favourites.value?.find {
+            // Deleting from favourites:
+            val favouriteMovie = favViewModel.favourites.value?.find {
                 x -> x.media_type == "tv" && x.movieOrTVShowID == TVShows.value?.get(position)?.id }
             if (favouriteMovie != null)
             {
                 delFromFav.setOnClickListener {
-                    favVM.deleteFavorite(favouriteMovie.id)
+                    favViewModel.deleteFavorite(favouriteMovie.id)
                     addToFav.visibility = View.VISIBLE
                     delFromFav.visibility = View.GONE
                 }
+
+                // Swapping visibility (deleting must be active, not adding):
                 addToFav.visibility = View.GONE
                 delFromFav.visibility = View.VISIBLE
                 favDate.text = favouriteMovie.date
             }
 
+        // Binding data in Home Fragment:
         } else {
-            // title:
-            val name = holder.itemView.findViewById<TextView>(R.id.tv_personName)
+            // Title:
+            val name = holder.itemView.findViewById<TextView>(R.id.tv_titleOrName)
             name.text = TVShows.value?.get(position)?.name.toString()
 
-            // who was played:
-            val character = holder.itemView.findViewById<TextView>(R.id.tv_characterName)
+            // Who was played:
+            val character = holder.itemView.findViewById<TextView>(R.id.tv_characterOrDepartment)
             character.text = TVShows.value?.get(position)?.character
 
-            // poster:
-            val poster = holder.itemView.findViewById<ImageView>(R.id.iv_personAvatar)
-
+            // Poster:
+            val poster = holder.itemView.findViewById<ImageView>(R.id.iv_posterOrPhoto)
             val url = "https://image.tmdb.org/t/p/w185${TVShows.value?.get(position)?.poster_path}"
             Glide.with(holder.itemView).load(url).centerCrop().placeholder(R.drawable.ic_twotone_live_tv_24holder).into(poster)
 
-
-            // navigation:
+            // Navigation between fragments - going to TV Show Details:
             val movieRowBackground = holder.itemView.findViewById<LinearLayout>(R.id.tileBackground)
             movieRowBackground.setOnClickListener {
-                TVShows.value?.let { item -> TVShowVM.setCurrentTVShow(item[position].id) }
+                TVShows.value?.let { item -> tvShowViewModel.setCurrentTVShow(item[position].id) }
                 movieRowBackground.findNavController().navigate(R.id.action_homeFragment_to_TVShowDetailsFragment)
             }
         }
     }
-
 
     override fun getItemCount(): Int = TVShows.value?.size ?: 0
 }

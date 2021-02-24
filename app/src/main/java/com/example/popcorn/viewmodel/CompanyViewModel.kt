@@ -4,13 +4,13 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.popcorn.model.Movie
 import com.example.popcorn.model.ProductionCompany
 import com.example.popcorn.model.api.ApiRequest
 import com.example.popcorn.model.api.CompanyRepository
 import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 
+// ViewModel which connects Company's Fragment with Company's Repository (and API):
 class CompanyViewModel(application: Application) : AndroidViewModel(application) {
     private val repository : CompanyRepository = CompanyRepository(ApiRequest.getAPI())
 

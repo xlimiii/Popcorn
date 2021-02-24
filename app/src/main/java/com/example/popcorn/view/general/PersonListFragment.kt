@@ -12,35 +12,50 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.popcorn.R
 import com.example.popcorn.viewmodel.PersonViewModel
 import com.example.popcorn.viewmodel.adapters.general.PersonListAdapter
-import kotlinx.android.synthetic.main.fragment_person_list.*
+import kotlinx.android.synthetic.main.fragment_general_list.*
 
+// Fragment displayed in third tab:
 class PersonListFragment : Fragment() {
+    // ViewModel:
+    private lateinit var personVM : PersonViewModel
+
+    // Adapter and its RecyclerView:
     private lateinit var personListAdapter : PersonListAdapter
     private lateinit var myLayoutManager : LinearLayoutManager
     private lateinit var recyclerView : RecyclerView
-    private lateinit var personVM : PersonViewModel
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        myLayoutManager = LinearLayoutManager(context)
+        // ViewModel:
         personVM = ViewModelProvider(requireActivity()).get(PersonViewModel::class.java)
 
+        // LinearLayoutManager (used by RecyclerView):
+        myLayoutManager = LinearLayoutManager(context)
+
+        // Initializing list of popular people (by empty input):
         personVM.setPeopleWithMatchingName("")
+
+        // Adapter (used by RecyclerView):
         personListAdapter = PersonListAdapter(personVM.peopleWithMatchingName, personVM, "PersonListFragment")
 
+        // Updating people's RecyclerView after receiving response from API:
         personVM.peopleWithMatchingName.observe(viewLifecycleOwner, { personListAdapter.notifyDataSetChanged() })
 
-        return inflater.inflate(R.layout.fragment_person_list, container, false)
+        return inflater.inflate(R.layout.fragment_general_list, container, false)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = rv_actorList.apply {
+        // RecyclerView which displays popular people or people with matching name:
+        recyclerView = rv_generalList.apply {
             this.layoutManager = myLayoutManager
             this.adapter = personListAdapter
         }
 
-        sv_actorList.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        // Search view responsible for finding people with matching name:
+        sv_generalList.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(givenText : String) : Boolean {
                 personVM.setPeopleWithMatchingName(givenText)
                 return false

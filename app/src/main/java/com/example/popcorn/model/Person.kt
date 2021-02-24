@@ -1,17 +1,21 @@
 package com.example.popcorn.model
 
 data class Person (
-    val birthday: String?,
-    val deathday: String?,
-    val biography: String?,
-    val gender : Int,
+    // General:
     val id : Int,
-    val known_for_department : String,
-    val place_of_birth: String?,
     val name : String,
+    val gender : Int,
+    val profile_path : String?, // photo
     val popularity : Double,
-    val profile_path : String?,
-    // Cast and Crew:
+
+    // Details:
+    val biography: String?,
+    val birthday: String?,
+    val deathDay: String?,
+    val place_of_birth: String?,
+    val known_for_department : String, // acting, directing, etc.
+
+    // Who was played / for what was responsible - used in recycler views:
     val character : String?,
     val department: String?
 )

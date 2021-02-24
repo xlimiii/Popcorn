@@ -11,6 +11,7 @@ import com.example.popcorn.model.api.TVShowRepository
 import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 
+// ViewModel which connects TV Shows' Fragments with TV Shows' Repository (and API):
 class TVShowViewModel(application: Application) : AndroidViewModel(application) {
     private val repository : TVShowRepository = TVShowRepository(ApiRequest.getAPI())
 

@@ -5,7 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Favourite::class], version = 4, exportSchema = false)
+// Class responsible for storing local data about favourite movies and TV shows:
+@Database(entities = [Favourite::class], version = 1, exportSchema = false)
 abstract class PopcornDatabase : RoomDatabase() {
     abstract fun favouriteDao() : FavouriteDao
 

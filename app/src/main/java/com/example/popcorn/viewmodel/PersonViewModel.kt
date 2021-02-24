@@ -11,6 +11,7 @@ import com.example.popcorn.model.api.PersonRepository
 import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 
+// ViewModel which connects People's Fragments with People's Repository (and API):
 class PersonViewModel(application: Application) : AndroidViewModel(application) {
     private val repository : PersonRepository = PersonRepository(ApiRequest.getAPI())
 
