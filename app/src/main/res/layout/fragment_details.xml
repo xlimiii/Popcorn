@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="144dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="6dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_titleOrName" />
 
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="264dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="6dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_titleOrName" />
 
@@ -67,18 +67,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="144dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="6dp"
                 android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_year" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_runtime" />
 
             <TextView
                 android:id="@+id/tv_origin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="144dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="6dp"
                 android:layout_marginEnd="24dp"
                 android:layout_weight="1"
                 android:ellipsize="none"
@@ -92,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="144dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="6dp"
                 android:layout_marginEnd="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +102,7 @@
                 android:id="@+id/tv_header1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="140dp"
+                android:layout_marginTop="160dp"
                 android:background="@color/phthalo_green"
                 android:textAlignment="center"
                 android:textColor="@color/white"
@@ -218,6 +218,30 @@
                 app:layout_constraintStart_toStartOf="@+id/iv_posterOrPhoto"
                 app:layout_constraintTop_toTopOf="@+id/iv_posterOrPhoto"
                 app:srcCompat="@drawable/ic_star_fav_24"/>
+
+            <TextView
+                android:id="@+id/tv_avgVote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:visibility="gone"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/iv_posterOrPhoto"
+                app:layout_constraintStart_toStartOf="@+id/iv_posterOrPhoto"
+                app:layout_constraintTop_toBottomOf="@+id/iv_posterOrPhoto" />
+
+            <TextView
+                android:id="@+id/tv_runtime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="144dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_year" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

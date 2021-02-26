@@ -20,6 +20,8 @@ import com.example.popcorn.viewmodel.TVShowViewModel
 import com.example.popcorn.viewmodel.adapters.details.MoviesAndTVShowsInPersonAdapter
 import kotlinx.android.synthetic.main.fragment_details.*
 import kotlinx.android.synthetic.main.fragment_details.view.*
+import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 
 // Fragment which is displayed after clicking specific person's row/column:
 class PersonDetailsFragment : Fragment() {
@@ -85,6 +87,16 @@ class PersonDetailsFragment : Fragment() {
             else
             {
                 view.tv_year.text = "Born: ${it.birthday}"
+
+                // Age:
+                if (it.deathDay.isNullOrEmpty())
+                {
+                    val today = LocalDate.now()
+                    val then = LocalDate.parse(it.birthday)
+                    val diff = ChronoUnit.YEARS.between(then, today)
+                    view.tv_year.text = view.tv_year.text.toString() + " (${diff} years old)"
+                }
+
                 view.tv_year.visibility = View.VISIBLE
             }
 
@@ -96,6 +108,9 @@ class PersonDetailsFragment : Fragment() {
                 view.tv_year2.text = "Died: ${it.deathDay}"
                 view.tv_year2.visibility = View.VISIBLE
             }
+
+            // Runtime:
+            view.tv_runtime.visibility = View.GONE
 
             // Place of birth:
             view.tv_origin.text = "Place of Birth: " + it.place_of_birth
@@ -115,6 +130,9 @@ class PersonDetailsFragment : Fragment() {
                 else -> R.drawable.ic_person_placeholder_24_e
             }
             Glide.with(view.iv_posterOrPhoto).load(url).centerCrop().placeholder(placeholderImg).into(view.iv_posterOrPhoto)
+
+            // Average vote:
+            view.tv_avgVote.visibility = View.GONE
 
             // Updating data of movie and TV shows that current person performed in or was in crew of:
             personViewModel.setCurrentPersonCollection(it.id)

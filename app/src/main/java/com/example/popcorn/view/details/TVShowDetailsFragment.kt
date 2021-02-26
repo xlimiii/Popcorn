@@ -78,27 +78,55 @@ class TVShowDetailsFragment : Fragment() {
             // Release date:
             if (!it.first_air_date.isNullOrEmpty())
             {
-                view.tv_year.text = "Release date: ${it.first_air_date}"
+                view.tv_year.text = "First episode air date: ${it.first_air_date}"
                 view.tv_year.visibility = View.VISIBLE
             }
             else view.tv_year.visibility = View.GONE
 
-            // Genres:
+            // Runtime:
+            if (!it.episode_run_time.isNullOrEmpty())
+            {
+                var runtimeSum = 0
+                it.episode_run_time.forEach { x -> runtimeSum += x }
+                view.tv_runtime.text = "Episode runtime: ${runtimeSum / it.episode_run_time.size} minutes"
+                view.tv_runtime.visibility = View.VISIBLE
+            }
+            else view.tv_runtime.visibility = View.GONE
+
+            // Genres (main two):
             if (!it.genres.isNullOrEmpty())
             {
                 var genresText = ""
-                it.genres.forEach { x -> genresText += x.name + ", "}
+                var i = 0
+                while (i < it.genres.size)
+                {
+                    if (i == 2) break
+                    else genresText += it.genres[i].name + ", "
+
+                    i += 1
+                }
                 view.tv_genresOrKnownFor.text = "Genres: ${genresText.slice(IntRange(0, genresText.length - 3))}"
                 view.tv_genresOrKnownFor.visibility = View.VISIBLE
             }
             else view.tv_genresOrKnownFor.visibility = View.GONE
 
-            // Languages:
+            // Languages (main two but with "..." if there are more):
             if (!it.spoken_languages.isNullOrEmpty())
             {
                 var languagesText = ""
-                it.spoken_languages.forEach{ x -> languagesText += x.english_name + " "}
-                view.tv_origin.text = "Languages: $languagesText"
+                var i = 0
+                while (i < it.spoken_languages.size)
+                {
+                    if (i == 2)
+                    {
+                        languagesText += "..." + ", "
+                        break
+                    }
+                    else languagesText += it.spoken_languages[i].english_name + ", "
+
+                    i += 1
+                }
+                view.tv_origin.text = "Languages: ${languagesText.slice(IntRange(0, languagesText.length - 3))}"
                 view.tv_origin.visibility = View.VISIBLE
             }
             else view.tv_origin.visibility = View.GONE
@@ -107,7 +135,7 @@ class TVShowDetailsFragment : Fragment() {
             if (!it.production_companies.isNullOrEmpty())
             {
                 val currentCompany = it.production_companies[0]
-                view.tv_mainCompany.text = "Main company: ${currentCompany.name}"
+                view.tv_mainCompany.text = "Company: ${currentCompany.name}"
                 view.tv_mainCompany.visibility = View.VISIBLE
                 view.tv_mainCompany.setOnClickListener {
                     companyViewModel.setCurrentCompany(currentCompany.id)
@@ -119,6 +147,14 @@ class TVShowDetailsFragment : Fragment() {
             // Poster:
             val url = "https://image.tmdb.org/t/p/w185${it.poster_path}"
             Glide.with(view.iv_posterOrPhoto).load(url).centerCrop().placeholder(R.drawable.ic_twotone_live_tv_24holder).into(view.iv_posterOrPhoto)
+
+            // Average vote:
+            if (it.vote_average.toString().isNotEmpty())
+            {
+                view.tv_avgVote.text = "Rating: ${it.vote_average}/10.0"
+                view.tv_avgVote.visibility = View.VISIBLE
+            }
+            else view.tv_avgVote.visibility = View.GONE
 
             // Buttons responsible for adding to favourites and deleting from favourites - updating view after any change in local database:
             favouriteViewModel.favourites.observe(viewLifecycleOwner, {

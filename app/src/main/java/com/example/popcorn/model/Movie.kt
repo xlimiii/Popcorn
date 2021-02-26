@@ -8,6 +8,8 @@ data class Movie (
     val popularity : Double,
 
     // Details:
+    val vote_average : Double?,
+    val runtime: Int?,
     val overview : String?,    // description
     val genres : List<Genre>,
     val release_date : String?,

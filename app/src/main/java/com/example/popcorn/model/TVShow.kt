@@ -8,6 +8,8 @@ data class TVShow (
     val popularity : Double,
 
     // Details:
+    val vote_average : Double?,
+    val episode_run_time : List<Int>,
     val overview : String?,
     val genres : List<Genre>,
     val first_air_date: String?,
