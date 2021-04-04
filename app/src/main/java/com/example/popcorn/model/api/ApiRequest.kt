@@ -65,7 +65,7 @@ interface ApiRequest {
 
     //                  INSTANCE WHICH PROVIDES COMMUNICATION WITH API
     companion object {
-        private const val apiKey: String = "055b1da364a8c6b64b59a86724d0ae7c"
+        private const val apiKey: String = "YOUR_API_KEY"    // PLACE YOUR API KEY HERE
         private const val WEBSITE = "https://api.themoviedb.org/"
         private var INSTANCE : ApiRequest? = null
 
