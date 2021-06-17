@@ -1,7 +1,4 @@
 # Popcorn
-**Popcorn** is a project written for **Mobile Applications for Android** course during 
-the 5th semester of Computer Science at the Silesian University of Technology.
-
 ### Table of contents
 * [Project description](#project-description)
 * [Used technologies](#used-technologies)
@@ -37,23 +34,23 @@ popular people and popular TV Shows**, but you can use search view placed at the
 there are usually a lot of results so you can scroll left or right. Using search view in this tab causes in searching in all three lists at the same time.
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/43967269/109326571-a7f0dc00-7857-11eb-8f8c-61517c37a4e5.png" alt="HomeFragment">
-<img src="https://user-images.githubusercontent.com/43967269/109327372-8e9c5f80-7858-11eb-9455-e36b87744d61.png" alt="SearchingInHomeFragment">
+<img src="https://user-images.githubusercontent.com/43967269/122435551-6320ba80-cf98-11eb-8e47-37959c481825.png" alt="HomeFragment">
+<img src="https://user-images.githubusercontent.com/43967269/122435555-6451e780-cf98-11eb-92a0-9228deb47200.png" alt="SearchingInHomeFragment">
 </p>
 
 In second, third and fourth tabs there are almost **the same lists** as in first tab but shown in different way - you have to scroll up or down.
 In these tabs you can also **add items to favourites** and get to know about the specific movie's / TV Show's release year.
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/43967269/109326642-b939e880-7857-11eb-980c-40db2a5fb7df.png" alt="MovieListFragment">
-<img src="https://user-images.githubusercontent.com/43967269/109326712-d1116c80-7857-11eb-80b2-5b489587221a.png" alt="TVShowListFragment">
-<img src="https://user-images.githubusercontent.com/43967269/109326675-c48d1400-7857-11eb-82b6-6f76bdca8d0b.png" alt="PeopleListFragment">
+<img src="https://user-images.githubusercontent.com/43967269/122435559-6451e780-cf98-11eb-90f1-72c9a471ff0c.png" alt="MovieListFragment">
+  <img src="https://user-images.githubusercontent.com/43967269/122435561-64ea7e00-cf98-11eb-9b98-b94991f73361.png" alt="PeopleListFragment">
+<img src="https://user-images.githubusercontent.com/43967269/122435564-64ea7e00-cf98-11eb-9980-411ddc207df0.png" alt="TVShowListFragment">
 </p>
 
 In last tab you can see a **list of your favourite movies and TV Shows**. There you can of course delete them from the list or search for specific one.
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/43967269/109326778-e1294c00-7857-11eb-9b98-60f0e650b18a.png" alt="FavListFragment">
+<img src="https://user-images.githubusercontent.com/43967269/122435566-64ea7e00-cf98-11eb-9d3d-259a69d3c342.png" alt="FavListFragment">
 </p>
 
 If you click a row or tile with specific movie / TV Show, you'll go to the screen presenting **it's details**. 
@@ -61,18 +58,13 @@ Information which is displayed here has been already mentioned in [Project descr
 You can also click the name of company responsible for this title and check the details of the company.
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/43967269/109326951-12098100-7858-11eb-863d-29b1a645db7b.png" alt="WWDetails">
-<img src="https://user-images.githubusercontent.com/43967269/109327007-23eb2400-7858-11eb-8c7d-c277391017b1.png" alt="WWCompany">
-</p>
-
-<p align="center">
-<img src="https://user-images.githubusercontent.com/43967269/109327110-42511f80-7858-11eb-8905-af035aa51094.png" alt="WVDetails">
-<img src="https://user-images.githubusercontent.com/43967269/109327148-4c731e00-7858-11eb-80ff-48da8e6162d6.png" alt="WVCompany">
+<img src="https://user-images.githubusercontent.com/43967269/122435567-65831480-cf98-11eb-9076-8bb926dd6ba1.png" alt="WVDetails">
+<img src="https://user-images.githubusercontent.com/43967269/122435570-65831480-cf98-11eb-9f91-ced488f8dacb.png" alt="WVCompany">
 </p>
 
 And if you click a row or tile with specific person, you'll go to the screen with **his/her details** too.
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/43967269/109327248-69a7ec80-7858-11eb-9cfc-d05abcf10167.png" alt="OlsenDetails1">
-<img src="https://user-images.githubusercontent.com/43967269/109327278-73c9eb00-7858-11eb-9085-a5632f88c804.png" alt="OlsenDetails2">
+<img src="https://user-images.githubusercontent.com/43967269/122435572-65831480-cf98-11eb-951e-dc9fe1048158.png" alt="JohansonDetails1">
+<img src="https://user-images.githubusercontent.com/43967269/122435574-661bab00-cf98-11eb-882b-17f10c2afe8c.png" alt="JohansonDetails2">
 </p>
