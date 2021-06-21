@@ -4,14 +4,15 @@
 * [Used technologies](#used-technologies)
 * [How to compile it?](#how-to-compile-it)
 * [How to use it?](#how-to-use-it)
+* [Project status](#project-status)
 
 ### Project description
-**Popcorn** is a mobile application that uses **The Movie Database API** to present information **about movies, people and TV Shows**.
-You can **search for** specific title / person or check what is in **lists of popular** ones. Each movie and TV Show is presented really 
-precisely - you can get to know what is it about, when and where it was produced, which languages are used in it, how long it lasts, 
-which genres it represents, who plays in it, who produced it and what rating it has. You can also check when and where specific person
-was born, when he/she died, with which movies and TV shows is connected and read his/her biography. Another functionality offered by Popcorn 
-is **adding to favourites** thanks to local database. 
+**Popcorn** is a mobile application that uses [**The Movie Database API**](https://developers.themoviedb.org/3) to present information 
+**about movies, people and TV Shows**. You can **search for** specific title / person or check what is in **lists of popular** ones. 
+Each movie and TV Show is presented really precisely - you can get to know what is it about, when and where it was produced, which 
+languages are used in it, how long it lasts, which genres it represents, who plays in it, who produced it and what rating it has. 
+You can also check when and where specific person was born, when he/she died, with which movies and TV shows is connected and read 
+his/her biography. Another functionality offered by Popcorn is **adding to favourites** thanks to local database. 
 
 ### Used technologies
 * Kotlin 1.4.30 - langauge in which the project has been written,
@@ -68,3 +69,6 @@ And if you click a row or tile with specific person, you'll go to the screen wit
 <img src="https://user-images.githubusercontent.com/43967269/122435572-65831480-cf98-11eb-951e-dc9fe1048158.png" alt="JohansonDetails1">
 <img src="https://user-images.githubusercontent.com/43967269/122435574-661bab00-cf98-11eb-882b-17f10c2afe8c.png" alt="JohansonDetails2">
 </p>
+
+### Project status
+The project is considered as **finished**.
